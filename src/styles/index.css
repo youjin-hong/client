@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans antialiased;
+  }
+
+  a {
+    @apply no-underline text-inherit;
+  }
+
+  button {
+    @apply cursor-pointer border-none outline-none bg-transparent;
+  }
+
+  input {
+    @apply outline-none;
+  }
+}
