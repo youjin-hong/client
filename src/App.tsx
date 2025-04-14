@@ -1,7 +1,7 @@
-import { Provider } from 'react-redux';
-import { store } from './store/store';
-import './index.css';
-import LandingPage from './pages/LandingPage';
+import { Provider } from "react-redux";
+import { store } from "./store/store";
+import "./index.css";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
