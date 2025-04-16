@@ -5,28 +5,25 @@ import { ApiResponse, ErrorResponse } from '../../types';
 interface ApiState {
   loading: boolean;
   error: ErrorResponse | null;
-  data: any;
+  data: unknown;
 }
 
 const initialState: ApiState = {
   loading: false,
   error: null,
-  data: null,
+  data: null
 };
 
-export const fetchData = createAsyncThunk(
-  'api/fetchData',
-  async (endpoint: string, { rejectWithValue }) => {
-    try {
-      const response = await axiosInstance.get<ApiResponse<any>>(endpoint);
-      return response.data;
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data || { message: '알 수 없는 오류가 발생했습니다.' },
-      );
-    }
-  },
-);
+export const fetchData = createAsyncThunk('api/fetchData', async (endpoint: string, { rejectWithValue }) => {
+  try {
+    const response = await axiosInstance.get<ApiResponse<unknown>>(endpoint);
+    return response.data;
+  } catch (error: unknown) {
+    return rejectWithValue(
+      ((error as ErrorResponse).response?.data || { message: '알 수 없는 오류가 발생했습니다.' }) as ErrorResponse
+    );
+  }
+});
 
 const apiSlice = createSlice({
   name: 'api',
@@ -34,7 +31,7 @@ const apiSlice = createSlice({
   reducers: {
     clearError: (state) => {
       state.error = null;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -50,7 +47,7 @@ const apiSlice = createSlice({
         state.loading = false;
         state.error = action.payload as ErrorResponse;
       });
-  },
+  }
 });
 
 export const { clearError } = apiSlice.actions;
