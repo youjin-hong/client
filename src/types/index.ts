@@ -11,6 +11,7 @@ export interface ApiResponse<T> {
 }
 
 export interface ErrorResponse {
+  response: unknown;
   status: number;
   message: string;
 }
