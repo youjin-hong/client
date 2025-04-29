@@ -16,7 +16,7 @@ const PrivateRoutes = [
     element: <RouteGuard />, // 인증 확인 컴포넌트
     children: [
       {
-        element: <Layout />,
+        element: <Layout />, // 페이지 공통 layout 추가
         children: [
           { path: ROUTES.HOME, element: <DashboardPage /> },
           { path: ROUTES.PROJECTS, element: <ProjectMangePage /> },

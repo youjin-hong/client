@@ -8,7 +8,7 @@ import ManualPage from '@/pages/manual/ManualPage';
 // 로그인 없이 접근 가능한 라우팅 모음
 const PublicRoutes = [
   {
-    element: <Layout />,
+    element: <Layout />, // 페이지 공통 layout 추가
     children: [
       { path: ROUTES.LANDING, element: <LandingPage /> },
       { path: ROUTES.LOGIN, element: <LoginPage /> },
