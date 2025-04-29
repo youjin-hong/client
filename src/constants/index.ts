@@ -5,6 +5,7 @@ export const API_ENDPOINTS = {
     REFRESH: '/auth/reissue'
   },
 
+  // end point는 똑같지만 사용할 HTTP 메서드가 다르므로 의미적으로 구분하기 위해 각각 변수로 설정해주었습니다.
   USER: {
     SIGNUP: '/users',
     EDIT: '/users',
@@ -50,7 +51,8 @@ export const ROUTES = {
 };
 
 export const STORAGE_KEYS = {
-  TOKEN: 'token',
+  ACCESS_TOKEN: 'accessToken',
+  REFRESH_TOKEN: 'refreshToken', // 쿠키로 관리되지만 키 이름은 정의해두기
   USER: 'user'
 };
 
