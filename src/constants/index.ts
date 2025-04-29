@@ -2,11 +2,35 @@ export const API_ENDPOINTS = {
   AUTH: {
     LOGIN: '/auth/login',
     LOGOUT: '/auth/logout',
-    REFRESH: '/auth/refresh'
+    REFRESH: '/auth/reissue'
   },
+
   USER: {
-    PROFILE: '/users/profile',
-    UPDATE: '/users/update'
+    SIGNUP: '/users',
+    EDIT: '/users',
+    LEAVE: '/users',
+    PROFILE: '/users/me'
+  },
+
+  DASHBOARD: '/home',
+
+  PROJECTS: {
+    LIST: '/projects',
+    CREATE: '/projects',
+    DETAIL: '/projects/:projectId',
+    UPDATE: '/projects/:projectId',
+    DELETE: '/projects/:projectId',
+
+    TESTS: {
+      LIST: '/projects/tests',
+      DETAIL: '/projects/tests/:testId',
+
+      PAGES: '/pages/:pageId'
+    }
+  },
+
+  HEALTH: {
+    CHECK: '/health'
   }
 };
 
