@@ -12,7 +12,7 @@ const PublicRoutes = [
     children: [
       { path: ROUTES.LANDING, element: <LandingPage /> },
       { path: ROUTES.LOGIN, element: <LoginPage /> },
-      { path: ROUTES.LOGIN, element: <SignupPage /> },
+      { path: ROUTES.SIGNUP, element: <SignupPage /> },
       { path: ROUTES.MANUAL, element: <ManualPage /> }
     ]
   }
