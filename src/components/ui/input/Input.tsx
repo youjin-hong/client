@@ -28,7 +28,7 @@ export default function Input({
   return (
     <div>
       {label && (
-        <label htmlFor={inputId} className="block mb-3 ml-2 font-bold text-14 text-typography-dark">
+        <label htmlFor={inputId} className="block mb-2 ml-2 font-bold text-14 text-typography-dark">
           {label}
           {required && <span> (*필수)</span>}
         </label>
@@ -36,7 +36,7 @@ export default function Input({
       <input
         id={inputId}
         type="text"
-        className={`w-full border border-typography-gray rounded-15 px-4 py-3 placeholder:text-typography-gray focus:border-typography-dark focus:outline-none ${className}`}
+        className={`w-full border-[0.5px] border-typography-gray rounded-15 px-4 py-3 placeholder:text-typography-gray focus:border-typography-dark focus:outline-none ${className}`}
         value={value}
         onChange={onChange}
         onKeyUp={handleKeyUp}
