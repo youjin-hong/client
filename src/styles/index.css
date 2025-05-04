@@ -14,7 +14,7 @@
   }
 
   button {
-    @apply cursor-pointer border-none outline-none bg-transparent;
+    @apply cursor-pointer outline-none bg-transparent;
   }
 
   input {
