@@ -32,5 +32,14 @@ export const colors = {
 
   // 빨강 계열
   red_1: '#A73131',
-  red_2: '#FEEDED'
+  red_2: '#FEEDED',
+
+  // 버튼 상태별 배경, border 색상
+  button: {
+    default: '#F5F5F5',
+    hover: '#E8E8E8',
+    press: '#B0B0B0',
+    text: '#8C8C8C',
+    border: '#8C8C8C'
+  }
 };
