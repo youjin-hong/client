@@ -1,6 +1,6 @@
 import { ROUTES } from '@/constants';
 import RouteGuard from '@/routes/RouteGuard';
-import Layout from '@/components/layout/Layout';
+import Layout from '@/components/layout/page-layout/Layout';
 import { DashboardPage } from '@/pages/main/DashboardPage';
 import ProjectMangePage from '@/pages/project/ProjectMangePage';
 import ProjectCreatePage from '@/pages/project/ProjectCreatePage';

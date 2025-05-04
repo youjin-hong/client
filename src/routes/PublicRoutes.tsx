@@ -1,4 +1,4 @@
-import Layout from '@/components/layout/Layout';
+import Layout from '@/components/layout/page-layout/Layout';
 import { ROUTES } from '@/constants';
 import LoginPage from '@/pages/auth/LoginPage';
 import SignupPage from '@/pages/auth/SignupPage';
