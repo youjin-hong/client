@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 export default function Header() {
   return (
-    <header className="fixed w-full bg-transparent flex items-center justify-around py-12">
+    <header className="fixed z-[999] w-full bg-transparent flex items-center justify-around py-12">
       {/* 현재 페이지 이름 */}
       <Link to="/" className="block">
         <div className="font-bm font-medium text-32 cursor-pointer">현재페이지이름</div>
@@ -25,7 +25,7 @@ export default function Header() {
         </div>
 
         {/* 프로필 버튼 */}
-        <button className="flex max-w-44 gap-2 rounded-15 px-3 py-1">
+        <button className="flex max-w-44 gap-2 rounded-15 px-5 py-1 bg-white">
           <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
             <img src="/src/assets/images/no-profile.png" alt="profile img" className="w-7" />
           </div>
