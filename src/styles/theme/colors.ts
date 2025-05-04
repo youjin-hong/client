@@ -3,7 +3,7 @@ export const colors = {
   background: '#F5F5F5',
 
   // 텍스트 색상
-  text: {
+  typography: {
     dark: '#191919',
     gray: '#8C8C8C',
     white: '#FFFFFF'

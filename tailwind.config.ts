@@ -1,4 +1,5 @@
 import { colors } from './src/styles/theme/colors';
+import { shape } from './src/styles/theme/shape';
 import defaultTheme from 'tailwindcss/defaultTheme';
 
 /** @type {import('tailwindcss').Config} */
@@ -13,6 +14,9 @@ export default {
       },
       colors: {
         ...colors
+      },
+      borderRadius: {
+        ...shape.radius
       }
     }
   },
