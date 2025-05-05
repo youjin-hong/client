@@ -1,4 +1,8 @@
+import { useUserProfile } from '@/store/queries/user/useUserQueries';
+
 export default function Header() {
+  const { data: profile } = useUserProfile();
+
   return (
     <header className="sticky top-0 z-[999] w-full bg-background flex items-center justify-around py-10">
       {/* 현재 페이지 이름 */}
@@ -22,11 +26,11 @@ export default function Header() {
 
         {/* 프로필 버튼 */}
         <button className="flex max-w-44 gap-2 rounded-15 px-5 py-1 bg-white">
-          <div className="w-9 h-9 rounded-full bg-gray-300 flex items-center justify-center">
-            <img src="/src/assets/images/no-profile.png" alt="profile img" className="w-5" />
+          <div className="w-9 h-9 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
+            <img src="/src/assets/images/짱구.jpg" alt="profile img" className="w-full h-full object-cover" />
           </div>
           <div className="flex flex-col justify-center items-start">
-            <p className="font-bm text-14">사용자이름</p>
+            <p className="font-bm text-14">{profile.username}</p>
             <p className="font-medium text-7 text-typography-gray">Test Automation Developer</p>
           </div>
         </button>
