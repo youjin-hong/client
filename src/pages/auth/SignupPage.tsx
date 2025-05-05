@@ -7,17 +7,16 @@ import { LoginRequest, SignupRequest } from '@/types/user.type';
 
 export default function SignupPage() {
   const navigate = useNavigate();
-  const signupRequest = useSignup();
+  const signupMutation = useSignup();
 
-  const handleSubmit = (data: LoginRequest | SignupRequest) => {
+  const handleSignup = (data: LoginRequest | SignupRequest) => {
     // signupRequest 타입인지 (username이 있는지) 확인
     if ('username' in data) {
-      signupRequest.mutate(data, {
-        onSuccess: () => {
+      signupMutation.mutate(data, {
+        onSuccess: (response) => {
           // TODO: alert창 컴포넌트 만들어서 나중에 바꾸기 (eg. "회원가입이 완료되었습니다.")
-          alert('회원가입이 완료되었습니다.');
+          alert(response.message);
           navigate(ROUTES.LOGIN);
-          console.log('회원가입 완료');
         }
       });
     }
@@ -25,7 +24,7 @@ export default function SignupPage() {
 
   return (
     <>
-      <AuthForm type="signup" onSubmit={handleSubmit} />
+      <AuthForm type="signup" onSubmit={handleSignup} />
     </>
   );
 }
