@@ -1,15 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import apiReducer from './api/apiSlice';
+import apiReducer from '../api/apiSlice';
 
 export const store = configureStore({
   reducer: {
-    api: apiReducer,
+    api: apiReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false,
-    }),
+      serializableCheck: false
+    })
 });
 
 export type RootState = ReturnType<typeof store.getState>;

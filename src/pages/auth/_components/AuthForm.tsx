@@ -18,10 +18,25 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
   const handleSubmitAuthForm = (e: React.FormEvent) => {
     e.preventDefault();
 
+    // 앞뒤 공백 제거
+    const trimmedEmail = email.trim();
+    const trimmedPassword = password.trim();
+    const trimmedUsername = username.trim();
+
     if (type === 'login') {
-      onSubmit({ email, password });
+      if (!trimmedEmail || !trimmedPassword) {
+        // TODO: alert 변경 필요
+        alert('이메일과 비밀번호를 모두 입력해주세요.');
+        return;
+      }
+      onSubmit({ email: trimmedEmail, password: trimmedPassword });
     } else {
-      onSubmit({ email, password, username });
+      if (!trimmedEmail || !trimmedPassword || !trimmedUsername) {
+        // TODO: alert 변경 필요
+        alert('이메일, 비밀번호, 이름을 모두 입력해주세요.');
+        return;
+      }
+      onSubmit({ email: trimmedEmail, password: trimmedPassword, username: trimmedUsername });
     }
   };
 
