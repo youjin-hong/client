@@ -1,7 +1,7 @@
 import Button from '@/components/ui/button/Button';
 import Input from '@/components/ui/input/Input';
 import { ROUTES } from '@/constants';
-import { LoginRequest, SignupRequest } from '@/types/user.type';
+import { LoginRequest, SignupRequest } from '@/types/auth.type';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -56,7 +56,7 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
         <Button
           text={type === 'login' ? '로그인' : '회원가입'}
           type="submit"
-          className="w-[90px] block mx-auto font-medium test-11 my-7"
+          className="w-[90px] block mx-auto font-medium text-11 my-7"
         />
       </form>
 
