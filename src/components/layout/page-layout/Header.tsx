@@ -1,6 +1,6 @@
 export default function Header() {
   return (
-    <header className="sticky top-0 z-[999] w-full bg-transparent flex items-center justify-around py-10">
+    <header className="sticky top-0 z-[999] w-full bg-background flex items-center justify-around py-10">
       {/* 현재 페이지 이름 */}
       <h1 className="font-bm font-medium text-32 cursor-default">현재페이지이름</h1>
 
