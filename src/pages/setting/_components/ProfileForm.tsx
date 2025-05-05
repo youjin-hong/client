@@ -36,6 +36,7 @@ export default function ProfileForm({ initialData, onSubmit }: ProfileFormProps)
         name="email"
         value={formData.email}
         onChange={handleChange}
+        required
         className="border-0 shadow-custom focus:bg-white"
       />
       <Input
@@ -44,6 +45,7 @@ export default function ProfileForm({ initialData, onSubmit }: ProfileFormProps)
         name="username"
         value={formData.username}
         onChange={handleChange}
+        required
         className="border-0 shadow-custom focus:bg-white"
       />
       <Input
