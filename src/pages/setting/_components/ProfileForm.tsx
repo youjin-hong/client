@@ -37,7 +37,7 @@ export default function ProfileForm({ initialData, onSubmit }: ProfileFormProps)
         value={formData.email}
         onChange={handleChange}
         required
-        className="border-0 shadow-custom focus:bg-white"
+        className="border-none shadow-custom focus:bg-white"
       />
       <Input
         label="이름"
@@ -46,7 +46,7 @@ export default function ProfileForm({ initialData, onSubmit }: ProfileFormProps)
         value={formData.username}
         onChange={handleChange}
         required
-        className="border-0 shadow-custom focus:bg-white"
+        className="border-none shadow-custom focus:bg-white"
       />
       <Input
         label="주소"
@@ -54,7 +54,7 @@ export default function ProfileForm({ initialData, onSubmit }: ProfileFormProps)
         name="address"
         value={formData.address}
         onChange={handleChange}
-        className="border-0 shadow-custom focus:bg-white"
+        className="border-none shadow-custom focus:bg-white"
       />
       <Input
         label="전화번호"
@@ -62,7 +62,7 @@ export default function ProfileForm({ initialData, onSubmit }: ProfileFormProps)
         name="phoneNumber"
         value={formData.phoneNumber}
         onChange={handleChange}
-        className="border-0 shadow-custom focus:bg-white"
+        className="border-none shadow-custom focus:bg-white"
       />
 
       <Button text="등록" type="submit" className="w-48 block mx-auto font-medium text-11 text-typography-dark" />
