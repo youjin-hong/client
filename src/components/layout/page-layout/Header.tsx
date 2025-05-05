@@ -32,7 +32,7 @@ export default function Header() {
             <img src="/src/assets/images/짱구.jpg" alt="profile img" className="w-full h-full object-cover" />
           </div>
           <div className="flex flex-col justify-center items-start">
-            <p className="font-bm text-14">fkffk</p>
+            <p className="font-bm text-14">{profile?.username}</p>
             <p className="font-medium text-7 text-typography-gray">Test Automation Developer</p>
           </div>
         </button>
