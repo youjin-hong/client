@@ -20,11 +20,6 @@ export interface LoginRequest {
   password: string;
 }
 
-// 토큰 정보 타입
-export interface TokenData {
-  accessToken: string;
-}
-
 // 로그인 응답 타입
 export interface LoginResponse {
   status: string;
@@ -33,9 +28,4 @@ export interface LoginResponse {
     accessToken: string;
   };
   code: number;
-}
-
-// 토큰 재발급 response의 data 부분
-export interface RefreshTokenResponseData {
-  accessToken: string;
 }
