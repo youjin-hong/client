@@ -8,7 +8,7 @@ interface MenuItemProps {
 
 export default function MenuItem({ item, fontSize = 'text-20' }: MenuItemProps) {
   const location = useLocation();
-  const isActive = location.pathname === item.path;
+  const isActive = item.path === '/' ? location.pathname === '/' : location.pathname.startsWith(item.path);
 
   return (
     <Link
