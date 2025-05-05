@@ -1,19 +1,21 @@
-import axios from "axios";
+import { ROUTES } from '@/constants';
+import axios from 'axios';
 
-const baseURL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
+const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://219.255.242.174:8080/api/v1';
 
 const axiosInstance = axios.create({
   baseURL,
   timeout: 10000,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json'
   },
+  withCredentials: true
 });
 
 // 요청 인터셉터
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -21,7 +23,7 @@ axiosInstance.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  },
+  }
 );
 
 // 응답 인터셉터
@@ -30,11 +32,11 @@ axiosInstance.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       // 토큰 만료 등의 처리
-      localStorage.removeItem("token");
-      window.location.href = "/login";
+      localStorage.removeItem('token');
+      window.location.href = ROUTES.LOGIN;
     }
     return Promise.reject(error);
-  },
+  }
 );
 
 export default axiosInstance;

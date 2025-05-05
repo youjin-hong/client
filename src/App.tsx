@@ -1,20 +1,19 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Provider } from 'react-redux';
-import { store } from './store/store';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { store } from './store/redux/store';
 import './styles/index.css';
-import { BrowserRouter } from 'react-router-dom';
-import AppRoutes from '@/routes';
+import routes from '@/routes';
 
 const queryClient = new QueryClient();
+const router = createBrowserRouter(routes);
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <BrowserRouter>
-          <AppRoutes />
-        </BrowserRouter>
+        <RouterProvider router={router} />
         <ReactQueryDevtools initialIsOpen={false} />
       </Provider>
     </QueryClientProvider>

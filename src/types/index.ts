@@ -1,13 +1,9 @@
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-}
-
+// API response 기본 구조
 export interface ApiResponse<T> {
-  data: T;
-  status: number;
+  status: string;
   message: string;
+  data: T;
+  code: number;
 }
 
 export interface ErrorResponse {
