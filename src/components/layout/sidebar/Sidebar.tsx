@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import smallLogo from '@/assets/logos/AUTA_small.svg';
 import { ROUTES } from '@/constants';
 import { useLogout } from '@/store/queries/auth/useAuthMutations';
 import MenuItem from '@/components/layout/sidebar/_components/MenuItem';
@@ -23,7 +24,7 @@ export default function Sidebar() {
   return (
     <aside className="fixed left-0 top-0 max-w-[280px] w-full h-screen z-[999] bg-[#E9E9E9]">
       <Link to="/" className="flex justify-center pt-8 pb-14">
-        <img src="/src/assets/logos/AUTA_small.svg" alt="logo" />
+        <img src={smallLogo} alt="logo" />
       </Link>
 
       <div className="my-4">
