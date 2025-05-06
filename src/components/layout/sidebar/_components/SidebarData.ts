@@ -18,7 +18,7 @@ export const menuItems: MenuItemType[] = [
   },
   {
     id: 'project-management',
-    path: ROUTES.PROFILE,
+    path: ROUTES.PROJECTS,
     icon: '/src/assets/icons/project.svg',
     title: '프로젝트 관리',
     alt: 'manage project'

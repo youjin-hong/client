@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { LoginRequest } from '@/types/user.type';
+import { LoginRequest } from '@/types/auth.type';
 import AuthForm from '@/pages/auth/_components/AuthForm';
 import { useLogin } from '@/store/queries/auth/useAuthMutations';
 import { ROUTES } from '@/constants';
