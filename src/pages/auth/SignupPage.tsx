@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants';
 import AuthForm from '@/pages/auth/_components/AuthForm';
 import { useSignup } from '@/store/queries/auth/useAuthMutations';
-import { LoginRequest, SignupRequest } from '@/types/user.type';
+import { LoginRequest, SignupRequest } from '@/types/auth.type';
 
 export default function SignupPage() {
   const navigate = useNavigate();

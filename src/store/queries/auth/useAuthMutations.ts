@@ -1,6 +1,6 @@
 import { API_ENDPOINTS } from '@/constants';
 import axiosInstance from '@/services/api/axios';
-import { LoginRequest, LoginResponse, SignupRequest } from '@/types/user.type';
+import { LoginRequest, LoginResponse, SignupRequest } from '@/types/auth.type';
 import { useMutation } from '@tanstack/react-query';
 
 export const useSignup = () => {

@@ -15,6 +15,7 @@ export default {
       },
       colors: colors,
       borderRadius: shape.radius,
+      boxShadow: shape.boxShadow,
       fontSize: typography.fontSize
     }
   },

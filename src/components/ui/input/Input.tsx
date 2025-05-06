@@ -2,6 +2,7 @@ import { ChangeEvent, InputHTMLAttributes, useId } from 'react';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
+  name?: string;
   required?: boolean;
   className?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -10,6 +11,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export default function Input({
   label,
+  name,
   value,
   className = '',
   required = false,
@@ -36,8 +38,9 @@ export default function Input({
       <input
         id={inputId}
         type="text"
-        className={`w-full border-[0.5px] border-typography-gray rounded-15 px-4 py-3 placeholder:text-typography-gray focus:border-typography-dark focus:outline-none ${className}`}
+        className={`w-full bg-background border-[0.5px] border-typography-gray rounded-15 px-4 py-3 placeholder:text-typography-gray focus:border-typography-dark focus:outline-none ${className}`}
         value={value}
+        name={name}
         onChange={onChange}
         onKeyUp={handleKeyUp}
         required={required}
