@@ -1,4 +1,7 @@
 import { useUserProfile } from '@/store/queries/user/useUserQueries';
+import searchIcon from '@/assets/icons/search.svg';
+import notificationIcon from '@/assets/icons/notification.svg';
+import profileImg from '@/assets/images/짱구.jpg';
 
 export default function Header() {
   const { data: profile } = useUserProfile();
@@ -13,7 +16,7 @@ export default function Header() {
       {/* 검색창 */}
       <div className="relative flex max-w-[510px] max-h-[50px] w-full bg-white py-3 px-5 mx-2 rounded-[23.5px]">
         <button type="button">
-          <img src="/src/assets/icons/search.svg" alt="search button" className="absolute left-5 top-2" />
+          <img src={searchIcon} alt="search button" className="absolute left-5 top-2" />
         </button>
         <input type="text" placeholder="프로젝트 검색" className="w-full rounded-[23.5px] pl-10" />
       </div>
@@ -22,14 +25,14 @@ export default function Header() {
         {/* 알림 버튼 */}
         <div className="flex items-center">
           <button>
-            <img src="/src/assets/icons/notification.svg" alt="notification button" />
+            <img src={notificationIcon} alt="notification button" />
           </button>
         </div>
 
         {/* 프로필 버튼 */}
         <button className="flex max-w-44 gap-2 rounded-15 px-5 py-1 bg-white">
           <div className="w-9 h-9 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
-            <img src="/src/assets/images/짱구.jpg" alt="profile img" className="w-full h-full object-cover" />
+            <img src={profileImg} alt="profile img" className="w-full h-full object-cover" />
           </div>
           <div className="flex flex-col justify-center items-start">
             <p className="font-bm text-14">{profile?.username}</p>

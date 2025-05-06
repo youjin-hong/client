@@ -1,3 +1,5 @@
+import settingIcon from '@/assets/icons/setting.svg';
+import profileImg from '@/assets/images/짱구.jpg';
 import { User } from '@/types/user.type';
 import ProfileForm from '@/pages/setting/_components/ProfileForm';
 import { useUserProfile } from '@/store/queries/user/useUserQueries';
@@ -33,7 +35,7 @@ export default function ProfileEditPage() {
       <section className="flex flex-col gap-5 pl-6">
         <div className="flex items-center gap-3 pl-6 pb-3">
           <div>
-            <img src="/src/assets/icons/setting.svg" alt="setting icon" />
+            <img src={settingIcon} alt="setting icon" />
           </div>
           <p className="font-bm text-20">설정</p>
         </div>
@@ -42,7 +44,7 @@ export default function ProfileEditPage() {
       <section className="flex w-full gap-10">
         <div className="flex flex-col items-center gap-6">
           <div className="w-72 h-72 rounded-full overflow-hidden">
-            <img src="/src/assets/images/짱구.jpg" alt="profileImg" className="w-full h-full object-cover" />
+            <img src={profileImg} alt="profileImg" className="w-full h-full object-cover" />
           </div>
           <p className="font-bm text-32 text-typography-dark">{profile.username}</p>
           <p className="font-medium text-14 text-typography-dark">Test Automation Developer</p>
