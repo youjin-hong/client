@@ -14,8 +14,6 @@ export default function LoginPage() {
   const handleLogin = (data: LoginRequest) => {
     loginMutation.mutate(data, {
       onSuccess: (response) => {
-        console.log('로그인 성공', response);
-
         // 토큰은 redux 상태에 저장
         if (response.data && response.data.accessToken) {
           dispatch(setToken(response.data.accessToken));
