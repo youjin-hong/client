@@ -1,54 +1,74 @@
 import { ReactNode } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import { useNavigate } from 'react-router-dom';
 
 interface TableColumn {
   id: string;
   label: string;
+  width?: string;
   align?: 'left' | 'center' | 'right';
-  minWidth?: number;
 }
 
-interface CustomTableProps<T> {
+interface TableItemProps<T> {
   columns: TableColumn[];
-  rows: T[];
-  renderCell: (column: TableColumn, row: T) => ReactNode;
+  items: T[];
+  renderCell: (column: TableColumn, item: T, index: number) => ReactNode;
+  className?: string;
+  onItemClick?: (item: T) => void;
+  getItemPath?: (item: T) => string;
 }
 
-export default function CustomTable<T>({ columns, rows, renderCell }: CustomTableProps<T>) {
+export default function TableItem<T>({
+  columns,
+  items,
+  renderCell,
+  className = '',
+  onItemClick,
+  getItemPath
+}: TableItemProps<T>) {
+  const navigate = useNavigate();
+
+  const handleItemClick = (item: T) => {
+    if (onItemClick) {
+      onItemClick(item);
+    } else if (getItemPath) {
+      navigate(getItemPath(item));
+    }
+  };
+
   return (
-    <TableContainer component={Paper} className="rounded-xl overflow-hidden">
-      <Table>
-        <TableHead>
-          <TableRow className="bg-gray-50">
+    <div className={`${className} space-y-5`}>
+      {/* 테이블 헤더 */}
+      <div className="grid grid-cols-[repeat(auto-fit,_minmax(0,_1fr))] bg-background shadow-custom rounded-10 p-4">
+        {columns.map((column) => (
+          <div
+            key={column.id}
+            className={`font-bold text-typography-dark text-14 flex items-center justify-${
+              column.align || 'center'
+            } ${column.width ? `w-[${column.width}]` : ''}`}>
+            {column.label}
+          </div>
+        ))}
+      </div>
+
+      {/* 테이블 바디 */}
+      <div className="space-y-5">
+        {items.map((item, itemIndex) => (
+          <div
+            key={itemIndex}
+            className="bg-white grid grid-cols-[repeat(auto-fit,_minmax(0,_1fr))] p-4 hover:bg-button-hover transition-colors rounded-10 cursor-pointer"
+            onClick={() => handleItemClick(item)}>
             {columns.map((column) => (
-              <TableCell
-                key={column.id}
-                align={column.align || 'left'}
-                style={{ minWidth: column.minWidth }}
-                className="font-medium text-gray-700 py-4">
-                {column.label}
-              </TableCell>
+              <div
+                key={`${itemIndex}-${column.id}`}
+                className={`flex items-center justify-${
+                  column.align || 'center'
+                } ${column.width ? `w-[${column.width}]` : ''} font-medium text-typography-dark text-11 `}>
+                {renderCell(column, item, itemIndex)}
+              </div>
             ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row, rowIndex) => (
-            <TableRow key={rowIndex} className="hover:bg-gray-50 transition-colors">
-              {columns.map((column) => (
-                <TableCell key={column.id} align={column.align || 'left'} className="py-4">
-                  {renderCell(column, row)}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
