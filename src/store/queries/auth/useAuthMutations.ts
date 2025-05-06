@@ -7,8 +7,6 @@ export const useSignup = () => {
   return useMutation({
     mutationFn: async (signupData: SignupRequest) => {
       const response = await axiosInstance.post(API_ENDPOINTS.USER.SIGNUP, signupData);
-      console.log('회원가입 완료', response);
-
       return response.data;
     }
   });
