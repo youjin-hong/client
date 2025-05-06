@@ -42,7 +42,7 @@ export const ROUTES = {
   LOGIN: '/login',
   SIGNUP: '/signup',
   PROJECTS: '/projects',
-  NEW_PROJECT: '/projects/new',
+  NEW_PROJECT: '/new-project',
   PROJECT_DETAIL: '/projects/:projectId',
   TESTS: '/tests',
   TEST_DETAIL: '/tests/:testId',
