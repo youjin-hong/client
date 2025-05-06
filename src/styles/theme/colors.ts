@@ -34,6 +34,10 @@ export const colors = {
   red_1: '#A73131',
   red_2: '#FEEDED',
 
+  // 회색 계열
+  gray_1: '#707070',
+  gray_2: '#e9e9e9',
+
   // 버튼 상태별 배경, border 색상
   button: {
     default: '#F5F5F5',

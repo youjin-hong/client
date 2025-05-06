@@ -6,8 +6,6 @@ import profileImg from '@/assets/images/짱구.jpg';
 export default function Header() {
   const { data: profile } = useUserProfile();
 
-  console.log('정보', profile);
-
   return (
     <header className="sticky top-0 z-[999] w-full bg-background flex items-center justify-around py-10">
       {/* 현재 페이지 이름 */}
