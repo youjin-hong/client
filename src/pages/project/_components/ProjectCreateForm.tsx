@@ -42,7 +42,14 @@ export default function ProjectCreateForm({ username, onSubmit }: ProjectCreateF
     <form onSubmit={handleSubmitProjectCreateForm} className="flex flex-col gap-6">
       <section className="space-y-5">
         <Input label="프로젝트명" required name="projectName" value={formData.projectName} onChange={handleChange} />
-        <Input label="프로젝트 관리자" required name="username" value={username} disabled className="bg-button-hover" />
+        <Input
+          label="프로젝트 관리자"
+          required
+          name="username"
+          value={username}
+          disabled
+          className="bg-button-hover text-typography-gray"
+        />
         <Input label="테스트 예상 시작일" onChange={handleChange} type="date" />
         <Input
           label="프로젝트 마감일"
