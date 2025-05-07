@@ -5,6 +5,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name?: string;
   required?: boolean;
   className?: string;
+  labelClassName?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onEnterPress?: () => void;
 }
@@ -14,6 +15,7 @@ export default function Input({
   name,
   value,
   className = '',
+  labelClassName = '',
   required = false,
   onChange,
   onEnterPress,
@@ -30,7 +32,7 @@ export default function Input({
   return (
     <div>
       {label && (
-        <label htmlFor={inputId} className="block mb-2 ml-2 font-bold text-14 text-typography-dark">
+        <label htmlFor={inputId} className={`block mb-2 ml-2 font-bold text-14 text-typography-dark ${labelClassName}`}>
           {label}
           {required && <span> (*필수)</span>}
         </label>
