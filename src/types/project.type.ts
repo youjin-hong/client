@@ -25,6 +25,7 @@ export interface ProjectsParams {
 
 export interface GenerateProject {
   projectName: string;
+  expectedTestExecution: string;
   projectEnd: string;
   description: string;
   figmaUrl: string;

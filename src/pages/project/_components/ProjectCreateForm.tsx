@@ -3,17 +3,19 @@ import Input from '@/components/ui/input/Input';
 import Textarea from '@/components/ui/textarea/TextArea';
 import DesignSourceSection from '@/pages/project/_components/DesignSourceSection';
 import { GenerateProject } from '@/types/project.type';
+import { getFormattedToday } from '@/utils/format';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
 interface ProjectCreateFormPropsType {
   username: string;
-  onSubmit: (data: GenerateProject) => void;
+  onSubmit: (data: GenerateProject, actionType: 'register' | 'test') => void;
+  onCancel: () => void;
 }
 
-export default function ProjectCreateForm({ username, onSubmit }: ProjectCreateFormPropsType) {
+export default function ProjectCreateForm({ username, onSubmit, onCancel }: ProjectCreateFormPropsType) {
   const [formData, setFormData] = useState<GenerateProject>({
     projectName: '',
-    administrator: username,
+    expectedTestExecution: '',
     projectEnd: '',
     description: '',
     figmaUrl: '',
@@ -31,12 +33,15 @@ export default function ProjectCreateForm({ username, onSubmit }: ProjectCreateF
 
   const handleSubmitProjectCreateForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit(formData);
-    console.log('프로젝트생성form 제출');
   };
 
-  // TODO: 테스트 예상 시작일은 프로젝트 마감일 전이어야 하고,
-  // //프로젝트 생성일보다 앞설 수 없음. 프로젝트 마감일도 프로젝트 생성일보다 앞설 수 없음
+  const handleRegisterProject = () => {
+    onSubmit(formData, 'register');
+  };
+
+  const handleRegisterAndTest = () => {
+    onSubmit(formData, 'test');
+  };
 
   return (
     <form onSubmit={handleSubmitProjectCreateForm} className="flex flex-col gap-6">
@@ -50,7 +55,14 @@ export default function ProjectCreateForm({ username, onSubmit }: ProjectCreateF
           disabled
           className="bg-button-hover text-typography-gray"
         />
-        <Input label="테스트 예상 시작일" onChange={handleChange} type="date" />
+        <Input
+          label="테스트 예상 시작일"
+          name="expectedTestExecution"
+          value={formData.expectedTestExecution}
+          onChange={handleChange}
+          type="date"
+          min={getFormattedToday()}
+        />
         <Input
           label="프로젝트 마감일"
           name="projectEnd"
@@ -58,6 +70,7 @@ export default function ProjectCreateForm({ username, onSubmit }: ProjectCreateF
           required
           type="date"
           onChange={handleChange}
+          min={getFormattedToday()}
         />
         <Textarea label="설명" name="description" value={formData.description} onChange={handleChange} />
       </section>
@@ -71,9 +84,14 @@ export default function ProjectCreateForm({ username, onSubmit }: ProjectCreateF
         />
 
         <div className="flex justify-center gap-10 children:px-8 ">
-          <Button text="등록" type="submit" data-submit-type="register" />
-          <Button text="등록 후 테스트하기" type="submit" data-submit-type="test after register" />
-          <Button text="취소" type="button" data-submit-type="cancel" />
+          <Button text="등록" type="button" data-submit-type="register" onClick={handleRegisterProject} />
+          <Button
+            text="등록 후 테스트하기"
+            type="button"
+            data-submit-type="test after register"
+            onClick={handleRegisterAndTest}
+          />
+          <Button text="취소" type="button" data-submit-type="cancel" onClick={onCancel} />
         </div>
       </section>
     </form>
