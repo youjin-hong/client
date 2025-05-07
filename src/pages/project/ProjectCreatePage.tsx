@@ -1,3 +1,10 @@
+import ProjectCreateForm from '@/pages/project/_components/ProjectCreateForm';
+
 export default function ProjectCreatePage() {
-  return <div>프로젝트생성페이지</div>;
+  return (
+    <div>
+      <h1 className="font-bm text-16 text-typography-dark pl-4">새 프로젝트 생성</h1>
+      <ProjectCreateForm />
+    </div>
+  );
 }
