@@ -1,5 +1,7 @@
 import Button from '@/components/ui/button/Button';
 import Input from '@/components/ui/input/Input';
+import Textarea from '@/components/ui/textarea/TextArea';
+import DesignSourceSection from '@/pages/project/_components/DesignSourceSection';
 import { GenerateProject } from '@/types/project.type';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
@@ -19,7 +21,7 @@ export default function ProjectCreateForm({ username, onSubmit }: ProjectCreateF
     rootFigmaPage: ''
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -50,45 +52,16 @@ export default function ProjectCreateForm({ username, onSubmit }: ProjectCreateF
           type="date"
           onChange={handleChange}
         />
-        <Input label="설명" name="description" value={formData.description} onChange={handleChange} />
+        <Textarea label="설명" name="description" value={formData.description} onChange={handleChange} />
       </section>
 
       <section className="flex flex-col gap-5">
-        <div>
-          <h2 className="font-bold text-14 text-typography-dark pl-4 py-3">디자인 소스</h2>
-          <div className="border-[0.5px] border-typography-gray rounded-15 px-6 pt-6 pb-8 space-y-4">
-            <Input
-              label="피그마 시안 URL"
-              name="figmaUrl"
-              value={formData.figmaUrl}
-              required
-              onChange={handleChange}
-              labelClassName="font-medium text-11"
-              className="h-8 rounded-md"
-              type="url"
-            />
-            <Input
-              label="배포된 서비스 URL"
-              name="serviceUrl"
-              value={formData.serviceUrl}
-              required
-              onChange={handleChange}
-              labelClassName="font-medium text-11"
-              className="h-8 rounded-md"
-              type="url"
-            />
-            <Input
-              label="피그마 루트 페이지"
-              name="rootFigmaPage"
-              value={formData.rootFigmaPage}
-              required
-              onChange={handleChange}
-              labelClassName="font-medium text-11"
-              className="h-8 rounded-md"
-              type="text"
-            />
-          </div>
-        </div>
+        <DesignSourceSection
+          figmaUrl={formData.figmaUrl}
+          serviceUrl={formData.serviceUrl}
+          rootFigmaPage={formData.rootFigmaPage}
+          onChange={handleChange}
+        />
 
         <div className="flex justify-center gap-10 children:px-8 ">
           <Button text="등록" type="submit" data-submit-type="register" />
