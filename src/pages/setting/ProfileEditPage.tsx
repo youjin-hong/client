@@ -16,8 +16,8 @@ export default function ProfileEditPage() {
         // TODO: alert나 toast로 변경
         alert(response.message);
       },
-      onError: (error) => {
-        alert(error?.message);
+      onError: () => {
+        alert('입력하신 내용 중 형식에 맞지 않는 항목이 있습니다.');
       }
     });
   };

@@ -22,3 +22,14 @@ export interface ProjectsParams {
   sortBy?: string;
   cursor?: number | null;
 }
+
+export interface GenerateProject {
+  projectName: string;
+  expectedTestExecution: string;
+  projectEnd: string;
+  description: string;
+  figmaUrl: string;
+  serviceUrl: string;
+  rootFigmaPage: string;
+  administrator?: string;
+}

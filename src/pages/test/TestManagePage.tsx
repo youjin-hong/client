@@ -1,3 +1,9 @@
+import TestTitle from '@/pages/test/_components/TestTitle';
+
 export default function TestManagePage() {
-  return <div>테스트관리페이지</div>;
+  return (
+    <div className="w-[90%] flex flex-col m-auto">
+      <TestTitle />
+    </div>
+  );
 }

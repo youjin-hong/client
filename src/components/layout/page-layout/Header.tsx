@@ -2,14 +2,28 @@ import { useUserProfile } from '@/store/queries/user/useUserQueries';
 import searchIcon from '@/assets/icons/search.svg';
 import notificationIcon from '@/assets/icons/notification.svg';
 import profileImg from '@/assets/images/짱구.jpg';
+import { useLocation } from 'react-router-dom';
+import { useMemo } from 'react';
+import { menuItems, topMenuItem } from '@/components/layout/sidebar/_components/SidebarData';
 
 export default function Header() {
   const { data: profile } = useUserProfile();
+  const location = useLocation();
+
+  // 현재 경로에 있는 사이드 바의 메뉴 아이템 찾기
+  const currentPage = useMemo(() => {
+    const allMenuItems = [...menuItems, topMenuItem];
+    const matchedItem = allMenuItems.find(
+      (item) => item.path === location.pathname || (location.pathname.startsWith(item.path) && item.path !== '/')
+    );
+
+    return matchedItem ? matchedItem.title : '';
+  }, [location.pathname]);
 
   return (
     <header className="sticky top-0 z-[999] w-full bg-background flex items-center justify-around py-10">
       {/* 현재 페이지 이름 */}
-      <h1 className="font-bm font-medium text-32 cursor-default">현재페이지이름</h1>
+      <h1 className="font-bm font-medium text-32 cursor-default">{currentPage}</h1>
 
       {/* 검색창 */}
       <div className="relative flex max-w-[510px] max-h-[50px] w-full bg-white py-3 px-5 mx-2 rounded-[23.5px]">
