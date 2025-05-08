@@ -1,10 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import TableItem from '@/components/ui/table/CustomTable';
-import { ROUTES } from '@/constants';
 import ProjectTitle from '@/pages/project/_components/ProjectTitle';
 import StatusBadge from '@/pages/project/_components/StatusBadge';
+import { ROUTES } from '@/constants';
 import { useGetProjectList } from '@/store/queries/project/useProjectQueries';
 import { ProjectListData } from '@/types/project.type';
-import { useNavigate } from 'react-router-dom';
 
 const columns = [
   { id: 'projectName', label: '프로젝트 명' },
