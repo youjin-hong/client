@@ -86,7 +86,7 @@ export default function ProjectCreateForm({ username, onSubmit, onCancel }: Proj
         <div className="flex justify-center gap-10 children:px-8 ">
           <Button text="등록" type="button" data-submit-type="register" onClick={handleRegisterProject} />
           <Button
-            text="등록 후 테스트하기"
+            text="등록 후 테스트 생성하기"
             type="button"
             data-submit-type="test after register"
             onClick={handleRegisterAndTest}
