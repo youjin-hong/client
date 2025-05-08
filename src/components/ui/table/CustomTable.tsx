@@ -36,7 +36,7 @@ export default function TableItem<T>({
   };
 
   return (
-    <table className={`${className} space-y-5`}>
+    <table className={`${className} flex flex-col gap-5`}>
       {/* 테이블 헤더 */}
       <thead className="grid grid-cols-[repeat(auto-fit,_minmax(0,_1fr))] bg-background shadow-custom rounded-10 p-4">
         {columns.map((column) => (
