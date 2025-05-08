@@ -19,5 +19,10 @@ export default {
       fontSize: typography.fontSize
     }
   },
-  plugins: []
+  plugins: [
+    function ({ addVariant }) {
+      addVariant('children', '& > *'); // 직계 자식 선택
+      addVariant('all', '& *'); // 모든 후손 선택
+    }
+  ]
 };

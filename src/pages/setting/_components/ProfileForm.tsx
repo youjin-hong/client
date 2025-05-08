@@ -62,7 +62,8 @@ export default function ProfileForm({ initialData, onSubmit }: ProfileFormProps)
         name="phoneNumber"
         value={formData.phoneNumber}
         onChange={handleChange}
-        className="border-none shadow-custom focus:bg-white"
+        className="border-none shadow-custom focus:bg-white placeholder:text-14"
+        placeholder="eg) 00(0)-0000-0000"
       />
 
       <Button text="등록" type="submit" className="w-48 block mx-auto font-medium text-11 text-typography-dark" />
