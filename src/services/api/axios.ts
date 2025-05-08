@@ -1,5 +1,13 @@
-import { ROUTES } from '@/constants';
 import axios from 'axios';
+import { API_ENDPOINTS, ROUTES } from '@/constants';
+import { store } from '@/store/redux/store';
+import { logout, setToken } from '@/store/redux/reducers/auth';
+
+// refresh 재요청 queue에 들어갈 요청 형태 정의
+type FailQueueItem = {
+  resolve: (token: string | null) => void;
+  reject: (error: unknown) => void;
+};
 
 const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://219.255.242.174:8080/api/v1';
 
@@ -9,8 +17,24 @@ const axiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json'
   },
-  withCredentials: true
+  withCredentials: true // refresh token을 주고 받기 위해 필요한 설정
 });
+
+// 중복 refresh 요청 방지
+let isRefreshing = false; // 현재 토큰 refresh 진행 중인지
+let failQueue: FailQueueItem[] = []; // 토큰 만료로 실패한 요청들 저장하는 queue
+
+// 토큰 재발급 성공/실패 후 queue에 대기 중인 요청들을 처리하는 함수
+const processQueue = (error: unknown, token: string | null = null) => {
+  failQueue.forEach((promise) => {
+    if (error) {
+      promise.reject(error); // 토큰 갱신 x -> 대기 중인 모든 요청들 실패 처리
+    } else {
+      promise.resolve(token); // 토큰 갱신 o -> 새 토큰으로 요청 재시도
+    }
+  });
+  failQueue = []; // 처리 후 queue 초기화
+};
 
 // 요청 인터셉터
 axiosInstance.interceptors.request.use(
@@ -29,12 +53,56 @@ axiosInstance.interceptors.request.use(
 // 응답 인터셉터
 axiosInstance.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      // 토큰 만료 등의 처리
-      localStorage.removeItem('token');
-      window.location.href = ROUTES.LOGIN;
+  async (error) => {
+    const originalRequest = error.config;
+
+    // 401(권한x)이면서 아직 재시도 요청인 경우
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      console.log('(지울예정) 토큰 만료됨');
+
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failQueue.push({
+            resolve: (token: string | null) => {
+              originalRequest.headers.Authorization = `Bearer ${token}`;
+              resolve(axiosInstance(originalRequest));
+            },
+            reject: (err: unknown) => reject(err)
+          });
+        });
+      }
+
+      // 토큰 갱신 플래그
+      originalRequest._retry = true; // 재시도중
+      isRefreshing = true; // 토큰 refresh 시작
+
+      try {
+        const response = await axiosInstance.post(API_ENDPOINTS.AUTH.REFRESH, {}, { withCredentials: true });
+        console.log('(지울예정) 토큰재발급응답', response.data);
+
+        // 응답에서 새 access 호출
+        const newAccessToken = response.data.data?.accessToken;
+        if (!newAccessToken) throw new Error('accessToken 없음');
+        console.log('(지울예정) 새accessToken발급받음');
+
+        // 새 토큰 저장 & 상태 업데이트
+        localStorage.setItem('token', newAccessToken);
+        store.dispatch(setToken(newAccessToken)); // redux 상태 갱신
+        processQueue(null, newAccessToken); // 대기 중인 다른 요청들 처리
+
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        return axiosInstance(originalRequest);
+      } catch (refreshError) {
+        console.log('(지울예정) 토큰갱신실패');
+        processQueue(refreshError, null);
+        store.dispatch(logout());
+        window.location.href = ROUTES.LOGIN;
+        return Promise.reject(refreshError);
+      } finally {
+        isRefreshing = false;
+      }
     }
+
     return Promise.reject(error);
   }
 );
