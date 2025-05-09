@@ -3,6 +3,7 @@ import searchIcon from '@/assets/icons/search.svg';
 import TestTitle from '@/pages/test/_components/TestTitle';
 import Select from '@/components/ui/select/Select';
 import { useState } from 'react';
+import TestListItem from '@/pages/test/_components/TestListItem';
 
 const sortOptions = [{ label: '이름순', value: 'name' }];
 const dateOptions = [
@@ -16,7 +17,7 @@ export default function TestManagePage() {
   return (
     <div className="w-[90%] flex flex-col m-auto">
       <TestTitle />
-      <div className="flex items-center justify-between w-full gap-4 py-5">
+      <section className="flex items-center justify-between w-full gap-4 pt-5 pb-9">
         <div className="relative flex-1 max-w-[510px] min-w-0">
           <img src={searchIcon} alt="search button" className="absolute top-2.5 left-4 w-4 cursor-pointer" />
           <Input
@@ -30,7 +31,26 @@ export default function TestManagePage() {
           <Select value={selected} onChange={setSelected} options={sortOptions} />
           <Select value={selected} onChange={setSelected} options={dateOptions} className="bg-[#9991F4] border-none" />
         </div>
-      </div>
+      </section>
+
+      <section className="grid grid-cols-3 gap-10">
+        <TestListItem />
+        <TestListItem />
+        <TestListItem />
+        <TestListItem />
+        <TestListItem />
+        <TestListItem />
+        <TestListItem />
+        <TestListItem />
+        <TestListItem />
+        <TestListItem />
+        <TestListItem />
+        <TestListItem />
+        <TestListItem />
+        <TestListItem />
+        <TestListItem />
+        <TestListItem />
+      </section>
     </div>
   );
 }
