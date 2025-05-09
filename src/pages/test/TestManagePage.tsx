@@ -28,7 +28,7 @@ export default function TestManagePage() {
 
         <div className="flex gap-2">
           <Select value={selected} onChange={setSelected} options={sortOptions} />
-          <Select value={selected} onChange={setSelected} options={dateOptions} className="bg-[#9991F4]" />
+          <Select value={selected} onChange={setSelected} options={dateOptions} className="bg-[#9991F4] border-none" />
         </div>
       </div>
     </div>
