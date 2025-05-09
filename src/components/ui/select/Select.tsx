@@ -10,12 +10,13 @@ type SelectProps = {
   onChange: (value: string) => void;
   options: Option[];
   className?: string;
+  placeholder?: string;
 };
 
-export default function Select({ value, onChange, options, className = '' }: SelectProps) {
+export default function Select({ value, onChange, options, className = '', placeholder = '' }: SelectProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const selectedLabel = options.find((opt) => opt.value === value)?.label || options[0]?.label;
+  const displayText = options.find((opt) => opt.value === value)?.label || placeholder;
 
   return (
     <div className="relative w-full min-w-[100px]">
@@ -23,7 +24,7 @@ export default function Select({ value, onChange, options, className = '' }: Sel
         type="button"
         className={`w-full max-h-[35px] border-[0.5px] border-typography-gray rounded-15 py-2 px-4 cursor-pointer flex justify-around items-center font-medium text-11 text-typography-dark ${className}`}
         onClick={() => setIsOpen((prev) => !prev)}>
-        <span>{selectedLabel}</span>
+        <span>{displayText}</span>
         <svg
           className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
@@ -43,7 +44,7 @@ export default function Select({ value, onChange, options, className = '' }: Sel
                 onChange(option.value);
                 setIsOpen(false);
               }}
-              className={`w-full max-h-[35px] border-[0.5px] border-typography-gray rounded-15 py-2 px-4 cursor-pointer flex items-center justify-center font-medium text-11 text-typography-dark hover:bg-gray_2 ${className}`}>
+              className={`w-full max-h-[35px] border-[0.5px] border-typography-gray rounded-15 py-2 px-4 cursor-pointer flex items-center justify-center font-medium text-11 z-30 text-typography-dark ${className}`}>
               {option.label}
             </li>
           ))}

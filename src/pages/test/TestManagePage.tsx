@@ -6,10 +6,7 @@ import { useState } from 'react';
 import TestListItem from '@/pages/test/_components/TestListItem';
 
 const sortOptions = [{ label: '이름순', value: 'name' }];
-const dateOptions = [
-  { label: '최신순', value: 'newest' },
-  { label: '오래된 순', value: 'oldest' }
-];
+const dateOptions = [{ label: '최신순', value: 'createdDate' }];
 
 export default function TestManagePage() {
   const [selected, setSelected] = useState('');
@@ -28,8 +25,20 @@ export default function TestManagePage() {
         </div>
 
         <div className="flex gap-2">
-          <Select value={selected} onChange={setSelected} options={sortOptions} />
-          <Select value={selected} onChange={setSelected} options={dateOptions} className="bg-[#9991F4] border-none" />
+          <Select
+            value={selected}
+            onChange={setSelected}
+            options={sortOptions}
+            className="bg-button-default hover:bg-button-hover"
+            placeholder="정렬"
+          />
+          <Select
+            value={selected}
+            onChange={setSelected}
+            options={dateOptions}
+            className="bg-[#9991F4] border-none hover:bg-[#9981f4]"
+            placeholder="날짜순"
+          />
         </div>
       </section>
 
