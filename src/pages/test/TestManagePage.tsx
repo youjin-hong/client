@@ -1,65 +1,67 @@
-import Input from '@/components/ui/input/Input';
-import searchIcon from '@/assets/icons/search.svg';
-import TestTitle from '@/pages/test/_components/TestTitle';
-import Select from '@/components/ui/select/Select';
 import { useState } from 'react';
-import TestListItem from '@/pages/test/_components/TestListItem';
-
-const sortOptions = [{ label: '이름순', value: 'name' }];
-const dateOptions = [{ label: '최신순', value: 'createdDate' }];
+import ScrollToTopButton from '@/components/ui/scrollTopButton/ScrollToTopButton';
+import TestTitle from '@/pages/test/_components/TestTitle';
+import { useGetTestListInfinite } from '@/store/queries/test/useTestQueries';
+import UseIntersectionObserver from '@/utils/useIntersectionObserver';
+import SearchHeader from '@/pages/test/_components/searchHeader/SearchHeader';
+import TestList from '@/pages/test/_components/testList/TestList';
 
 export default function TestManagePage() {
-  const [selected, setSelected] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [inputValue, setInputValue] = useState('');
+  const [nameSort, setNameSort] = useState('');
+  const [dateSort, setDateSort] = useState('');
+
+  const {
+    data: testList,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isPending,
+    isError
+  } = useGetTestListInfinite({
+    projectName: searchTerm,
+    sortBy: [nameSort, dateSort].filter(Boolean).join(',')
+  });
+
+  const bottomRef = UseIntersectionObserver({
+    onIntersect: fetchNextPage,
+    enabled: !!hasNextPage
+  });
+
+  const handleSearch = () => {
+    setSearchTerm(inputValue);
+  };
+
+  const handleReset = () => {
+    setSearchTerm('');
+    setInputValue('');
+    setNameSort('');
+    setDateSort('');
+  };
+
+  if (isPending) return <div>로딩 중...</div>;
+  if (isError) return <div>오류가 발생했습니다.</div>;
+
+  const tests = testList?.pages.flatMap((page) => page.tests) || [];
 
   return (
     <div className="w-[90%] flex flex-col m-auto">
       <TestTitle />
-      <section className="flex items-center justify-between w-full gap-4 pt-5 pb-9">
-        <div className="relative flex-1 max-w-[510px] min-w-0">
-          <img src={searchIcon} alt="search button" className="absolute top-2.5 left-4 w-4 cursor-pointer" />
-          <Input
-            type="text"
-            placeholder="프로젝트 검색"
-            className="w-full max-h-[35px] rounded-20 pl-10 border-[0.5px] border-typography-gray"
-          />
-        </div>
+      <SearchHeader
+        inputValue={inputValue}
+        onInputChange={setInputValue}
+        onSearch={handleSearch}
+        onReset={handleReset}
+        nameSort={nameSort}
+        dateSort={dateSort}
+        onNameSortChange={setNameSort}
+        onDateSortChange={setDateSort}
+      />
 
-        <div className="flex gap-2">
-          <Select
-            value={selected}
-            onChange={setSelected}
-            options={sortOptions}
-            className="bg-button-default hover:bg-button-hover"
-            placeholder="정렬"
-          />
-          <Select
-            value={selected}
-            onChange={setSelected}
-            options={dateOptions}
-            className="bg-[#9991F4] border-none hover:bg-[#9981f4]"
-            placeholder="날짜순"
-          />
-        </div>
-      </section>
+      <TestList tests={tests} isFetchingNextPage={isFetchingNextPage} hasNextPage={hasNextPage} ref={bottomRef} />
 
-      <section className="grid grid-cols-3 gap-10">
-        <TestListItem />
-        <TestListItem />
-        <TestListItem />
-        <TestListItem />
-        <TestListItem />
-        <TestListItem />
-        <TestListItem />
-        <TestListItem />
-        <TestListItem />
-        <TestListItem />
-        <TestListItem />
-        <TestListItem />
-        <TestListItem />
-        <TestListItem />
-        <TestListItem />
-        <TestListItem />
-      </section>
+      <ScrollToTopButton />
     </div>
   );
 }
