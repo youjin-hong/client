@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import SettingCard from '@/pages/setting/_components/SettingCard';
 import { SettingCardProps, settingItem } from '@/pages/setting/_components/SettingCardData';
-import DeleteAccountModal from '@/components/modal/DeleteAccountModal';
+import DeleteAccountModal from '@/pages/setting/_components/DeleteAccountModal';
+import { useGetProjectList } from '@/store/queries/project/useProjectQueries';
 
 export default function SettingPage() {
   const navigate = useNavigate();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const { data: projectList = [], isLoading: isProjectLoading } = useGetProjectList();
 
   const handleCardClick = (item: SettingCardProps) => {
     if (item.path) {
@@ -15,12 +17,6 @@ export default function SettingPage() {
     } else if (item.id === 'delete') {
       setIsDeleteModalOpen(true);
     }
-  };
-
-  const handleDeleteAccount = () => {
-    // TODO: 계정 삭제 API 호출
-    console.log('계정 삭제 처리');
-    setIsDeleteModalOpen(false);
   };
 
   return (
@@ -38,9 +34,8 @@ export default function SettingPage() {
       <DeleteAccountModal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
-        onConfirm={handleDeleteAccount}
-        projectCount={12}
-        testCount={95}
+        projectCount={projectList.length}
+        testCount={0}
       />
     </div>
   );
