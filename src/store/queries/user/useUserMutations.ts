@@ -18,3 +18,13 @@ export const useUpdateProfile = () => {
     }
   });
 };
+
+// 회원 탈퇴
+export const useDeleteAccount = () => {
+  return useMutation({
+    mutationFn: async () => {
+      const response = await axiosInstance.delete(API_ENDPOINTS.USER.LEAVE);
+      return response.data;
+    }
+  });
+};
