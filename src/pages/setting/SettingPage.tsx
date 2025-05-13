@@ -9,7 +9,7 @@ import { useGetProjectList } from '@/store/queries/project/useProjectQueries';
 export default function SettingPage() {
   const navigate = useNavigate();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const { data: projectList = [], isLoading: isProjectLoading } = useGetProjectList();
+  const { data: projectList = [] } = useGetProjectList();
 
   const handleCardClick = (item: SettingCardProps) => {
     if (item.path) {
