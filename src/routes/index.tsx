@@ -5,6 +5,7 @@ import LandingPage from '@/pages/main/LandingPage';
 import LoginPage from '@/pages/auth/LoginPage';
 import SignupPage from '@/pages/auth/SignupPage';
 import ManualPage from '@/pages/manual/ManualPage';
+import ManualPrivatePage from '@/pages/manual/ManualPrivatePage';
 import DashboardPage from '@/pages/main/DashboardPage';
 import ProjectCreatePage from '@/pages/project/ProjectCreatePage';
 import ProjectDetailPage from '@/pages/project/ProjectDetailPage';
@@ -23,6 +24,7 @@ const routes = [
       { path: ROUTES.LOGIN, element: <LoginPage /> },
       { path: ROUTES.SIGNUP, element: <SignupPage /> },
       { path: ROUTES.MANUAL, element: <ManualPage /> },
+      { path: '/main/manual', element: <ManualPrivatePage /> },
 
       // 비공개 라우트 (인증이 필요한 라우트)
       { path: ROUTES.HOME, element: <DashboardPage /> },

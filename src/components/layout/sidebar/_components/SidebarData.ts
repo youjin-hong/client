@@ -45,7 +45,7 @@ export const menuItems: MenuItemType[] = [
   },
   {
     id: 'tutorial',
-    path: ROUTES.MANUAL,
+    path: '/main/manual',
     icon: tutorialIcon,
     title: '튜토리얼',
     alt: 'manual'
