@@ -5,7 +5,7 @@ interface DesignSourceProps {
   figmaUrl: string;
   serviceUrl: string;
   rootFigmaPage: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
   containerClassName?: string;
 }

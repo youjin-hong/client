@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import ProjectCreateForm from '@/pages/project/_components/ProjectCreateForm';
+import ProjectCreateForm from '@/pages/project/_components/projectForm/ProjectCreateForm';
 import { useGenerateProject } from '@/store/queries/project/useProjectMutations';
 import { useUserProfile } from '@/store/queries/user/useUserQueries';
 import { GenerateProject } from '@/types/project.type';
