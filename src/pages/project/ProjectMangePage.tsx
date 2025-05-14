@@ -24,7 +24,7 @@ export default function ProjectMangePage() {
     isError
   } = useGetProjectList({
     projectName: '',
-    sortBy: 'rate',
+    sortBy: '',
     cursor: null
   });
 

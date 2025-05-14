@@ -1,6 +1,7 @@
 export const colors = {
   // 페이지 색상
   background: '#F5F5F5',
+  pointColor: '#97AF8F',
 
   // 텍스트 색상
   typography: {

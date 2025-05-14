@@ -58,8 +58,6 @@ axiosInstance.interceptors.response.use(
 
     // 401(권한x)이면서 아직 재시도 요청인 경우
     if (error.response?.status === 401 && !originalRequest._retry) {
-      console.log('(지울예정) 토큰 만료됨');
-
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failQueue.push({
@@ -78,12 +76,10 @@ axiosInstance.interceptors.response.use(
 
       try {
         const response = await axiosInstance.post(API_ENDPOINTS.AUTH.REFRESH, {}, { withCredentials: true });
-        console.log('(지울예정) 토큰재발급응답', response.data);
 
         // 응답에서 새 access 호출
         const newAccessToken = response.data.data?.accessToken;
         if (!newAccessToken) throw new Error('accessToken 없음');
-        console.log('(지울예정) 새accessToken발급받음');
 
         // 새 토큰 저장 & 상태 업데이트
         localStorage.setItem('token', newAccessToken);
@@ -93,7 +89,6 @@ axiosInstance.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return axiosInstance(originalRequest);
       } catch (refreshError) {
-        console.log('(지울예정) 토큰갱신실패');
         processQueue(refreshError, null);
         store.dispatch(logout());
         window.location.href = ROUTES.LOGIN;
