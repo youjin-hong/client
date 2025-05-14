@@ -45,7 +45,7 @@ export const ROUTES = {
   NEW_PROJECT: '/new-project',
   PROJECT_DETAIL: '/projects/:projectId',
   TESTS: '/tests',
-  TEST_DETAIL: '/tests/:testId',
+  TEST_DETAIL: '/tests/:projectId',
   SETTINGS: '/settings',
   PROFILE: '/settings/profile'
 };
