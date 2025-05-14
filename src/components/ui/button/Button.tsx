@@ -29,6 +29,9 @@ export default function Button({
     active:bg-button-press
     disabled:opacity-50
     disabled:cursor-not-allowed
+    flex
+    justify-center
+    items-center
     py-2 
     px-4
   `;
