@@ -1,12 +1,14 @@
 import Button from '@/components/ui/button/Button';
 import LinearProgressBar from '@/components/ui/progressBar/LinearProgressBar';
 import { TestData } from '@/types/test.type';
+import { calculatePercentage } from '@/utils/useCalculateTestPercentage';
 
 interface TestListItemProps {
-  data?: TestData;
+  data: TestData;
+  handleClickRegisterButton: (projectId: number) => void;
 }
 
-export default function TestListItem({ data }: TestListItemProps) {
+export default function TestListItem({ data, handleClickRegisterButton }: TestListItemProps) {
   const {
     projectName: projectName = '테스트 프로젝트 이름',
     projectCreatedDate = '',
@@ -17,11 +19,6 @@ export default function TestListItem({ data }: TestListItemProps) {
     totalInteractionTest = 0,
     totalMappingTest = 0
   } = data || {};
-
-  // progress bar를 위한 percentage 계산 함수
-  const calculatePercentage = (success: number, total: number) => {
-    return total === 0 ? 0 : Math.round((success / total) * 100);
-  };
 
   // 테스트 성공률 계산
   const routingPercentage = calculatePercentage(successRoutingTest, totalRoutingTest);
@@ -73,7 +70,7 @@ export default function TestListItem({ data }: TestListItemProps) {
       <p className="font-medium text-11 text-typography-gray py-2">
         총 테스트 {successTests}/{totalTests} 통과
       </p>
-      <Button text="등록" className="w-full" />
+      <Button text="등록" className="w-full" onClick={() => handleClickRegisterButton(data.projectId)} />
     </div>
   );
 }

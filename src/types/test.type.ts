@@ -1,5 +1,5 @@
 export interface TestData {
-  projectId?: number;
+  projectId: number;
   projectName?: string;
   successRoutingTest?: number;
   successInteractionTest?: number;
