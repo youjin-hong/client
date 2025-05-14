@@ -1,11 +1,11 @@
 import ManualContent from './ManualContent';
 
-const ManualPage = () => {
+const ManualPrivatePage = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-transparent">
-      <ManualContent showLogo />
+      <ManualContent />
     </div>
   );
 };
 
-export default ManualPage;
+export default ManualPrivatePage;
