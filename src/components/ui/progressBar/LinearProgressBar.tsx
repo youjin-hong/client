@@ -1,5 +1,5 @@
 interface LinearProgressBarProps {
-  value: string;
+  value?: number;
   className?: string;
   color?: string;
   success?: number;

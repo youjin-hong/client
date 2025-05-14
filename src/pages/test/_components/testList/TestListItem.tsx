@@ -18,10 +18,15 @@ export default function TestListItem({ data }: TestListItemProps) {
     totalMappingTest = 0
   } = data || {};
 
+  // progress bar를 위한 percentage 계산 함수
+  const calculatePercentage = (success: number, total: number) => {
+    return total === 0 ? 0 : Math.round((success / total) * 100);
+  };
+
   // 테스트 성공률 계산
-  const routingPercentage = Math.round((successRoutingTest / totalRoutingTest) * 100);
-  const interactionPercentage = Math.round((successInteractionTest / totalInteractionTest) * 100);
-  const mappingPercentage = Math.round((successMappingTest / totalMappingTest) * 100);
+  const routingPercentage = calculatePercentage(successRoutingTest, totalRoutingTest);
+  const interactionPercentage = calculatePercentage(successInteractionTest, totalInteractionTest);
+  const mappingPercentage = calculatePercentage(successMappingTest, totalMappingTest);
 
   // 총 테스트 계산
   const totalTests = totalRoutingTest + totalInteractionTest + totalMappingTest;
@@ -40,7 +45,7 @@ export default function TestListItem({ data }: TestListItemProps) {
         <li className="space-y-1">
           <p className="font-semibold text-11">라우팅 테스트</p>
           <LinearProgressBar
-            value={String(routingPercentage)}
+            value={routingPercentage}
             success={successRoutingTest}
             total={totalRoutingTest}
             color="bg-teal_1"
@@ -49,7 +54,7 @@ export default function TestListItem({ data }: TestListItemProps) {
         <li className="space-y-1">
           <p className="font-semibold text-11">인터랙션 테스트</p>
           <LinearProgressBar
-            value={String(interactionPercentage)}
+            value={interactionPercentage}
             success={successInteractionTest}
             total={totalInteractionTest}
             color="bg-purple_1"
@@ -58,7 +63,7 @@ export default function TestListItem({ data }: TestListItemProps) {
         <li className="space-y-1">
           <p className="font-semibold text-11">컴포넌트 테스트</p>
           <LinearProgressBar
-            value={String(mappingPercentage)}
+            value={mappingPercentage}
             success={successMappingTest}
             total={totalMappingTest}
             color="bg-brown_1"

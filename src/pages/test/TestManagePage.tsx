@@ -40,8 +40,9 @@ export default function TestManagePage() {
     setDateSort('');
   };
 
-  if (isPending) return <div>로딩 중...</div>;
-  if (isError) return <div>오류가 발생했습니다.</div>;
+  if (isPending) return <div className="col-span-3 text-center text-typography-gray text-16 pt-40">로딩 중...</div>;
+  if (isError)
+    return <div className="col-span-3 text-center text-typography-gray text-16 pt-40">오류가 발생했습니다.</div>;
 
   const tests = testList?.pages.flatMap((page) => page.tests) || [];
 
