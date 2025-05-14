@@ -1,10 +1,10 @@
-import settingIcon from '@/assets/icons/setting.svg';
 import profileImg from '@/assets/images/짱구.jpg';
 import { User } from '@/types/user.type';
 import ProfileForm from '@/pages/setting/_components/ProfileForm';
 import { useUserProfile } from '@/store/queries/user/useUserQueries';
 import { useUpdateProfile } from '@/store/queries/user/useUserMutations';
 import SettingCard from '@/pages/setting/_components/SettingCard';
+import SettingTitle from '@/pages/setting/_components/SettingTitle';
 
 export default function ProfileEditPage() {
   const { data: profile, isPending, isError } = useUserProfile();
@@ -32,13 +32,8 @@ export default function ProfileEditPage() {
 
   return (
     <div className="w-[90%] space-y-24">
-      <section className="flex flex-col gap-5 pl-6">
-        <div className="flex items-center gap-3 pl-6 pb-3">
-          <div>
-            <img src={settingIcon} alt="setting icon" />
-          </div>
-          <p className="font-bm text-20">설정</p>
-        </div>
+      <section className="flex flex-col gap-8">
+        <SettingTitle />
         <SettingCard title="Edit Profile Info" />
       </section>
       <section className="flex w-full gap-10">

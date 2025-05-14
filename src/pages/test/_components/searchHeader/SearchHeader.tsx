@@ -1,0 +1,73 @@
+import { KeyboardEvent } from 'react';
+import Input from '@/components/ui/input/Input';
+import Select from '@/components/ui/select/Select';
+import Button from '@/components/ui/button/Button';
+import searchIcon from '@/assets/icons/search.svg';
+
+interface SearchHeaderProps {
+  inputValue: string;
+  onInputChange: (value: string) => void;
+  onSearch: () => void;
+  onReset: () => void;
+  nameSort: string;
+  dateSort: string;
+  onNameSortChange: (value: string) => void;
+  onDateSortChange: (value: string) => void;
+}
+
+const sortOptions = [{ label: '이름순', value: 'name' }];
+const dateOptions = [{ label: '최신순', value: 'createdDate' }];
+
+export default function SearchHeader({
+  inputValue,
+  onInputChange,
+  onSearch,
+  onReset,
+  nameSort,
+  dateSort,
+  onNameSortChange,
+  onDateSortChange
+}: SearchHeaderProps) {
+  return (
+    <section className="flex items-center justify-between w-full gap-4 pt-5 pb-9">
+      <div className="relative flex-1 max-w-[510px] min-w-0">
+        <img
+          src={searchIcon}
+          alt="search button"
+          className="absolute top-2.5 left-4 w-4 cursor-pointer"
+          onClick={onSearch}
+        />
+        <Input
+          type="text"
+          placeholder="프로젝트 검색"
+          className="w-full max-h-[35px] rounded-20 pl-10 border-[0.5px] border-typography-gray"
+          value={inputValue}
+          onChange={(e) => onInputChange(e.target.value)}
+          onKeyUp={(e: KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === 'Enter') {
+              onSearch();
+            }
+          }}
+        />
+      </div>
+
+      <div className="flex gap-2">
+        <Button text="⭮" className="font-bold" onClick={onReset} />
+        <Select
+          value={nameSort}
+          onChange={onNameSortChange}
+          options={sortOptions}
+          className="bg-button-default hover:bg-button-hover"
+          placeholder="정렬"
+        />
+        <Select
+          value={dateSort}
+          onChange={onDateSortChange}
+          options={dateOptions}
+          className="bg-[#9991F4] border-none hover:bg-[#9981f4]"
+          placeholder="날짜순"
+        />
+      </div>
+    </section>
+  );
+}

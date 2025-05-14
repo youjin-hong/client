@@ -22,7 +22,7 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="fixed left-0 top-0 max-w-[280px] w-full h-screen z-[999] bg-[#E9E9E9]">
+    <aside className="fixed left-0 top-0 max-w-[280px] w-full h-screen z-[999] bg-pointColor">
       <Link to="/" className="flex justify-center pt-8 pb-14">
         <img src={smallLogo} alt="logo" />
       </Link>
@@ -37,7 +37,9 @@ export default function Sidebar() {
         ))}
       </nav>
       <div className="w-full flex justify-center py-12">
-        <button onClick={handleLogout} className="border border-b-button-text text-typography-gray font-medium text-11">
+        <button
+          onClick={handleLogout}
+          className="border-0 border-b border-[#696969]  text-[#696969] font-medium text-11">
           로그아웃
         </button>
       </div>
