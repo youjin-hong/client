@@ -29,7 +29,7 @@ export default function Layout() {
   ];
 
   // 현재 경로가 noSidebarAndHeaderRoutes에 있는지 확인
-  const shouldHideSidebarAndHeader = noSidebarAndHeaderRoutes.includes(currentPath);
+  const shouldHideSidebarAndHeader = noSidebarAndHeaderRoutes.some((route) => currentPath.startsWith(route));
 
   // 로그인한 사용자가 authOnlyRoutes 접근 시도하는 경우
   if (isLoggedIn && authOnlyRoutes.includes(currentPath)) {
