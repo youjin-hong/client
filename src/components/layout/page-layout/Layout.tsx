@@ -13,7 +13,7 @@ export default function Layout() {
   const currentPath = location.pathname;
 
   // 사이드바, 헤더가 필요하지 않은 경로
-  const noSidebarAndHeaderRoutes = [ROUTES.LANDING, ROUTES.LOGIN, ROUTES.SIGNUP];
+  const noSidebarAndHeaderRoutes = [ROUTES.LANDING, ROUTES.LOGIN, ROUTES.SIGNUP, ROUTES.MANUAL];
   // 비로그인 사용자만 접근 가능한 경로
   const authOnlyRoutes = [ROUTES.LOGIN, ROUTES.SIGNUP];
   // 로그인 사용자만 접근 가능한 경로
