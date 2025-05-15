@@ -13,3 +13,14 @@ export const useGetProjectList = (params: ProjectsParams = {}) => {
     }
   });
 };
+
+export const useGetProjectDetail = (projectId: number) => {
+  return useQuery({
+    queryKey: ['projects'],
+    queryFn: async () => {
+      const response = await axiosInstance.get(`API_ENDPOINTS.PROJECTS/${projectId}`);
+
+      return response.data;
+    }
+  });
+};

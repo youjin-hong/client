@@ -6,7 +6,6 @@ export default function ProjectPageTable() {
           <tr className="text-14 text-typography-dark font-bold border-b border-b-[#CCCCCC]">
             <th className="px-4 py-2">페이지명</th>
             <th className="px-4 py-2">페이지 URL</th>
-            <th className="px-4 py-2">피그마 URL</th>
           </tr>
         </thead>
         <tbody>
@@ -15,26 +14,17 @@ export default function ProjectPageTable() {
             <td className="px-4 py-2">
               <p>페이지유알엑</p>
             </td>
-            <td className="px-4 py-2">
-              <p>피그마유알엑</p>
-            </td>
           </tr>
           <tr className="children:font-medium text-11 text-typography-dark">
             <td className="px-4 py-2">페이지이름</td>
             <td className="px-4 py-2">
               <p>페이지유알엑</p>
             </td>
-            <td className="px-4 py-2">
-              <p>피그마유알엑</p>
-            </td>
           </tr>
           <tr className="children:font-medium text-11 text-typography-dark">
             <td className="px-4 py-2">페이지이름</td>
             <td className="px-4 py-2">
               <p>페이지유알엑</p>
-            </td>
-            <td className="px-4 py-2">
-              <p>피그마유알엑</p>
             </td>
           </tr>
         </tbody>
