@@ -1,11 +1,19 @@
+import OverviewSection from './_components/OverviewSection';
+import ProjectMangePage from '@/pages/project/ProjectMangePage';
+import TestManagePage from '@/pages/test/TestManagePage';
+
 export default function DashboardPage() {
   return (
-    <>
-      <h1 className="font-bm">
-        대시보드(홈)페이지 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos perferendis optio minus
-        iusto, voluptas quia nemo repellat dolores ut iure, numquam amet labore quod inventore laboriosam sint iste
-        tempora error.
-      </h1>
-    </>
+    <div className="bg-[#F7F7F8] min-h-screen p-8">
+      <OverviewSection />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <section>
+          <ProjectMangePage />
+        </section>
+        <section>
+          <TestManagePage />
+        </section>
+      </div>
+    </div>
   );
 }
