@@ -26,9 +26,9 @@ const overviewData = [
 ];
 
 const OverviewSection: React.FC = () => (
-  <section className="w-full px-2 md:px-0 mb-8">
-    <div className="font-bold text-[18px] text-[#222] mb-6 md:mb-8">Overview</div>
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+  <section className="w-full px-2 md:px-0 mb-12">
+    <div className="text-[22px] font-extrabold text-[#222] mb-8">Overview</div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
       {overviewData.map((item) => (
         <OverviewCard key={item.title} {...item} />
       ))}
