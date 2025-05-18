@@ -1,31 +1,16 @@
 import React from 'react';
 import OverviewCard from './OverviewCard';
-import ProjectIcon from '@/assets/icons/dash-project.svg?react';
-import TestIcon from '@/assets/icons/dash-projecting.svg?react';
-import IncompleteIcon from '@/assets/icons/dash-test.svg?react';
 
-const overviewData = [
-  {
-    icon: <ProjectIcon width={40} height={40} />,
-    title: '진행 중인 프로젝트 수',
-    value: 12,
-    unit: '개'
-  },
-  {
-    icon: <TestIcon width={40} height={40} />,
-    title: '진행 중인 테스트 수',
-    value: 1208,
-    unit: '개'
-  },
-  {
-    icon: <IncompleteIcon width={40} height={40} />,
-    title: '미완료된 테스트 수',
-    value: 95,
-    unit: '개'
-  }
-];
+interface OverviewSectionProps {
+  overviewData: Array<{
+    icon: React.ReactNode;
+    title: string;
+    value: number | string;
+    unit?: string;
+  }>;
+}
 
-const OverviewSection: React.FC = () => (
+const OverviewSection: React.FC<OverviewSectionProps> = ({ overviewData }) => (
   <section className="w-full px-2 md:px-0 mb-12">
     <div className="text-[22px] font-extrabold text-[#222] mb-8">Overview</div>
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
