@@ -21,7 +21,7 @@ export default function Header() {
   }, [location.pathname]);
 
   return (
-    <header className="sticky top-0 z-[999] w-full bg-background flex items-center justify-around py-10">
+    <header className="sticky top-0 z-[999] w-full bg-background flex items-center justify-around px-8 py-10">
       {/* 현재 페이지 이름 */}
       <h1 className="font-bm font-medium text-32 cursor-default">{currentPage}</h1>
 
