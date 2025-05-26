@@ -15,26 +15,25 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'  # ✅ npm으로 변경
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci  # ✅ npm install --frozen-lockfile와 동일한 역할
+        run: npm ci
 
-      # ✅ TypeScript 타입 검사
       - name: Type check (tsc)
         run: npm run tsc --if-present
 
-      # ✅ ESLint 코드 스타일 검사
       - name: Lint check (eslint)
         run: npm run lint --if-present
 
-      # ✅ 테스트 실행 (선택 사항)
       - name: Run tests
         run: npm test --if-present
 
-      # 기존 빌드
       - name: Install mustache
-        run: apk add ruby && gem install mustache
+        run: |
+         sudo apt-get update
+         sudo apt-get install -y ruby
+         gem install mustache
 
       - name: creates output
         run: sh ./build.sh
