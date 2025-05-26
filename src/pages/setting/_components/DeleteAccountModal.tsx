@@ -24,15 +24,18 @@ export default function DeleteAccountModal({ isOpen, onClose, projectCount, test
         onClose();
         navigate('/landing');
       },
-      onError: (error: any) => {
-        if (error?.response?.status === 401) {
-          alert('세션이 만료되었습니다. 다시 로그인 후 시도해 주세요.');
-          dispatch(logout());
-          onClose();
-          navigate('/login');
-        } else {
-          alert('회원 탈퇴에 실패했습니다. 다시 시도해주세요.');
-          onClose();
+      onError: (error: unknown) => {
+        if (error && typeof error === 'object' && 'response' in error) {
+          const err = error as { response?: { status: number } };
+          if (err.response?.status === 401) {
+            alert('세션이 만료되었습니다. 다시 로그인 후 시도해 주세요.');
+            dispatch(logout());
+            onClose();
+            navigate('/login');
+          } else {
+            alert('회원 탈퇴에 실패했습니다. 다시 시도해주세요.');
+            onClose();
+          }
         }
       }
     });
