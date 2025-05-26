@@ -31,7 +31,7 @@ export default function ProfileEditPage() {
   }
 
   return (
-    <div className="w-[90%] space-y-24">
+    <div className="w-[90%] space-y-24 mx-auto">
       <section className="flex flex-col gap-8">
         <SettingTitle />
         <SettingCard title="Edit Profile Info" />
