@@ -16,11 +16,12 @@ export const useGetProjectList = (params: ProjectsParams = {}) => {
 
 export const useGetProjectDetail = (projectId: number) => {
   return useQuery({
-    queryKey: ['projects'],
+    queryKey: ['projects', projectId],
     queryFn: async () => {
-      const response = await axiosInstance.get(`API_ENDPOINTS.PROJECTS/${projectId}`);
+      const response = await axiosInstance.get(API_ENDPOINTS.PROJECTS.DETAIL.replace(':projectId', String(projectId)));
 
-      return response.data;
-    }
+      return response.data.data;
+    },
+    enabled: !!projectId
   });
 };

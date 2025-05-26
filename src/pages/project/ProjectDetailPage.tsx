@@ -4,41 +4,47 @@ import ProjectInfo from '@/pages/project/_components/projectDetail/ProjectInfo';
 import ReportBrief from '@/pages/project/_components/projectDetail/ReportBrief';
 import ProjectControlButtons from '@/pages/project/_components/projectDetail/ProjectControlButtons';
 import ProjectPageTable from '@/pages/project/_components/projectDetail/ProjectPageTable';
-import BigLogo from '@/assets/logos/AUTA_big.svg';
 import { useGetProjectDetail } from '@/store/queries/project/useProjectQueries';
 import { useParams } from 'react-router-dom';
 
 export default function ProjectDetailPage() {
-  const projectId = useParams();
-  console.log('파람스', projectId);
-
+  const params = useParams();
+  const projectId = params.projectId;
   const { data: projectDetail } = useGetProjectDetail(Number(projectId));
 
-  console.log('프젝디테일', projectDetail);
+  const projectBasicInfo = {
+    projectName: projectDetail?.projectName,
+    projectCreatedDate: projectDetail?.projectCreatedDate,
+    projectEnd: projectDetail?.projectEnd,
+    projectAdmin: projectDetail?.projectAdmin,
+    description: projectDetail?.description
+  };
 
   return (
-    <div className="w-[90%] flex flex-col m-auto">
+    <div className="w-full px-8 flex flex-col m-auto">
       <ProjectTitle />
-      <ProjectInfo />
+      <ProjectInfo {...projectBasicInfo} />
 
       {/* TODO: 내용 정해지면 페이지 컴포넌트로 뺄 예정 */}
       <section className="flex gap-6 justify-center py-4 children:shadow-custom children:rounded-15 children:w-full">
         <div className="p-6 flex flex-col items-center gap-4">
-          <p className="font-medium text-16">개발중... 조금만 기다려주세요</p>
-          <img src={BigLogo} alt="임시 이미지" />
+          <div className="border border-dashed border-typography-gray p-4 rounded-md w-full h-full flex justify-center items-center">
+            <p className="font-medium text-16 text-typography-gray">개발중... 조금만 기다려주세요</p>
+          </div>
         </div>
 
-        <ProjectPageTable />
+        <ProjectPageTable pages={projectDetail?.pages || []} />
       </section>
 
-      <ReportBrief />
+      <ReportBrief reportSummary={projectDetail?.reportSummary} />
 
       <DesignSourceSection
-        figmaUrl="gkgkgk"
-        serviceUrl="하하하"
-        rootFigmaPage="Dashboard"
-        containerClassName="border-none shadow-bottom_custom rounded-15 px-6 pt-6 pb-8 space-y-4"
+        figmaUrl={projectDetail?.figmaUrl}
+        serviceUrl={projectDetail?.serviceUrl}
+        rootFigmaPage={projectDetail?.rootFigmaPage}
+        containerClassName="border-none shadow-custom rounded-15 px-6 pt-6 pb-8 space-y-4"
         onChange={() => console.log('하하')}
+        disabled
       />
 
       <ProjectControlButtons />

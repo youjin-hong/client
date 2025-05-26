@@ -11,9 +11,9 @@ interface DesignSourceProps {
 }
 
 export default function DesignSourceSection({
-  figmaUrl,
-  serviceUrl,
-  rootFigmaPage,
+  figmaUrl = '',
+  serviceUrl = '',
+  rootFigmaPage = '',
   onChange,
   disabled = false,
   containerClassName = 'border-[0.5px] border-typography-gray rounded-15 px-6 pt-6 pb-8 space-y-4'
@@ -30,7 +30,7 @@ export default function DesignSourceSection({
           onChange={onChange}
           disabled={disabled}
           labelClassName="font-medium text-11"
-          className="h-8 rounded-md"
+          className={`h-8 rounded-md ${disabled ? 'bg-gray_2 text-typography-gray' : ''}`}
           type="url"
         />
         <Input
@@ -41,7 +41,7 @@ export default function DesignSourceSection({
           onChange={onChange}
           disabled={disabled}
           labelClassName="font-medium text-11"
-          className="h-8 rounded-md"
+          className={`h-8 rounded-md ${disabled ? 'bg-gray_2 text-typography-gray' : ''}`}
           type="url"
         />
         <Input
@@ -52,7 +52,7 @@ export default function DesignSourceSection({
           onChange={onChange}
           disabled={disabled}
           labelClassName="font-medium text-11"
-          className="h-8 rounded-md"
+          className={`h-8 rounded-md ${disabled ? 'bg-gray_2 text-typography-gray' : ''}`}
           type="text"
         />
       </div>

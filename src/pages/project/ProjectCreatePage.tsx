@@ -49,7 +49,7 @@ export default function ProjectCreatePage() {
   }
 
   return (
-    <div>
+    <div className="w-[90%] m-auto">
       <h1 className="font-bm text-16 text-typography-dark pl-4 pb-8">새 프로젝트 생성</h1>
       <ProjectCreateForm username={userData.username} onSubmit={handleGenerateProject} onCancel={handleCancelProject} />
     </div>
