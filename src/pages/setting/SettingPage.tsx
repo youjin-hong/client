@@ -20,7 +20,7 @@ export default function SettingPage() {
   };
 
   return (
-    <div className="space-y-8 w-[90%]">
+    <div className="space-y-8 w-[90%] mx-auto">
       <SettingTitle />
       <div className="space-y-10">
         {settingItem.map((item) => (
