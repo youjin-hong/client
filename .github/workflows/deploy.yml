@@ -35,6 +35,7 @@ jobs:
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.AUTO_ACTIONS }}
+          DESTINATION_CLONED_DIRECTORY: 'destination'
         with:
           source-directory: 'output'
           destination-github-username: youjin-hong
@@ -45,8 +46,8 @@ jobs:
 
       - name: Verify push success
         run: |
-          if [ -z "$DESTINATION_CLONED_DIRECTORY" ]; then
+          if [ ! -d "destination" ]; then
             echo "Error: Push to destination repository may have failed"
             exit 1
           fi
-          echo "Push completed successfully to: $DESTINATION_CLONED_DIRECTORY"
+          echo "Push completed successfully"
