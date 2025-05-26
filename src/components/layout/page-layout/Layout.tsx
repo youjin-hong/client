@@ -45,9 +45,9 @@ export default function Layout() {
     <div className={`min-h-screen bg-background ${shouldHideSidebarAndHeader ? '' : 'flex'}`}>
       {!shouldHideSidebarAndHeader && <Sidebar />}
       <div className={`flex flex-col w-full ${shouldHideSidebarAndHeader ? '' : 'ml-[280px]'}`}>
-        <div className={`px-24 w-full`}>
+        <div className={`px-8 w-full`}>
           {!shouldHideSidebarAndHeader && <Header />}
-          <main className={`flex-grow py-8`}>
+          <main className={`flex-grow py-4`}>
             <Outlet />
           </main>
         </div>
