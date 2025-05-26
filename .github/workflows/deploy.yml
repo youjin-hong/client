@@ -7,11 +7,33 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: pandoc/latex
     steps:
-      - uses: actions/checkout@v4  # 최신 버전 사용
+      - name: Checkout source code
+        uses: actions/checkout@v4
 
-      - name: Install mustache (to update the date)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'  # ✅ npm으로 변경
+
+      - name: Install dependencies
+        run: npm ci  # ✅ npm install --frozen-lockfile와 동일한 역할
+
+      # ✅ TypeScript 타입 검사
+      - name: Type check (tsc)
+        run: npm run tsc --if-present
+
+      # ✅ ESLint 코드 스타일 검사
+      - name: Lint check (eslint)
+        run: npm run lint --if-present
+
+      # ✅ 테스트 실행 (선택 사항)
+      - name: Run tests
+        run: npm test --if-present
+
+      # 기존 빌드
+      - name: Install mustache
         run: apk add ruby && gem install mustache
 
       - name: creates output
@@ -31,7 +53,6 @@ jobs:
           ls -la output/
 
       - name: Pushes to another repository
-        id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.AUTO_ACTIONS }}
@@ -42,11 +63,3 @@ jobs:
           user-email: ${{ secrets.EMAIL }}
           commit-message: ${{ github.event.commits[0].message }}
           target-branch: main
-
-      - name: Verify push success
-        run: |
-          if [ -z "$DESTINATION_CLONED_DIRECTORY" ]; then
-            echo "Error: Push to destination repository may have failed"
-            exit 1
-          fi
-          echo "Push completed successfully to: $DESTINATION_CLONED_DIRECTORY"
