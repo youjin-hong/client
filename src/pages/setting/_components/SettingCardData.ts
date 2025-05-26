@@ -15,7 +15,7 @@ export const settingItem = [
   {
     id: 'password',
     title: 'Change Password',
-    path: ROUTES.PROFILE // TODO: api 개발되면 라우팅도 추가할 것
+    path: ROUTES.PASSWORD
   },
   {
     id: 'delete',
@@ -24,6 +24,6 @@ export const settingItem = [
   {
     id: 'help',
     title: 'Help',
-    path: ROUTES.PROFILE // TODO: 디자인 시안 나오면 라우팅 추가할 것
+    path: 'https://www.google.com'
   }
 ];
