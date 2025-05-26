@@ -47,7 +47,8 @@ export const ROUTES = {
   TESTS: '/tests',
   TEST_DETAIL: '/tests/:projectId',
   SETTINGS: '/settings',
-  PROFILE: '/settings/profile'
+  PROFILE: '/settings/profile',
+  PASSWORD: '/settings/password'
 };
 
 export const STORAGE_KEYS = {
