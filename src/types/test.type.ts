@@ -9,3 +9,11 @@ export interface TestData {
   totalMappingTest?: number;
   projectCreatedDate?: string;
 }
+
+export interface DashBoardTestList {
+  testId: number;
+  projectName: string;
+  pageName: string;
+  testType: string;
+  testStatus: string;
+}
