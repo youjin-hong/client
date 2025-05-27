@@ -7,7 +7,7 @@ interface ProjectPageTableProps {
 
 export default function ProjectPageTable({ pages = [] }: ProjectPageTableProps) {
   return (
-    <div className="p-6">
+    <div className="p-6 max-w-[320px]">
       <table className="w-full text-center">
         <thead>
           <tr className="text-14 text-typography-dark font-bold border-b border-b-[#CCCCCC]">
@@ -27,8 +27,8 @@ export default function ProjectPageTable({ pages = [] }: ProjectPageTableProps) 
             ))
           ) : (
             <tr className="children:font-medium text-11 text-typography-gray">
-              <td colSpan={2} className="py-4">
-                등록된 페이지가 없습니다.
+              <td colSpan={2} className="py-4 ont-medium text-16 text-typography-gray">
+                탐지된 페이지가 없습니다.
               </td>
             </tr>
           )}
