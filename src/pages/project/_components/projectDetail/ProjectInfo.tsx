@@ -6,13 +6,15 @@ interface ProjectBasicInfoProps {
   projectEnd: string;
   projectAdmin: string;
   description: string;
+  testExecutionTime: string;
 }
 export default function ProjectInfo({
   projectName,
   projectCreatedDate,
   projectEnd,
   projectAdmin,
-  description
+  description,
+  testExecutionTime
 }: ProjectBasicInfoProps) {
   return (
     <section>
@@ -22,7 +24,7 @@ export default function ProjectInfo({
           <ProjectInfoItem label="프로젝트 관리자" value={projectAdmin} />
           <ProjectInfoItem label="프로젝트 생성일" value={projectCreatedDate} />
           <ProjectInfoItem label="프로젝트 마감일" value={projectEnd} />
-          <ProjectInfoItem label="테스트 실행 횟수" value="5" />
+          <ProjectInfoItem label="테스트 실행일시" value={testExecutionTime} />
         </div>
         <div>
           <ProjectInfoItem label="설명" value={description} />

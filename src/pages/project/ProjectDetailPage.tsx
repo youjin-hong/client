@@ -17,7 +17,8 @@ export default function ProjectDetailPage() {
     projectCreatedDate: projectDetail?.projectCreatedDate,
     projectEnd: projectDetail?.projectEnd,
     projectAdmin: projectDetail?.projectAdmin,
-    description: projectDetail?.description
+    description: projectDetail?.description,
+    testExecutionTime: projectDetail?.testExecutionTime
   };
 
   console.log('프젝 상세', projectDetail);
