@@ -2,7 +2,7 @@ import settingIcon from '@/assets/icons/setting.svg';
 
 export default function SettingTitle() {
   return (
-    <div className="flex items-center gap-3 pl-12 pb-3">
+    <div className="flex items-center gap-3 pl-4 pb-3">
       <div>
         <img src={settingIcon} alt="setting icon" />
       </div>
