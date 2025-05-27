@@ -1,11 +1,11 @@
+import { useParams } from 'react-router-dom';
+import { useGetProjectDetail } from '@/store/queries/project/useProjectQueries';
 import DesignSourceSection from '@/pages/project/_components/projectForm/DesignSourceSection';
 import ProjectTitle from '@/pages/project/_components/ProjectTitle';
 import ProjectInfo from '@/pages/project/_components/projectDetail/ProjectInfo';
 import ReportBrief from '@/pages/project/_components/projectDetail/ReportBrief';
 import ProjectControlButtons from '@/pages/project/_components/projectDetail/ProjectControlButtons';
 import ProjectPageTable from '@/pages/project/_components/projectDetail/ProjectPageTable';
-import { useGetProjectDetail } from '@/store/queries/project/useProjectQueries';
-import { useParams } from 'react-router-dom';
 
 export default function ProjectDetailPage() {
   const params = useParams();
@@ -20,8 +20,6 @@ export default function ProjectDetailPage() {
     description: projectDetail?.description,
     testExecutionTime: projectDetail?.testExecutionTime
   };
-
-  console.log('프젝 상세', projectDetail);
 
   return (
     <div className="w-[90%] flex flex-col m-auto">
@@ -50,7 +48,7 @@ export default function ProjectDetailPage() {
         disabled
       />
 
-      <ProjectControlButtons />
+      <ProjectControlButtons projectId={Number(projectId)} />
     </div>
   );
 }
