@@ -48,7 +48,7 @@ export default function ProjectDetailPage() {
         disabled
       />
 
-      <ProjectControlButtons projectId={Number(projectId)} />
+      <ProjectControlButtons projectId={Number(projectId)} projectName={projectBasicInfo.projectName} />
     </div>
   );
 }

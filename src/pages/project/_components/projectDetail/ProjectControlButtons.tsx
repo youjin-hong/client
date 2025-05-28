@@ -4,7 +4,11 @@ import { useState } from 'react';
 import { useDeleteProject } from '@/store/queries/project/useProjectMutations';
 import CommonModal from '@/components/modal/CommonModal';
 
-export default function ProjectControlButtons({ projectId }: { projectId: number }) {
+interface ProjectControlButtonProps {
+  projectId: number;
+  projectName: string;
+}
+export default function ProjectControlButtons({ projectId, projectName }: ProjectControlButtonProps) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const { mutate: deleteProject } = useDeleteProject();
 
@@ -41,7 +45,7 @@ export default function ProjectControlButtons({ projectId }: { projectId: number
         onConfirm={handleConfirmDeleteProject}
         title="프로젝트 삭제"
         cancelText="취소">
-        프로젝트를 삭제하시겠습니까? 삭제된 프로젝트는 복구할 수 없습니다.
+        {projectName}를 삭제하시겠습니까? 삭제된 프로젝트는 복구할 수 없습니다.
       </CommonModal>
     </>
   );
