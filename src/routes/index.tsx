@@ -15,6 +15,7 @@ import TestDetailPage from '@/pages/test/TestDetailPage';
 import SettingPage from '@/pages/setting/SettingPage';
 import ProfileEditPage from '@/pages/setting/ProfileEditPage';
 import PasswordEditPage from '@/pages/setting/PasswordEditPage';
+import ProjectModifyPage from '@/pages/project/ProjectModifyPage';
 
 const routes = [
   {
@@ -37,6 +38,7 @@ const routes = [
       { path: ROUTES.SETTINGS, element: <SettingPage /> },
       { path: ROUTES.PROFILE, element: <ProfileEditPage /> },
       { path: ROUTES.PASSWORD, element: <PasswordEditPage /> },
+      { path: ROUTES.EDIT_PROJECT, element: <ProjectModifyPage /> },
 
       // 404 페이지
       { path: '*', element: <Navigate to={ROUTES.HOME} replace /> }

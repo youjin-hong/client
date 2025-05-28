@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import ProjectCreateForm from '@/pages/project/_components/ProjectCreateForm';
+import ProjectCreateForm from '@/pages/project/_components/projectForm/ProjectCreateForm';
 import { useGenerateProject } from '@/store/queries/project/useProjectMutations';
 import { useUserProfile } from '@/store/queries/user/useUserQueries';
 import { GenerateProject } from '@/types/project.type';
@@ -49,7 +49,7 @@ export default function ProjectCreatePage() {
   }
 
   return (
-    <div>
+    <div className="w-[90%] m-auto">
       <h1 className="font-bm text-16 text-typography-dark pl-4 pb-8">새 프로젝트 생성</h1>
       <ProjectCreateForm username={userData.username} onSubmit={handleGenerateProject} onCancel={handleCancelProject} />
     </div>

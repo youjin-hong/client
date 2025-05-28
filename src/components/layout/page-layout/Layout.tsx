@@ -22,11 +22,16 @@ export default function Layout() {
     ROUTES.NEW_PROJECT,
     ROUTES.PROFILE,
     ROUTES.PROJECTS,
-    ROUTES.PROJECT_DETAIL,
     ROUTES.SETTINGS,
-    ROUTES.TESTS,
-    ROUTES.TEST_DETAIL
+    ROUTES.TESTS
   ];
+
+  // 동적 라우트들 (TODO: 추후에 싹 다 수정)
+  const privateDynamicRoutes = ['/projects/', '/tests/'];
+
+  const isPrivateRoute =
+    privateRoutes.includes(currentPath) ||
+    privateDynamicRoutes.some((route) => currentPath.startsWith(route) && currentPath !== route.slice(0, -1));
 
   // 현재 경로가 noSidebarAndHeaderRoutes에 있는지 확인
   const shouldHideSidebarAndHeader = noSidebarAndHeaderRoutes.some((route) => currentPath.startsWith(route));
@@ -37,7 +42,7 @@ export default function Layout() {
   }
 
   // 비로그인 사용자가 privateRoutes에 접근 시도하는 경우
-  else if (!isLoggedIn && privateRoutes.includes(currentPath)) {
+  else if (!isLoggedIn && privateRoutes.includes(currentPath) && isPrivateRoute) {
     return <Navigate to={ROUTES.LANDING} replace />;
   }
 

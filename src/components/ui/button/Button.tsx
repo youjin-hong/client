@@ -1,12 +1,23 @@
-import { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes, ReactNode } from 'react';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   isLoading?: boolean;
   text?: string;
+  leftIcon?: ReactNode;
+  rightIcon?: ReactNode;
 }
 
-export default function Button({ children, text, className = '', disabled, onClick, ...props }: ButtonProps) {
+export default function Button({
+  children,
+  text,
+  className = '',
+  disabled,
+  leftIcon,
+  rightIcon,
+  onClick,
+  ...props
+}: ButtonProps) {
   const baseClasses = `
     rounded-10
     text-11
@@ -18,6 +29,9 @@ export default function Button({ children, text, className = '', disabled, onCli
     active:bg-button-press
     disabled:opacity-50
     disabled:cursor-not-allowed
+    flex
+    justify-center
+    items-center
     py-2 
     px-4
   `;
@@ -32,7 +46,9 @@ export default function Button({ children, text, className = '', disabled, onCli
 
   return (
     <button className={`${baseClasses} ${className}`.trim()} disabled={disabled} onClick={handleClick} {...props}>
+      {leftIcon && <span className="flex items-center mr-1">{leftIcon}</span>}
       {text || children}
+      {rightIcon && <span className="flex items-center ml-1">{rightIcon}</span>}
     </button>
   );
 }
