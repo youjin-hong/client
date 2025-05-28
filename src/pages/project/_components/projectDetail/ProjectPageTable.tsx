@@ -27,7 +27,7 @@ export default function ProjectPageTable({ pages = [] }: ProjectPageTableProps) 
             ))
           ) : (
             <tr className="children:font-medium text-11 text-typography-gray">
-              <td colSpan={2} className="py-4 ont-medium text-16 text-typography-gray">
+              <td colSpan={2} className="py-4 font-medium text-14 text-typography-gray align-middle h-32">
                 탐지된 페이지가 없습니다.
               </td>
             </tr>
