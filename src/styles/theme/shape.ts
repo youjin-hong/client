@@ -6,6 +6,7 @@ export const shape = {
   },
 
   boxShadow: {
-    custom: '0 0 3px 2px rgba(0,0,0,0.1)'
+    custom: '0 0 3px 2px rgba(0,0,0,0.1)',
+    bottom_custom: '0 3px 3px 1px rgb(0, 0, 0, 0.2)'
   }
 };

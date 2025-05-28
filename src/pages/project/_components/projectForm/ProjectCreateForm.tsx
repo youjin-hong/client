@@ -1,7 +1,7 @@
 import Button from '@/components/ui/button/Button';
 import Input from '@/components/ui/input/Input';
 import Textarea from '@/components/ui/textarea/TextArea';
-import DesignSourceSection from '@/pages/project/_components/DesignSourceSection';
+import DesignSourceSection from '@/pages/project/_components/projectForm/DesignSourceSection';
 import { GenerateProject } from '@/types/project.type';
 import { getFormattedToday } from '@/utils/format';
 import { ChangeEvent, FormEvent, useState } from 'react';
