@@ -37,7 +37,7 @@ export default function ProjectDetailPage() {
         <ProjectPageTable pages={projectDetail?.pages || []} />
       </section>
 
-      <ReportBrief reportSummary={projectDetail?.reportSummary} />
+      <ReportBrief reportSummary={projectDetail?.reportSummary} projectId={Number(projectId)} />
 
       <DesignSourceSection
         figmaUrl={projectDetail?.figmaUrl}
