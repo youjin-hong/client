@@ -7,7 +7,12 @@ export const useGetProjectList = (params: ProjectsParams = {}) => {
   return useQuery({
     queryKey: ['projects', params],
     queryFn: async () => {
-      const response = await axiosInstance.get(API_ENDPOINTS.PROJECTS.LIST, { params });
+      const response = await axiosInstance.get(API_ENDPOINTS.PROJECTS.LIST, {
+        params: {
+          projectName: params.projectName,
+          sortBy: params.sortBy
+        }
+      });
 
       return response.data.data.projectSummaries ?? [];
     }

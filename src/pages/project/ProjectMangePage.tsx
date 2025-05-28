@@ -5,6 +5,8 @@ import StatusBadge from '@/pages/project/_components/StatusBadge';
 import { ROUTES } from '@/constants';
 import { useGetProjectList } from '@/store/queries/project/useProjectQueries';
 import { ProjectListData } from '@/types/project.type';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/redux/store';
 
 const columns = [
   { id: 'projectName', label: '프로젝트 명' },
@@ -18,12 +20,13 @@ const columns = [
 
 export default function ProjectMangePage() {
   const navigate = useNavigate();
+  const projectName = useSelector((state: RootState) => state.searchReducer.projectName);
   const {
     data: projects = [],
     isPending,
     isError
   } = useGetProjectList({
-    projectName: '',
+    projectName,
     sortBy: '',
     cursor: null
   });
@@ -38,22 +41,28 @@ export default function ProjectMangePage() {
   return (
     <div className="w-[90%] flex flex-col m-auto">
       <ProjectTitle />
-      <TableItem
-        columns={columns}
-        items={projects}
-        onItemClick={handleItemClick}
-        className="w-full"
-        renderCell={(column, item) => {
-          if (column.id === 'projectStatus') {
-            return <StatusBadge status={item.projectStatus} />;
-          }
-          if (column.id === 'testRate') {
-            return <span>{item.testRate}%</span>;
-          }
+      {projects.length === 0 ? (
+        <div className="w-full text-center py-20 text-typography-gray text-16 font-medium">
+          <p>검색 결과가 없습니다.</p>
+        </div>
+      ) : (
+        <TableItem
+          columns={columns}
+          items={projects}
+          onItemClick={handleItemClick}
+          className="w-full"
+          renderCell={(column, item) => {
+            if (column.id === 'projectStatus') {
+              return <StatusBadge status={item.projectStatus} />;
+            }
+            if (column.id === 'testRate') {
+              return <span>{item.testRate}%</span>;
+            }
 
-          return item[column.id as keyof typeof item];
-        }}
-      />
+            return item[column.id as keyof typeof item];
+          }}
+        />
+      )}
     </div>
   );
 }
