@@ -13,8 +13,6 @@ export default function ProjectDetailPage() {
   const projectId = params.projectId;
   const { data: projectDetail } = useGetProjectDetail(Number(projectId));
 
-  console.log('테스트', projectDetail);
-
   const projectBasicInfo = {
     projectName: projectDetail?.projectName,
     projectCreatedDate: projectDetail?.projectCreatedDate,
@@ -46,7 +44,6 @@ export default function ProjectDetailPage() {
         serviceUrl={projectDetail?.serviceUrl}
         rootFigmaPage={projectDetail?.rootFigmaPage}
         containerClassName="border-none shadow-custom rounded-15 px-6 pt-6 pb-8 space-y-4"
-        onChange={() => console.log('하하')}
         disabled
       />
 
