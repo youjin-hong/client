@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import authReducer from './reducers/auth';
+import projectSearchReducer from './reducers/project';
 
 // 여기서 모든 리듀서들을 관리
 export const store = configureStore({
   reducer: {
-    auth: authReducer
+    auth: authReducer,
+    searchReducer: projectSearchReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
