@@ -11,7 +11,7 @@ export default function CircleProgressBar({
   value,
   label = 'TOTAL',
   color = '#E48989',
-  size = 143,
+  size = 150,
   thickness = 6
 }: CircleProgressBarProps) {
   return (
