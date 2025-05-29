@@ -1,7 +1,7 @@
 import { API_ENDPOINTS } from '@/constants';
 import axiosInstance from '@/services/api/axios';
 import { ProjectsParams } from '@/types/project.type';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 // test 관련 get 요청 (무한스크롤로 변경)
 export const useGetTestListInfinite = (params: Omit<ProjectsParams, 'cursor'> = {}) => {
@@ -20,5 +20,19 @@ export const useGetTestListInfinite = (params: Omit<ProjectsParams, 'cursor'> = 
       return tests[tests.length - 1].projectId; // 백엔드에서 요청한대로 마지막 id를 다음 cursor로 넘기기
     },
     initialPageParam: null
+  });
+};
+
+export const useGetTestDetail = (projectId: number) => {
+  return useQuery({
+    queryKey: ['tests', projectId],
+    queryFn: async () => {
+      const response = await axiosInstance.get(
+        API_ENDPOINTS.PROJECTS.TESTS.DETAIL.replace(':projectId', String(projectId))
+      );
+
+      return response.data.data;
+    },
+    enabled: !!projectId
   });
 };
