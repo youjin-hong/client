@@ -12,7 +12,7 @@ export default function CircleProgressBar({
   label = 'TOTAL',
   color = '#E48989',
   size = 143,
-  thickness = 5
+  thickness = 6
 }: CircleProgressBarProps) {
   return (
     <div className="flex flex-col justify-center items-center gap-3">
