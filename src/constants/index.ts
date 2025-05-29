@@ -24,7 +24,7 @@ export const API_ENDPOINTS = {
 
     TESTS: {
       LIST: '/projects/tests',
-      DETAIL: '/projects/tests/:testId',
+      DETAIL: '/projects/tests/:projectId',
 
       PAGES: '/pages/:pageId'
     }
