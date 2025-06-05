@@ -10,8 +10,44 @@ export default function ProjectCreatePage() {
   const { data: userData, isPending, isError } = useUserProfile();
   const generateProject = useGenerateProject();
 
-  const handleGenerateProject = (formData: GenerateProject, actionType: 'register' | 'test') => {
-    generateProject.mutate(formData, {
+  const handleGenerateProject = (
+    formData: GenerateProject,
+    actionType: 'register' | 'test',
+    figmaFile: File | null
+  ) => {
+    const data = new FormData();
+    data.append('projectName', formData.projectName);
+    data.append('expectedTestExecution', formData.expectedTestExecution);
+    data.append('projectEnd', formData.projectEnd);
+    data.append('description', formData.description);
+    data.append('figmaUrl', formData.figmaUrl);
+    data.append('serviceUrl', formData.serviceUrl);
+    data.append('rootFigmaPage', formData.rootFigmaPage);
+    if (userData?.username) {
+      data.append('administrator', userData.username);
+    }
+
+    // Only append figmaFile if it is a valid File instance
+    if (figmaFile !== null && figmaFile instanceof File) {
+      data.append('figmaFile', figmaFile);
+    } else if (figmaFile !== null) {
+      // Log a warning if figmaFile is not null but not a File instance
+      console.warn('figmaFile is not a File instance:', figmaFile);
+    }
+
+    // actionType is also needed by the backend, append it to FormData
+    data.append('actionType', actionType);
+
+    // Log FormData contents for debugging
+    // Note: Iterating FormData entries logs [key, value] pairs, File objects might show as [key, File]
+    // For better inspection of File details, you might need browser Network tab
+    console.log('FormData contents:');
+    for (let pair of data.entries()) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
+
+    generateProject.mutate(data as any, {
+      // Cast data to any for FormData compatibility
       onSuccess: (response) => {
         // TODO: alert나 toast로 변경
         alert(response.message);
