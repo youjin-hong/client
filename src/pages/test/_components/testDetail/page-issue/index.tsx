@@ -17,8 +17,8 @@ export default function PageIssueSection({ testDetail }: PageIssueSectionProps) 
   const params = useParams();
   const projectId = params.projectId;
   const pages = testDetail.pages;
-  const [activeTab, setActiveTab] = useState(0); // 탭 index
-  const [activePageIndex, setActivePageIndex] = useState(0); // 페이지 버튼 index
+  const [activeTab, setActiveTab] = useState(0); // 현재 선택된 이슈 인덱스
+  const [activePageIndex, setActivePageIndex] = useState(0); // 현재 선택된 페이지 인덱스
   const [filters, setFilters] = useState<Filters>({
     routing: true,
     interaction: true,
