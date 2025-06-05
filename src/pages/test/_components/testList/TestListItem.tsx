@@ -70,7 +70,7 @@ export default function TestListItem({ data, handleClickRegisterButton }: TestLi
       <p className="font-medium text-11 text-typography-gray py-2">
         총 테스트 {successTests}/{totalTests} 통과
       </p>
-      <Button text="등록" className="w-full" onClick={() => handleClickRegisterButton(data.projectId)} />
+      <Button text="보기" className="w-full" onClick={() => handleClickRegisterButton(data.projectId)} />
     </div>
   );
 }
