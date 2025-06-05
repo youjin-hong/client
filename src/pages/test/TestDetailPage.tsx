@@ -32,9 +32,7 @@ export default function TestDetailPage() {
 
       <TestRatingBars testSummary={testDetail.testSummary} />
 
-      <section>
-        <PageIssueSection testDetail={testDetail} />
-      </section>
+      <PageIssueSection testDetail={testDetail} />
     </div>
   );
 }
