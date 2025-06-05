@@ -46,5 +46,16 @@ export const colors = {
     press: '#B0B0B0',
     text: '#8C8C8C',
     border: '#8C8C8C'
+  },
+
+  TEST_TYPE_DOT: {
+    ROUTING: '#31A791',
+    INTERACTION: '#A731A3',
+    MAPPING: '#A79131'
+  },
+  TEST_TYPE_TEXT: {
+    ROUTING: '#31A791',
+    INTERACTION: '#A731A3',
+    MAPPING: '#A79131'
   }
-};
+} as const;

@@ -1,8 +1,6 @@
 import React from 'react';
 import TableItem from '@/components/ui/table/CustomTable';
-import StatusBadge from '@/pages/project/_components/StatusBadge';
-
-type StatusType = 'IN_PROGRESS' | 'COMPLETED' | 'NOT_STARTED' | 'READY';
+import StatusBadge, { StatusType } from '@/pages/project/_components/StatusBadge';
 
 interface DashboardProject {
   projectId: number;

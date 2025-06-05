@@ -44,11 +44,11 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <section>
             <div className="text-[22px] font-extrabold text-[#222] mb-6">프로젝트 관리</div>
-            <DashboardProjectTable projects={data?.projects || []} />
+            <DashboardProjectTable projects={data?.projects?.slice(0, 5) || []} />
           </section>
           <section>
             <div className="text-[22px] font-extrabold text-[#222] mb-6">테스트 관리</div>
-            <DashboardTestTable tests={data?.tests || []} />
+            <DashboardTestTable tests={data?.tests?.slice(0, 5) || []} />
           </section>
         </div>
       </div>
