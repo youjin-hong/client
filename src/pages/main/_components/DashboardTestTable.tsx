@@ -1,6 +1,8 @@
 import React from 'react';
 import TableItem from '@/components/ui/table/CustomTable';
 import { DashBoardTestList } from '@/types/test.type';
+import StatusBadge from '@/pages/test/_components/StatusBadge';
+import { colors } from '@/styles/theme/colors';
 
 const columns = [
   { id: 'projectName', label: '프로젝트 명' },
@@ -9,29 +11,24 @@ const columns = [
   { id: 'pageName', label: '페이지 명' }
 ];
 
-const typeColor: Record<string, string> = {
-  Routing: 'text-green-600',
-  Interaction: 'text-purple-600',
-  Component: 'text-yellow-600'
-};
-
 const DashboardTestTable: React.FC<{ tests: DashBoardTestList[] }> = ({ tests }) => (
   <TableItem
     columns={columns}
     items={tests}
     renderCell={(column, item) => {
-      if (column.id === 'testStatus') {
+      if (column.id === 'testType') {
+        const typeKey = String(item.testType).toUpperCase() as keyof typeof colors.TEST_TYPE_TEXT;
         return (
-          <span className={`font-bold ${typeColor[item.testType as keyof typeof typeColor]}`}>{item.testType}</span>
+          <span className={`flex items-center font-bold`} style={{ color: colors.TEST_TYPE_TEXT[typeKey] }}>
+            <span
+              className={`w-3 h-3 rounded-sm mr-2`}
+              style={{ backgroundColor: colors.TEST_TYPE_DOT[typeKey] }}></span>
+            {item.testType}
+          </span>
         );
       }
       if (column.id === 'testStatus') {
-        return (
-          <span
-            className={`px-3 py-1 rounded-full text-xs font-bold ${item.testStatus === '성공' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-            {item.testStatus}
-          </span>
-        );
+        return <StatusBadge status={item.testStatus} />;
       }
       return item[column.id as keyof DashBoardTestList] ?? '-';
     }}
