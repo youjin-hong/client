@@ -82,7 +82,11 @@ export default function ProjectMangePage() {
               );
             }
             if (column.id === 'testRate') {
-              return <span>{item.testRate}%</span>;
+              if (item.testRate === null) {
+                return <span>-</span>;
+              } else {
+                return <span>{item.testRate}%</span>;
+              }
             }
 
             return item[column.id as keyof typeof item];
