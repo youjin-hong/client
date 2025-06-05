@@ -25,7 +25,9 @@ export const useDeleteProject = () => {
 
   return useMutation({
     mutationFn: async (projectId: number) => {
-      const response = await axiosInstance(API_ENDPOINTS.PROJECTS.DELETE.replace(':projectId', String(projectId)));
+      const response = await axiosInstance.delete(
+        API_ENDPOINTS.PROJECTS.DELETE.replace(':projectId', String(projectId))
+      );
       return response.data;
     },
     onSuccess: () => {

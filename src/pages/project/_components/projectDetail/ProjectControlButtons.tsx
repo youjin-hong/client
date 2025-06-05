@@ -26,6 +26,7 @@ export default function ProjectControlButtons({ projectId, projectName }: Projec
   const handleConfirmDeleteProject = () => {
     deleteProject(projectId);
     setIsDeleteModalOpen(false);
+    navigate(ROUTES.PROJECTS);
   };
 
   const handleCloseDeleteModal = () => {
