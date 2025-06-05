@@ -17,14 +17,14 @@ export default function PageIssueSection({ testDetail }: PageIssueSectionProps) 
   const params = useParams();
   const projectId = params.projectId;
   const pages = testDetail.pages;
-  const [activeTab, setActiveTab] = useState(0);
-  const [activePageIndex, setActivePageIndex] = useState(0);
+  const [activeTab, setActiveTab] = useState(0); // 탭 index
+  const [activePageIndex, setActivePageIndex] = useState(0); // 페이지 버튼 index
   const [filters, setFilters] = useState<Filters>({
     routing: true,
     interaction: true,
     mapping: true
   });
-  const pageId = pages[activeTab]?.pageId ?? 0;
+  const pageId = pages[activePageIndex]?.pageId ?? 0;
 
   const { data: projectDetail } = useGetProjectDetail(Number(projectId));
   const { data: issueData, isLoading: isPending, isError } = useGetPageIssue(pageId);
@@ -67,7 +67,7 @@ export default function PageIssueSection({ testDetail }: PageIssueSectionProps) 
   }
   if (tabMeta.length === 0) {
     return (
-      <div className="space-y-2">
+      <div>
         <PageButtons
           pages={pages}
           activePageIndex={activePageIndex}
@@ -92,10 +92,10 @@ export default function PageIssueSection({ testDetail }: PageIssueSectionProps) 
         activePageIndex={activePageIndex}
         onSelectPage={(pageId: number) => {
           setActivePageIndex(pageId);
-          setActiveTab(0);
         }}
       />
       <CheckBoxes filters={filters} onChange={setFilters} />
+
       <section className="shadow-custom rounded-15 pt-7 px-10 pb-4 space-y-4">
         <IssueTabBar tabMeta={tabMeta} activeTab={activeTab} onSelectTab={(idx) => setActiveTab(idx)} />
         <IssueContents issueData={issueData} tabMeta={tabMeta[activeTab]} />
