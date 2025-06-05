@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import type { TestDetail } from '@/types/test.type';
+import type { FailComponent, InteractionFail, RoutingFail, TestDetail } from '@/types/test.type';
 import { useGetPageIssue } from '@/store/queries/test/useTestQueries';
 import { useGetProjectDetail } from '@/store/queries/project/useProjectQueries';
 import CheckBoxes, { Filters } from '@/pages/test/_components/testDetail/page-issue/CheckBoxes';
@@ -15,20 +15,19 @@ interface PageIssueSectionProps {
 
 export default function PageIssueSection({ testDetail }: PageIssueSectionProps) {
   const params = useParams();
+  const projectId = params.projectId;
+  const pages = testDetail.pages;
   const [activeTab, setActiveTab] = useState(0);
+  const [activePageIndex, setActivePageIndex] = useState(0);
   const [filters, setFilters] = useState<Filters>({
     routing: true,
     interaction: true,
     mapping: true
   });
-  const projectId = params.projectId;
-  const pages = testDetail.pages;
+  const pageId = pages[activeTab]?.pageId ?? 0;
 
   const { data: projectDetail } = useGetProjectDetail(Number(projectId));
-  const pageId = pages[activeTab]?.pageId ?? 0;
   const { data: issueData, isLoading: isPending, isError } = useGetPageIssue(pageId);
-
-  console.log('ㅇ아아', issueData);
 
   if (isPending) {
     return <div className="py-20 text-center">페이지 이슈 로딩 중...</div>;
@@ -40,28 +39,28 @@ export default function PageIssueSection({ testDetail }: PageIssueSectionProps) 
   const tabMeta: TabMeta[] = [];
 
   if (filters.routing && issueData.routingTest?.fail) {
-    issueData.routingTest.fail.forEach((item, idx) => {
+    issueData.routingTest.fail.forEach((item: RoutingFail, index: number) => {
       tabMeta.push({
         category: 'routing',
-        index: idx,
+        index,
         label: item.failReason
       });
     });
   }
   if (filters.mapping && issueData.mappingTest?.failComponents) {
-    issueData.mappingTest.failComponents.forEach((item, idx) => {
+    issueData.mappingTest.failComponents.forEach((item: FailComponent, index: number) => {
       tabMeta.push({
         category: 'mapping',
-        index: idx,
+        index,
         label: item.failReason
       });
     });
   }
   if (filters.interaction && issueData.interactionTest?.fail) {
-    issueData.interactionTest.fail.forEach((item, idx) => {
+    issueData.interactionTest.fail.forEach((item: InteractionFail, index: number) => {
       tabMeta.push({
         category: 'interaction',
-        index: idx,
+        index,
         label: item.failReason
       });
     });
@@ -69,7 +68,13 @@ export default function PageIssueSection({ testDetail }: PageIssueSectionProps) 
   if (tabMeta.length === 0) {
     return (
       <div className="space-y-2">
-        <PageButtons pages={pages} />
+        <PageButtons
+          pages={pages}
+          activePageIndex={activePageIndex}
+          onSelectPage={(pageId: number) => {
+            setActivePageIndex(pageId);
+          }}
+        />
         <CheckBoxes filters={filters} onChange={setFilters} />
         <section className="shadow-custom p-6 rounded-15">
           <p className="border border-dashed border-typography-gray p-4 rounded-15 w-full min-h-[200px] h-full flex justify-center items-center">
@@ -82,7 +87,14 @@ export default function PageIssueSection({ testDetail }: PageIssueSectionProps) 
 
   return (
     <div>
-      <PageButtons pages={pages} />
+      <PageButtons
+        pages={pages}
+        activePageIndex={activePageIndex}
+        onSelectPage={(pageId: number) => {
+          setActivePageIndex(pageId);
+          setActiveTab(0);
+        }}
+      />
       <CheckBoxes filters={filters} onChange={setFilters} />
       <section className="shadow-custom rounded-15 pt-7 px-10 pb-4 space-y-4">
         <IssueTabBar tabMeta={tabMeta} activeTab={activeTab} onSelectTab={(idx) => setActiveTab(idx)} />
