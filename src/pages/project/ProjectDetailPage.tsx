@@ -31,6 +31,7 @@ export default function ProjectDetailPage() {
     <div className="w-[90%] flex flex-col m-auto">
       <ProjectTitle />
       <ProjectInfo {...projectBasicInfo} />
+      <span className="border border-typography-gray my-4"></span>
 
       <section className="flex gap-6 justify-center py-4 children:shadow-custom children:rounded-15 children:w-full">
         <ProjectSummaryGraph {...testSummary} />

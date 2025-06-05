@@ -45,7 +45,7 @@ export default function Button({
   };
 
   return (
-    <button className={`${baseClasses} ${className}`.trim()} disabled={disabled} onClick={handleClick} {...props}>
+    <button className={`${className ?? ''} ${baseClasses}`} disabled={disabled} onClick={handleClick} {...props}>
       {leftIcon && <span className="flex items-center mr-1">{leftIcon}</span>}
       {text || children}
       {rightIcon && <span className="flex items-center ml-1">{rightIcon}</span>}

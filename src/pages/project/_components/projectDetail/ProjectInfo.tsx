@@ -32,7 +32,6 @@ export default function ProjectInfo({
         <div>
           <ProjectInfoItem label="설명" value={description} />
         </div>
-        <span className="border border-typography-gray my-1"></span>
       </div>
     </section>
   );
