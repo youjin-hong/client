@@ -28,6 +28,7 @@ export interface GenerateProject {
   expectedTestExecution: string;
   projectEnd: string;
   description: string;
+  figmaFile: File | null;
   figmaUrl: string;
   serviceUrl: string;
   rootFigmaPage: string;
