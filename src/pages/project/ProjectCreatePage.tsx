@@ -16,38 +16,35 @@ export default function ProjectCreatePage() {
     figmaFile: File | null
   ) => {
     const data = new FormData();
-    data.append('projectName', formData.projectName);
-    data.append('expectedTestExecution', formData.expectedTestExecution);
-    data.append('projectEnd', formData.projectEnd);
-    data.append('description', formData.description);
-    data.append('figmaUrl', formData.figmaUrl);
-    data.append('serviceUrl', formData.serviceUrl);
-    data.append('rootFigmaPage', formData.rootFigmaPage);
-    if (userData?.username) {
-      data.append('administrator', userData.username);
+
+    // 1. 프로젝트 정보 객체와 actionType을 JSON 문자열로 변환
+    const requestData = {
+      projectName: formData.projectName,
+      expectedTestExecution: formData.expectedTestExecution,
+      projectEnd: formData.projectEnd,
+      description: formData.description,
+      figmaUrl: formData.figmaUrl,
+      serviceUrl: formData.serviceUrl,
+      rootFigmaPage: formData.rootFigmaPage,
+      administrator: userData?.username || undefined, // 사용자 정보가 있으면 추가
+      actionType: actionType // actionType 추가
+    };
+
+    // JSON 데이터를 Blob으로 감싸서 'request' 파트로 추가
+    data.append('request', new Blob([JSON.stringify(requestData)], { type: 'application/json' }), 'request.json');
+
+    // 2. 실제 파일 데이터는 'file' key로 추가
+    if (figmaFile) {
+      data.append('file', figmaFile, figmaFile.name);
     }
 
-    // Only append figmaFile if it is a valid File instance
-    if (figmaFile !== null && figmaFile instanceof File) {
-      data.append('figmaFile', figmaFile);
-    } else if (figmaFile !== null) {
-      // Log a warning if figmaFile is not null but not a File instance
-      console.warn('figmaFile is not a File instance:', figmaFile);
-    }
-
-    // actionType is also needed by the backend, append it to FormData
-    data.append('actionType', actionType);
-
-    // Log FormData contents for debugging
-    // Note: Iterating FormData entries logs [key, value] pairs, File objects might show as [key, File]
-    // For better inspection of File details, you might need browser Network tab
+    // 디버깅을 위한 FormData 내용 로깅
     console.log('FormData contents:');
     for (let pair of data.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
+      console.log(pair[0] + ', ' + (pair[1] instanceof File ? pair[1].name : pair[1]));
     }
 
-    generateProject.mutate(data as any, {
-      // Cast data to any for FormData compatibility
+    generateProject.mutate(data, {
       onSuccess: (response) => {
         // TODO: alert나 toast로 변경
         alert(response.message);
