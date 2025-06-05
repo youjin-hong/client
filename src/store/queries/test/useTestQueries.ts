@@ -36,3 +36,15 @@ export const useGetTestDetail = (projectId: number) => {
     enabled: !!projectId
   });
 };
+
+export const useGetPageIssue = (pageId: number) => {
+  return useQuery({
+    queryKey: ['pageIssue', pageId],
+    queryFn: async () => {
+      const response = await axiosInstance.get(API_ENDPOINTS.PROJECTS.TESTS.PAGES.replace(':pageId', String(pageId)));
+
+      return response.data.data;
+    },
+    enabled: !!pageId
+  });
+};
