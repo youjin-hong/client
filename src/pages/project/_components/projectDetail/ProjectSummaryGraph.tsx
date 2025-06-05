@@ -4,32 +4,20 @@ import { calculatePercentage } from '@/utils/useCalculateTestPercentage';
 
 interface ProjectSummaryGraphProps {
   testSummary: {
-    routingSuccessCount: number;
-    routingFailCount: number;
-    interactionSuccessCount: number;
-    interactionFailCount: number;
-    mappingSuccessCount: number;
-    mappingFailCount: number;
+    totalInteractionTest: number;
+    totalMappingTest: number;
+    totalRoutingTest: number;
   };
 }
 
 export default function ProjectSummaryGraph({ testSummary }: ProjectSummaryGraphProps) {
-  const {
-    routingSuccessCount,
-    routingFailCount,
-    interactionSuccessCount,
-    interactionFailCount,
-    mappingSuccessCount,
-    mappingFailCount
-  } = testSummary;
+  const { totalInteractionTest, totalMappingTest, totalRoutingTest } = testSummary;
 
-  const totalRoutingTest = routingSuccessCount + routingFailCount;
-  const totalInteractionTest = interactionSuccessCount + interactionFailCount;
-  const totalMappingTest = mappingSuccessCount + mappingFailCount;
+  const totalTest = totalInteractionTest + totalMappingTest + totalRoutingTest;
 
-  const routingPercentage = calculatePercentage(routingSuccessCount, totalRoutingTest);
-  const interactionPercentage = calculatePercentage(interactionSuccessCount, totalInteractionTest);
-  const mappingPercentage = calculatePercentage(mappingSuccessCount, totalMappingTest);
+  const routingPercentage = calculatePercentage(totalRoutingTest, totalTest);
+  const interactionPercentage = calculatePercentage(totalInteractionTest, totalTest);
+  const mappingPercentage = calculatePercentage(totalMappingTest, totalTest);
 
   return (
     <>

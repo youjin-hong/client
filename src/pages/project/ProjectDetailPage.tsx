@@ -7,14 +7,11 @@ import ReportBrief from '@/pages/project/_components/projectDetail/ReportBrief';
 import ProjectControlButtons from '@/pages/project/_components/projectDetail/ProjectControlButtons';
 import ProjectPageTable from '@/pages/project/_components/projectDetail/ProjectPageTable';
 import ProjectSummaryGraph from '@/pages/project/_components/projectDetail/ProjectSummaryGraph';
-import { useGetTestDetail } from '@/store/queries/test/useTestQueries';
 
 export default function ProjectDetailPage() {
   const params = useParams();
   const projectId = params.projectId;
-  const { data: projectDetail } = useGetProjectDetail(Number(projectId));
-  // TODO: 백엔드한테 projectDetail에 성공 count 넣어줄 수 있느지... 부탁해보기...
-  const { data: testDetail, isPending, isError } = useGetTestDetail(Number(projectId));
+  const { data: projectDetail, isPending, isError } = useGetProjectDetail(Number(projectId));
 
   if (isPending) return <div className="py-20 text-center">로딩 중...</div>;
   if (isError) return <div className="py-20 text-center text-red-500">오류가 발생했습니다.</div>;
@@ -35,7 +32,7 @@ export default function ProjectDetailPage() {
       <span className="border border-typography-gray my-4"></span>
 
       <section className="flex gap-6 justify-center py-4 children:shadow-custom children:rounded-15 children:w-full">
-        <ProjectSummaryGraph testSummary={testDetail?.testSummary} />
+        <ProjectSummaryGraph testSummary={projectDetail?.testSummary} />
         <ProjectPageTable pages={projectDetail?.pages || []} />
       </section>
 
