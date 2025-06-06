@@ -1,4 +1,4 @@
-import ManualContent from './_components/ManualContent';
+import ManualContent from '@/pages/manual/_components/ManualContent';
 
 const ManualPage = () => {
   return (
