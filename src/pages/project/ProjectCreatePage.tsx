@@ -40,7 +40,7 @@ export default function ProjectCreatePage() {
 
     // 디버깅을 위한 FormData 내용 로깅
     console.log('FormData contents:');
-    for (let pair of data.entries()) {
+    for (const pair of data.entries()) {
       console.log(pair[0] + ', ' + (pair[1] instanceof File ? pair[1].name : pair[1]));
     }
 

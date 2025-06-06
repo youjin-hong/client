@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { API_ENDPOINTS } from '@/constants';
 import axiosInstance from '@/services/api/axios';
-import { GenerateProject } from '@/types/project.type';
 
 // 프로젝트 생성
 export const useGenerateProject = () => {
