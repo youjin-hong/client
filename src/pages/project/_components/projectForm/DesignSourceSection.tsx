@@ -1,11 +1,14 @@
 import Input from '@/components/ui/input/Input';
-import { ChangeEvent } from 'react';
+import FileInput from '@/components/ui/input/FileInput';
+import { ChangeEvent, InputHTMLAttributes, useId, useState } from 'react';
+import UploadIcon from '@/assets/icons/upload.svg';
 
 interface DesignSourceProps {
   figmaUrl: string;
   serviceUrl: string;
   rootFigmaPage: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onFileChange?: (file: File | null) => void;
   disabled?: boolean;
   containerClassName?: string;
 }
@@ -15,6 +18,7 @@ export default function DesignSourceSection({
   serviceUrl = '',
   rootFigmaPage = '',
   onChange,
+  onFileChange,
   disabled = false,
   containerClassName = 'border-[0.5px] border-typography-gray rounded-15 px-6 pt-6 pb-8 space-y-4'
 }: DesignSourceProps) {
@@ -22,6 +26,7 @@ export default function DesignSourceSection({
     <div>
       <h2 className="font-bold text-14 text-typography-dark pl-4 py-3">디자인 소스</h2>
       <div className={containerClassName}>
+        <FileInput label="피그마 시안 파일 업로드" name="figmaFile" onChange={onFileChange} disabled={disabled} />
         <Input
           label="피그마 시안 URL"
           name="figmaUrl"
