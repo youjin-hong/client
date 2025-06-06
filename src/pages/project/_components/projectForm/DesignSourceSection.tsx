@@ -1,7 +1,6 @@
 import Input from '@/components/ui/input/Input';
 import FileInput from '@/components/ui/input/FileInput';
 import { ChangeEvent } from 'react';
-import UploadIcon from '@/assets/icons/upload.svg';
 
 interface DesignSourceProps {
   figmaUrl: string;
