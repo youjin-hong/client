@@ -18,11 +18,11 @@ import PasswordEditPage from '@/pages/setting/PasswordEditPage';
 import ProjectModifyPage from '@/pages/project/ProjectModifyPage';
 
 const routes = [
-  { path: ROUTES.LANDING, element: <LandingPage /> },
   {
     element: <Layout />,
     children: [
       // 공개 라우트
+      { path: ROUTES.LANDING, element: <LandingPage /> },
       { path: ROUTES.LOGIN, element: <LoginPage /> },
       { path: ROUTES.SIGNUP, element: <SignupPage /> },
       { path: ROUTES.MANUAL, element: <ManualPage /> },
