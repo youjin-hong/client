@@ -8,7 +8,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 
 interface ProjectCreateFormPropsType {
   username: string;
-  onSubmit: (data: GenerateProject, actionType: 'register' | 'test') => void;
+  onSubmit: (data: GenerateProject, actionType: 'register' | 'test', figmaFile: File | null) => void;
   onCancel: () => void;
 }
 
@@ -20,8 +20,11 @@ export default function ProjectCreateForm({ username, onSubmit, onCancel }: Proj
     description: '',
     figmaUrl: '',
     serviceUrl: '',
-    rootFigmaPage: ''
+    rootFigmaPage: '',
+    figmaFile: null
   });
+
+  const [figmaFile, setFigmaFile] = useState<File | null>(null);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -31,16 +34,20 @@ export default function ProjectCreateForm({ username, onSubmit, onCancel }: Proj
     }));
   };
 
+  const handleFileChange = (file: File | null) => {
+    setFigmaFile(file);
+  };
+
   const handleSubmitProjectCreateForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
 
   const handleRegisterProject = () => {
-    onSubmit(formData, 'register');
+    onSubmit(formData, 'register', figmaFile);
   };
 
   const handleRegisterAndTest = () => {
-    onSubmit(formData, 'test');
+    onSubmit(formData, 'test', figmaFile);
   };
 
   return (
@@ -81,6 +88,7 @@ export default function ProjectCreateForm({ username, onSubmit, onCancel }: Proj
           serviceUrl={formData.serviceUrl}
           rootFigmaPage={formData.rootFigmaPage}
           onChange={handleChange}
+          onFileChange={handleFileChange}
         />
 
         <div className="flex justify-center gap-10 children:px-8 children:font-medium">
