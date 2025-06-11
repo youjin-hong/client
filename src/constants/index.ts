@@ -21,6 +21,7 @@ export const API_ENDPOINTS = {
     DETAIL: '/projects/:projectId',
     UPDATE: '/projects/:projectId',
     DELETE: '/projects/:projectId',
+    RUN_TEST: '/projects/:projectId/run-test',
 
     TESTS: {
       LIST: '/projects/tests',

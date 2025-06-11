@@ -1,6 +1,8 @@
 import React from 'react';
 import TableItem from '@/components/ui/table/CustomTable';
 import StatusBadge, { StatusType } from '@/pages/project/_components/StatusBadge';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/constants';
 
 interface DashboardProject {
   projectId: number;
@@ -27,20 +29,27 @@ interface DashboardProjectTableProps {
   }>;
 }
 
-const DashboardProjectTable: React.FC<DashboardProjectTableProps> = ({ projects }) => (
-  <TableItem<DashboardProject>
-    columns={columns}
-    items={projects.map((project) => ({
-      ...project,
-      projectStatus: project.projectStatus as StatusType
-    }))}
-    renderCell={(column, item) => {
-      if (column.id === 'projectStatus') {
-        return <StatusBadge status={item.projectStatus} />;
-      }
-      return item[column.id as keyof DashboardProject] ?? '-';
-    }}
-  />
-);
+const DashboardProjectTable: React.FC<DashboardProjectTableProps> = ({ projects }) => {
+  const navigate = useNavigate();
+  const handleDashboardProjectItem = (item: DashboardProject) => {
+    navigate(ROUTES.PROJECT_DETAIL.replace(':projectId', item.projectId.toString()));
+  };
+  return (
+    <TableItem<DashboardProject>
+      columns={columns}
+      items={projects.map((project) => ({
+        ...project,
+        projectStatus: project.projectStatus as StatusType
+      }))}
+      onItemClick={handleDashboardProjectItem}
+      renderCell={(column, item) => {
+        if (column.id === 'projectStatus') {
+          return <StatusBadge status={item.projectStatus} />;
+        }
+        return item[column.id as keyof DashboardProject] ?? '-';
+      }}
+    />
+  );
+};
 
 export default DashboardProjectTable;

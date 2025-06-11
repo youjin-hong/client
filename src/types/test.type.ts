@@ -12,6 +12,7 @@ export interface TestData {
 
 export interface DashBoardTestList {
   testId: number;
+  projectId: number;
   projectName: string;
   pageName: string;
   testType: string;

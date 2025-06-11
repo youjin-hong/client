@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { store } from './store/redux/store';
 import './styles/index.css';
 import routes from '@/routes';
+import { ToastContainer } from 'react-toastify';
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter(routes);
@@ -16,6 +17,7 @@ function App() {
         <RouterProvider router={router} />
         <ReactQueryDevtools initialIsOpen={false} />
       </Provider>
+      <ToastContainer />
     </QueryClientProvider>
   );
 }
