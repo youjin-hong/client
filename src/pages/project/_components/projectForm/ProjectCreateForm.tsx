@@ -10,9 +10,10 @@ interface ProjectCreateFormPropsType {
   username: string;
   onSubmit: (data: GenerateProject, actionType: 'register' | 'test', figmaFile: File | null) => void;
   onCancel: () => void;
+  isLoading?: boolean;
 }
 
-export default function ProjectCreateForm({ username, onSubmit, onCancel }: ProjectCreateFormPropsType) {
+export default function ProjectCreateForm({ username, onSubmit, onCancel, isLoading }: ProjectCreateFormPropsType) {
   const [formData, setFormData] = useState<GenerateProject>({
     projectName: '',
     expectedTestExecution: '',
@@ -92,14 +93,21 @@ export default function ProjectCreateForm({ username, onSubmit, onCancel }: Proj
         />
 
         <div className="flex justify-center gap-10 children:px-8 children:font-medium">
-          <Button text="등록" type="button" data-submit-type="register" onClick={handleRegisterProject} />
           <Button
-            text="등록 후 테스트 생성하기"
+            text={isLoading ? '등록 중...' : '등록'}
+            type="button"
+            data-submit-type="register"
+            onClick={handleRegisterProject}
+            disabled={isLoading}
+          />
+          <Button
+            text={isLoading ? '등록 및 테스트 중...' : '등록 후 테스트 생성하기'}
             type="button"
             data-submit-type="test after register"
             onClick={handleRegisterAndTest}
+            disabled={isLoading}
           />
-          <Button text="취소" type="button" data-submit-type="cancel" onClick={onCancel} />
+          <Button text="취소" type="button" data-submit-type="cancel" onClick={onCancel} disabled={isLoading} />
         </div>
       </section>
     </form>
