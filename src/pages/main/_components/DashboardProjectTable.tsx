@@ -34,7 +34,6 @@ const DashboardProjectTable: React.FC<DashboardProjectTableProps> = ({ projects 
   const handleDashboardProjectItem = (item: DashboardProject) => {
     navigate(ROUTES.PROJECT_DETAIL.replace(':projectId', item.projectId.toString()));
   };
-  console.log('projects', projects);
   return (
     <TableItem<DashboardProject>
       columns={columns}
