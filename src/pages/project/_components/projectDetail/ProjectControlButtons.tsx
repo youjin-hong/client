@@ -58,7 +58,7 @@ export default function ProjectControlButtons({ projectId, projectName }: Projec
             className="flex border-none shadow-custom rounded-10 w-[118px] h-6 items-center justify-center"
           />
           <button
-            className="block mx-auto my-2 border-0 border-b border-[#696969]  text-[#696969] font-medium text-11"
+            className="block mx-auto my-4 border-0 border-b border-[#696969]  text-[#696969] font-medium text-11"
             onClick={handleProjectDeleteButtonClick}>
             프로젝트 삭제하기
           </button>
