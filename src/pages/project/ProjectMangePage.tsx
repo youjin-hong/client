@@ -7,6 +7,7 @@ import { useGetProjectList } from '@/store/queries/project/useProjectQueries';
 import { ProjectListData } from '@/types/project.type';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/redux/store';
+import { BeatLoader } from 'react-spinners';
 
 const columns = [
   { id: 'projectName', label: '프로젝트 명' },
@@ -35,7 +36,12 @@ export default function ProjectMangePage() {
     navigate(ROUTES.PROJECT_DETAIL.replace(':projectId', item.projectId.toString()));
   };
 
-  if (isPending) return <div>로딩 중...</div>;
+  if (isPending)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <BeatLoader color="#B3C7AA" />
+      </div>
+    );
   if (isError) return <div>오류가 발생했습니다.</div>;
 
   return (
