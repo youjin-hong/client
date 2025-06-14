@@ -5,6 +5,7 @@ import { useGetTestListInfinite } from '@/store/queries/test/useTestQueries';
 import UseIntersectionObserver from '@/utils/useIntersectionObserver';
 import SearchHeader from '@/pages/test/_components/searchHeader/SearchHeader';
 import TestList from '@/pages/test/_components/testList/TestList';
+import { BeatLoader } from 'react-spinners';
 
 export default function TestManagePage() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -40,7 +41,12 @@ export default function TestManagePage() {
     setDateSort('');
   };
 
-  if (isPending) return <div className="col-span-3 text-center text-typography-gray text-16 pt-40">로딩 중...</div>;
+  if (isPending)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <BeatLoader color="#B3C7AA" />
+      </div>
+    );
   if (isError)
     return <div className="col-span-3 text-center text-typography-gray text-16 pt-40">오류가 발생했습니다.</div>;
 

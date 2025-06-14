@@ -5,6 +5,7 @@ import { useLogin } from '@/store/queries/auth/useAuthMutations';
 import { ROUTES } from '@/constants';
 import { useAppDispatch } from '@/store/redux/store';
 import { setToken } from '@/store/redux/reducers/auth';
+import { toast } from 'react-toastify';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -19,13 +20,11 @@ export default function LoginPage() {
           dispatch(setToken(response.data.accessToken));
         }
 
-        // TODO: alert 창 변경 필요
-        alert(response.message);
+        toast.success(response.message);
         navigate(ROUTES.HOME);
       },
       onError: (error) => {
         console.error('로그인 실패', error);
-        // TODO: alert 변경 필요
         alert(error.message);
       }
     });
