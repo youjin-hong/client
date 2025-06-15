@@ -1,4 +1,4 @@
-import { ChangeEvent, InputHTMLAttributes, useId, useState } from 'react';
+import { ChangeEvent, InputHTMLAttributes, useEffect, useId, useState } from 'react';
 import UploadIcon from '@/assets/icons/upload.svg';
 
 interface FileInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'accept'> {
@@ -7,6 +7,7 @@ interface FileInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'on
   required?: boolean;
   className?: string;
   labelClassName?: string;
+  initialFile?: File | null;
   onChange?: (file: File | null) => void;
 }
 
@@ -16,6 +17,7 @@ export default function FileInput({
   className = '',
   labelClassName = '',
   required = false,
+  initialFile,
   onChange,
   disabled,
   ...props
@@ -23,6 +25,13 @@ export default function FileInput({
   const inputId = useId();
   const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // initialFile이 있으면 마운트 (파일명 설정)
+  useEffect(() => {
+    if (initialFile) {
+      setSelectedFileName(initialFile.name);
+    }
+  }, [initialFile]);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
