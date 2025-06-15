@@ -22,6 +22,29 @@ export const useGenerateProject = () => {
   });
 };
 
+// 프로젝트 수정
+export const useUpdateProject = (projectId: number) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (projectData: FormData) => {
+      const response = await axiosInstance.put(
+        API_ENDPOINTS.PROJECTS.UPDATE.replace(':projectId', String(projectId)),
+        projectData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['projects'] });
+    }
+  });
+};
+
 // 프로젝트 삭제
 export const useDeleteProject = () => {
   const queryClient = useQueryClient();
