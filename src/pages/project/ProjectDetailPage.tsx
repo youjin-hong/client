@@ -42,6 +42,7 @@ export default function ProjectDetailPage() {
         figmaUrl={projectDetail?.figmaUrl}
         serviceUrl={projectDetail?.serviceUrl}
         rootFigmaPage={projectDetail?.rootFigmaPage}
+        initialFile={projectDetail?.figmaFile || null}
         containerClassName="border-none shadow-custom rounded-15 px-6 pt-6 pb-8 space-y-4"
         disabled
       />
