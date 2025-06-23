@@ -4,16 +4,23 @@ import Textarea from '@/components/ui/textarea/TextArea';
 import DesignSourceSection from '@/pages/project/_components/projectForm/DesignSourceSection';
 import { GenerateProject } from '@/types/project.type';
 import { getFormattedToday } from '@/utils/format';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
 interface ProjectCreateFormPropsType {
-  username: string;
+  username?: string;
+  initialValues?: GenerateProject;
   onSubmit: (data: GenerateProject, actionType: 'register' | 'test', figmaFile: File | null) => void;
   onCancel: () => void;
   isLoading?: boolean;
 }
 
-export default function ProjectCreateForm({ username, onSubmit, onCancel, isLoading }: ProjectCreateFormPropsType) {
+export default function ProjectCreateForm({
+  username,
+  initialValues,
+  onSubmit,
+  onCancel,
+  isLoading
+}: ProjectCreateFormPropsType) {
   const [formData, setFormData] = useState<GenerateProject>({
     projectName: '',
     expectedTestExecution: '',
@@ -26,6 +33,14 @@ export default function ProjectCreateForm({ username, onSubmit, onCancel, isLoad
   });
 
   const [figmaFile, setFigmaFile] = useState<File | null>(null);
+
+  // initialValue가 변경될 때 formData 업데이트
+  useEffect(() => {
+    if (initialValues) {
+      setFormData(initialValues);
+      setFigmaFile(initialValues.figmaFile || null);
+    }
+  }, [initialValues]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
