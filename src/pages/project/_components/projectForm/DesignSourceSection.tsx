@@ -32,6 +32,7 @@ export default function DesignSourceSection({
           name="figmaFile"
           onChange={onFileChange}
           disabled={disabled}
+          required
           initialFile={initialFile}
           labelButton={
             <a
