@@ -6,6 +6,7 @@ import { useRunTest } from '@/store/queries/test/useTestMutations';
 import { useGenerateProject, useUpdateProject } from '@/store/queries/project/useProjectMutations';
 import { useUserProfile } from '@/store/queries/user/useUserQueries';
 import { useGetProjectDetail } from '@/store/queries/project/useProjectQueries';
+import { useState } from 'react';
 
 interface UseProjectFromHandlerProps {
   mode: 'create' | 'modify';
@@ -14,6 +15,7 @@ interface UseProjectFromHandlerProps {
 export const useProjectFromHandler = ({ mode }: UseProjectFromHandlerProps) => {
   const navigate = useNavigate();
   const { projectId } = useParams(); // URL에서 projectId 가져오기
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
   // API 호출 함수 정의
   const generateProject = useGenerateProject();
@@ -83,12 +85,18 @@ export const useProjectFromHandler = ({ mode }: UseProjectFromHandlerProps) => {
     });
   };
 
-  // 프로젝트 생성/수정 취소
+  // 프로젝트 생성/수정 취소 모달 핸들러
   const handleCancelProject = () => {
-    const isConfirmed = confirm('프로젝트 생성을 취소하시겠습니까?');
-    if (isConfirmed) {
-      navigate(ROUTES.HOME);
-    }
+    setIsCancelModalOpen(true);
+  };
+
+  const handleCloseCancelModal = () => {
+    setIsCancelModalOpen(false);
+  };
+
+  const handleConfirmCancelProject = () => {
+    setIsCancelModalOpen(false);
+    navigate(ROUTES.PROJECT_DETAIL.replace(':projectId', String(projectId)));
   };
 
   // mode를 나눠놨으므로 return문 밖에서 여기서 계산해서 밖에서 그냥 변수 갖다 쓰기
@@ -105,6 +113,9 @@ export const useProjectFromHandler = ({ mode }: UseProjectFromHandlerProps) => {
     initialValues,
     handleProjectSubmit,
     handleCancelProject,
-    isLoading
+    isLoading,
+    isCancelModalOpen,
+    handleCloseCancelModal,
+    handleConfirmCancelProject
   };
 };
