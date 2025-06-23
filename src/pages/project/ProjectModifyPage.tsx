@@ -29,8 +29,9 @@ export default function ProjectModifyPage() {
 
   return (
     <div className="w-[90%] m-auto">
-      <h1 className="font-bm text-16 text-typography-dark pl-4 pb-8">새 프로젝트 생성</h1>
+      <h1 className="font-bm text-16 text-typography-dark pl-4 pb-8">프로젝트 수정</h1>
       <ProjectCreateForm
+        mode="modify"
         username={username}
         initialValues={initialValues}
         onSubmit={handleProjectSubmit}
@@ -41,9 +42,9 @@ export default function ProjectModifyPage() {
         isOpen={isCancelModalOpen}
         onClose={handleCloseCancelModal}
         onConfirm={handleConfirmCancelProject}
-        title="프로젝트 생성 취소"
+        title="프로젝트 수정 취소"
         cancelText="취소">
-        프로젝트 생성을 취소하시겠습니까? 입력한 내용이 모두 사라집니다.
+        프로젝트 수정을 취소하시겠습니까? 입력한 내용이 모두 사라집니다.
       </CommonModal>
     </div>
   );
