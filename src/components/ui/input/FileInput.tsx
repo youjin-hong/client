@@ -71,7 +71,9 @@ export default function FileInput({
   return (
     <div>
       {label && (
-        <label htmlFor={inputId} className={`block mb-2 ml-2 font-bold text-14 text-typography-dark ${labelClassName}`}>
+        <label
+          htmlFor={inputId}
+          className={`block mb-2 ml-2 font-medium text-14 text-typography-dark ${labelClassName}`}>
           {label}
           {required && <span> (*필수)</span>}
         </label>
