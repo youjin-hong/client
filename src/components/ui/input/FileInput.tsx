@@ -1,4 +1,4 @@
-import { ChangeEvent, InputHTMLAttributes, useEffect, useId, useState } from 'react';
+import { ChangeEvent, InputHTMLAttributes, useEffect, useId, useState, ReactNode } from 'react';
 import UploadIcon from '@/assets/icons/upload.svg';
 
 interface FileInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'accept'> {
@@ -7,6 +7,8 @@ interface FileInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'on
   required?: boolean;
   className?: string;
   labelClassName?: string;
+  labelButton?: ReactNode;
+  disableLabelClick?: boolean;
   initialFile?: File | null;
   onChange?: (file: File | null) => void;
 }
@@ -16,6 +18,8 @@ export default function FileInput({
   name,
   className = '',
   labelClassName = '',
+  labelButton,
+  disableLabelClick = true,
   required = false,
   initialFile,
   onChange,
@@ -68,15 +72,25 @@ export default function FileInput({
     }
   };
 
+  const handleLabelClick = (e: React.MouseEvent<HTMLLabelElement>) => {
+    if (disableLabelClick) {
+      e.preventDefault();
+    }
+  };
+
   return (
     <div>
       {label && (
-        <label
-          htmlFor={inputId}
-          className={`block mb-2 ml-2 font-medium text-14 text-typography-dark ${labelClassName}`}>
-          {label}
-          {required && <span> (*필수)</span>}
-        </label>
+        <div className="flex items-center gap-4 mb-2 ml-2">
+          <label
+            htmlFor={disableLabelClick ? undefined : inputId}
+            className={`font-medium text-14 text-typography-dark ${disableLabelClick ? 'cursor-default' : 'cursor-pointer'} ${labelClassName}`}
+            onClick={handleLabelClick}>
+            {label}
+            {required && <span> (*필수)</span>}
+          </label>
+          {labelButton && <div className="flex items-center">{labelButton}</div>}
+        </div>
       )}
       <label
         htmlFor={inputId}
