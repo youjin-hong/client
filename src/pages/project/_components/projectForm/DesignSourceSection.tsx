@@ -33,6 +33,15 @@ export default function DesignSourceSection({
           onChange={onFileChange}
           disabled={disabled}
           initialFile={initialFile}
+          labelButton={
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border-0 border-b border-blue-500 text-blue-500 hover:text-blue-700 font-medium text-11"
+              href="https://www.youtube.com/embed/pZ-hYhXEerU?autoplay=0&mute=1&loop=1&playlist=pZ-hYhXEerU">
+              업로드 방법
+            </a>
+          }
         />
         <Input
           label="피그마 시안 URL"
