@@ -1,8 +1,8 @@
 import ProjectCreateForm from '@/pages/project/_components/projectForm/ProjectCreateForm';
-import { useProjectFromHandler } from '@/pages/project/_hooks/useProjectFromHandler';
+import { useProjectFormHandler } from '@/pages/project/_hooks/useProjectFormHandler';
 
 export default function ProjectCreatePage() {
-  const { isPending, isError, username, handleProjectSubmit, handleCancelProject, isLoading } = useProjectFromHandler({
+  const { isPending, isError, username, handleProjectSubmit, handleCancelProject, isLoading } = useProjectFormHandler({
     mode: 'create'
   });
 

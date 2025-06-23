@@ -1,6 +1,6 @@
 import CommonModal from '@/components/modal/CommonModal';
 import ProjectCreateForm from '@/pages/project/_components/projectForm/ProjectCreateForm';
-import { useProjectFromHandler } from '@/pages/project/_hooks/useProjectFromHandler';
+import { useProjectFormHandler } from '@/pages/project/_hooks/useProjectFormHandler';
 import { BeatLoader } from 'react-spinners';
 
 export default function ProjectModifyPage() {
@@ -15,7 +15,7 @@ export default function ProjectModifyPage() {
     isCancelModalOpen,
     handleCloseCancelModal,
     handleConfirmCancelProject
-  } = useProjectFromHandler({
+  } = useProjectFormHandler({
     mode: 'modify'
   });
 

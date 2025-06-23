@@ -12,7 +12,7 @@ interface UseProjectFromHandlerProps {
   mode: 'create' | 'modify';
 }
 
-export const useProjectFromHandler = ({ mode }: UseProjectFromHandlerProps) => {
+export const useProjectFormHandler = ({ mode }: UseProjectFromHandlerProps) => {
   const navigate = useNavigate();
   const { projectId } = useParams(); // URL에서 projectId 가져오기
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
