@@ -1,12 +1,23 @@
+import CommonModal from '@/components/modal/CommonModal';
 import ProjectCreateForm from '@/pages/project/_components/projectForm/ProjectCreateForm';
 import { useProjectFromHandler } from '@/pages/project/_hooks/useProjectFromHandler';
 import { BeatLoader } from 'react-spinners';
 
 export default function ProjectModifyPage() {
-  const { isPending, isError, username, initialValues, handleProjectSubmit, handleCancelProject, isLoading } =
-    useProjectFromHandler({
-      mode: 'modify'
-    });
+  const {
+    isPending,
+    isError,
+    username,
+    initialValues,
+    handleProjectSubmit,
+    handleCancelProject,
+    isLoading,
+    isCancelModalOpen,
+    handleCloseCancelModal,
+    handleConfirmCancelProject
+  } = useProjectFromHandler({
+    mode: 'modify'
+  });
 
   if (isPending)
     return (
@@ -26,6 +37,14 @@ export default function ProjectModifyPage() {
         onCancel={handleCancelProject}
         isLoading={isLoading}
       />
+      <CommonModal
+        isOpen={isCancelModalOpen}
+        onClose={handleCloseCancelModal}
+        onConfirm={handleConfirmCancelProject}
+        title="프로젝트 생성 취소"
+        cancelText="취소">
+        프로젝트 생성을 취소하시겠습니까? 입력한 내용이 모두 사라집니다.
+      </CommonModal>
     </div>
   );
 }
