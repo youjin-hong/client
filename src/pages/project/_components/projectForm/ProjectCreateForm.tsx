@@ -49,7 +49,7 @@ export default function ProjectCreateForm({
   useEffect(() => {
     if (initialValues) {
       setFormData(initialValues);
-      setFigmaFile(initialValues.figmaFile || null);
+      setFigmaFile(initialValues?.figmaFile || null);
     }
   }, [initialValues]);
 
