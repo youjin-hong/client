@@ -44,7 +44,7 @@ export default function ProjectModifyPage() {
         onConfirm={handleConfirmCancelProject}
         title="프로젝트 수정 취소"
         cancelText="취소">
-        프로젝트 수정을 취소하시겠습니까? 입력한 내용이 모두 사라집니다.
+        프로젝트 수정을 취소하시겠습니까? 수정한 내용이 모두 사라집니다.
       </CommonModal>
     </div>
   );
