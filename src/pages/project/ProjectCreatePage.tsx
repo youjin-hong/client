@@ -1,8 +1,19 @@
+import CommonModal from '@/components/modal/CommonModal';
 import ProjectCreateForm from '@/pages/project/_components/projectForm/ProjectCreateForm';
 import { useProjectFormHandler } from '@/pages/project/_hooks/useProjectFormHandler';
 
 export default function ProjectCreatePage() {
-  const { isPending, isError, username, handleProjectSubmit, handleCancelProject, isLoading } = useProjectFormHandler({
+  const {
+    isPending,
+    isError,
+    username,
+    handleProjectSubmit,
+    handleCancelProject,
+    isLoading,
+    isCancelModalOpen,
+    handleCloseCancelModal,
+    handleConfirmCancelProject
+  } = useProjectFormHandler({
     mode: 'create'
   });
 
@@ -20,6 +31,14 @@ export default function ProjectCreatePage() {
         onCancel={handleCancelProject}
         isLoading={isLoading}
       />
+      <CommonModal
+        isOpen={isCancelModalOpen}
+        onClose={handleCloseCancelModal}
+        onConfirm={handleConfirmCancelProject}
+        title="프로젝트 생성 취소"
+        cancelText="취소">
+        프로젝트 생성을 취소하시겠습니까? 입력한 내용이 모두 사라집니다.
+      </CommonModal>
     </div>
   );
 }
