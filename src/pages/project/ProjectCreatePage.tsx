@@ -1,43 +1,44 @@
-import { ROUTES } from '@/constants';
+import CommonModal from '@/components/modal/CommonModal';
 import ProjectCreateForm from '@/pages/project/_components/projectForm/ProjectCreateForm';
-import { useProjectForm } from '@/pages/project/_hooks/useCreateProject';
-import { useUserProfile } from '@/store/queries/user/useUserQueries';
-import { useNavigate } from 'react-router-dom';
+import { useProjectFormHandler } from '@/pages/project/_hooks/useProjectFormHandler';
 
 export default function ProjectCreatePage() {
-  const navigate = useNavigate();
-  const { data: userData, isPending: isUserDataLoading, isError: isUserDataError } = useUserProfile();
+  const {
+    isPending,
+    isError,
+    username,
+    handleProjectSubmit,
+    handleCancelProject,
+    isLoading,
+    isCancelModalOpen,
+    handleCloseCancelModal,
+    handleConfirmCancelProject
+  } = useProjectFormHandler({
+    mode: 'create'
+  });
 
-  const handleNavigate = (actionType: 'register' | 'test', projectId?: number) => {
-    if (actionType === 'register') {
-      navigate(ROUTES.PROJECT_DETAIL.replace(':projectId', String(projectId)));
-    } else if (actionType === 'test') {
-      navigate(ROUTES.TESTS);
-    }
-  };
-
-  const { handleProjectSubmit, isLoading } = useProjectForm(userData, handleNavigate);
-
-  const handleCancelProject = () => {
-    const isConfirmed = confirm('프로젝트 생성을 취소하시겠습니까?');
-    if (isConfirmed) {
-      navigate(ROUTES.HOME); // TODO: confirm 부분 나중에 modal로 바꾸기
-    }
-  };
-
-  if (isUserDataLoading) return <div className="py-20 text-center">사용자 정보 로딩 중...</div>;
-  if (isUserDataError || !userData)
+  if (isPending) return <div className="py-20 text-center">사용자 정보 로딩 중...</div>;
+  if (isError || !username)
     return <div className="py-20 text-center text-red-500">사용자 정보 불러오는 중 오류가 발생했습니다.</div>;
 
   return (
     <div className="w-[90%] m-auto">
       <h1 className="font-bm text-16 text-typography-dark pl-4 pb-8">새 프로젝트 생성</h1>
       <ProjectCreateForm
-        username={userData.username}
+        mode="create"
+        username={username}
         onSubmit={handleProjectSubmit}
         onCancel={handleCancelProject}
         isLoading={isLoading}
       />
+      <CommonModal
+        isOpen={isCancelModalOpen}
+        onClose={handleCloseCancelModal}
+        onConfirm={handleConfirmCancelProject}
+        title="프로젝트 생성 취소"
+        cancelText="취소">
+        프로젝트 생성을 취소하시겠습니까? 입력한 내용이 모두 사라집니다.
+      </CommonModal>
     </div>
   );
 }

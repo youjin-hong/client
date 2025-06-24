@@ -4,16 +4,25 @@ import Textarea from '@/components/ui/textarea/TextArea';
 import DesignSourceSection from '@/pages/project/_components/projectForm/DesignSourceSection';
 import { GenerateProject } from '@/types/project.type';
 import { getFormattedToday } from '@/utils/format';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 
 interface ProjectCreateFormPropsType {
-  username: string;
+  username?: string;
+  initialValues?: GenerateProject;
+  mode?: 'create' | 'modify';
   onSubmit: (data: GenerateProject, actionType: 'register' | 'test', figmaFile: File | null) => void;
   onCancel: () => void;
   isLoading?: boolean;
 }
 
-export default function ProjectCreateForm({ username, onSubmit, onCancel, isLoading }: ProjectCreateFormPropsType) {
+export default function ProjectCreateForm({
+  username,
+  initialValues,
+  mode = 'create',
+  onSubmit,
+  onCancel,
+  isLoading
+}: ProjectCreateFormPropsType) {
   const [formData, setFormData] = useState<GenerateProject>({
     projectName: '',
     expectedTestExecution: '',
@@ -22,10 +31,31 @@ export default function ProjectCreateForm({ username, onSubmit, onCancel, isLoad
     figmaUrl: '',
     serviceUrl: '',
     rootFigmaPage: '',
-    figmaFile: null
+    figmaFile: null,
+    fileName: null
   });
 
   const [figmaFile, setFigmaFile] = useState<File | null>(null);
+
+  // mode에 따른 텍스트 설정
+  const buttonTexts = useMemo(() => {
+    const baseText = mode === 'modify' ? '수정' : '등록';
+    return {
+      primary: isLoading ? `${baseText} 중...` : baseText,
+      secondary: isLoading ? `${baseText} 및 테스트 중...` : `${baseText} 후 테스트 생성하기`
+    };
+  }, [mode, isLoading]);
+
+  // initialValue가 변경될 때 formData 업데이트
+  useEffect(() => {
+    if (initialValues) {
+      setFormData({
+        ...initialValues,
+        fileName: initialValues.fileName || null
+      });
+      setFigmaFile(initialValues?.figmaFile || null);
+    }
+  }, [initialValues]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -37,10 +67,11 @@ export default function ProjectCreateForm({ username, onSubmit, onCancel, isLoad
 
   const handleFileChange = (file: File | null) => {
     setFigmaFile(file);
-  };
 
-  const handleSubmitProjectCreateForm = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    setFormData((prev) => ({
+      ...prev,
+      fileName: file?.name || null
+    }));
   };
 
   const handleRegisterProject = () => {
@@ -52,7 +83,7 @@ export default function ProjectCreateForm({ username, onSubmit, onCancel, isLoad
   };
 
   return (
-    <form onSubmit={handleSubmitProjectCreateForm} className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6">
       <section className="space-y-5">
         <Input label="프로젝트명" required name="projectName" value={formData.projectName} onChange={handleChange} />
         <Input
@@ -88,28 +119,17 @@ export default function ProjectCreateForm({ username, onSubmit, onCancel, isLoad
           figmaUrl={formData.figmaUrl}
           serviceUrl={formData.serviceUrl}
           rootFigmaPage={formData.rootFigmaPage}
+          fileName={formData.fileName}
           onChange={handleChange}
           onFileChange={handleFileChange}
         />
 
         <div className="flex justify-center gap-10 children:px-8 children:font-medium">
-          <Button
-            text={isLoading ? '등록 중...' : '등록'}
-            type="button"
-            data-submit-type="register"
-            onClick={handleRegisterProject}
-            disabled={isLoading}
-          />
-          <Button
-            text={isLoading ? '등록 및 테스트 중...' : '등록 후 테스트 생성하기'}
-            type="button"
-            data-submit-type="test after register"
-            onClick={handleRegisterAndTest}
-            disabled={isLoading}
-          />
+          <Button text={buttonTexts.primary} type="button" onClick={handleRegisterProject} disabled={isLoading} />
+          <Button text={buttonTexts.secondary} type="button" onClick={handleRegisterAndTest} disabled={isLoading} />
           <Button text="취소" type="button" data-submit-type="cancel" onClick={onCancel} disabled={isLoading} />
         </div>
       </section>
-    </form>
+    </div>
   );
 }

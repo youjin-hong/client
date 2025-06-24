@@ -41,7 +41,7 @@ export default function Input({
         id={inputId}
         type="text"
         className={`w-full bg-background border-[0.5px] border-typography-gray rounded-15 px-4 py-3 placeholder:text-typography-gray focus:border-typography-dark focus:outline-none ${className}`}
-        value={value}
+        value={value || ''}
         name={name}
         onChange={onChange}
         onKeyUp={handleKeyUp}
