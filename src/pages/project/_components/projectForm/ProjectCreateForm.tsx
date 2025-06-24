@@ -31,7 +31,8 @@ export default function ProjectCreateForm({
     figmaUrl: '',
     serviceUrl: '',
     rootFigmaPage: '',
-    figmaFile: null
+    figmaFile: null,
+    fileName: null
   });
 
   const [figmaFile, setFigmaFile] = useState<File | null>(null);
@@ -48,7 +49,10 @@ export default function ProjectCreateForm({
   // initialValue가 변경될 때 formData 업데이트
   useEffect(() => {
     if (initialValues) {
-      setFormData(initialValues);
+      setFormData({
+        ...initialValues,
+        fileName: initialValues.fileName || null
+      });
       setFigmaFile(initialValues?.figmaFile || null);
     }
   }, [initialValues]);
@@ -63,6 +67,11 @@ export default function ProjectCreateForm({
 
   const handleFileChange = (file: File | null) => {
     setFigmaFile(file);
+
+    setFormData((prev) => ({
+      ...prev,
+      fileName: file?.name || null
+    }));
   };
 
   const handleRegisterProject = () => {
@@ -110,6 +119,7 @@ export default function ProjectCreateForm({
           figmaUrl={formData.figmaUrl}
           serviceUrl={formData.serviceUrl}
           rootFigmaPage={formData.rootFigmaPage}
+          fileName={formData.fileName}
           onChange={handleChange}
           onFileChange={handleFileChange}
         />

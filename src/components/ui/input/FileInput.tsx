@@ -9,7 +9,7 @@ interface FileInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'on
   labelClassName?: string;
   labelButton?: ReactNode;
   disableLabelClick?: boolean;
-  initialFile?: File | null;
+  fileName?: string | null;
   onChange?: (file: File | null) => void;
 }
 
@@ -21,7 +21,7 @@ export default function FileInput({
   labelButton,
   disableLabelClick = true,
   required = false,
-  initialFile,
+  fileName,
   onChange,
   disabled,
   ...props
@@ -32,10 +32,10 @@ export default function FileInput({
 
   // initialFile이 있으면 마운트 (파일명 설정)
   useEffect(() => {
-    if (initialFile) {
-      setSelectedFileName(initialFile.name);
+    if (fileName) {
+      setSelectedFileName(fileName);
     }
-  }, [initialFile]);
+  }, [fileName]);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;

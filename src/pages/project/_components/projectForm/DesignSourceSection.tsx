@@ -10,7 +10,7 @@ interface DesignSourceProps {
   onFileChange?: (file: File | null) => void;
   disabled?: boolean;
   containerClassName?: string;
-  initialFile?: File | null;
+  fileName?: string | null;
 }
 
 export default function DesignSourceSection({
@@ -21,7 +21,7 @@ export default function DesignSourceSection({
   onFileChange,
   disabled = false,
   containerClassName = 'border-[0.5px] border-typography-gray rounded-15 px-6 pt-6 pb-8 space-y-4',
-  initialFile
+  fileName
 }: DesignSourceProps) {
   return (
     <div>
@@ -33,7 +33,7 @@ export default function DesignSourceSection({
           onChange={onFileChange}
           disabled={disabled}
           required
-          initialFile={initialFile}
+          fileName={fileName}
           labelButton={
             <a
               target="_blank"

@@ -33,4 +33,5 @@ export interface GenerateProject {
   serviceUrl: string;
   rootFigmaPage: string;
   administrator?: string;
+  fileName?: string | null;
 }

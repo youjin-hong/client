@@ -50,6 +50,7 @@ export const useProjectFormHandler = ({ mode }: UseProjectFromHandlerProps) => {
       rootFigmaPage: formData.rootFigmaPage,
       administrator: userData?.administrator || null,
       actionType: actionType,
+      fileName: figmaFile?.name || formData.fileName || null,
       ...(mode === 'modify' && { projectId: Number(projectId) })
     };
 
@@ -59,7 +60,7 @@ export const useProjectFormHandler = ({ mode }: UseProjectFromHandlerProps) => {
       data.append('file', figmaFile, figmaFile.name);
     } else {
       // 빈 파일 생성 -> 백엔드에서 빈 파일로 받으면 기존 파일 유지해줘야 할 듯
-      const emptyJsonFile = new File(['{}'], 'empty.json', {
+      const emptyJsonFile = new File(['{}'], formData?.fileName || 'empty.json', {
         type: 'application/json'
       });
       data.append('file', emptyJsonFile);
@@ -77,7 +78,7 @@ export const useProjectFormHandler = ({ mode }: UseProjectFromHandlerProps) => {
     }
 
     const data = createFormData(formData, actionType, figmaFile);
-    const mutation = mode === 'create' ? generateProject : updateProject!;
+    const mutation = mode === 'create' ? generateProject : updateProject;
 
     mutation.mutate(data, {
       onSuccess: (response) => {
