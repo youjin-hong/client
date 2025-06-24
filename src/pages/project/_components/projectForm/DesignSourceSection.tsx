@@ -28,7 +28,7 @@ export default function DesignSourceSection({
       <h2 className="font-bold text-14 text-typography-dark pl-4 py-3">디자인 소스</h2>
       <div className={containerClassName}>
         <FileInput
-          label="피그마 시안 파일 업로드"
+          label="피그마 시안 파일"
           name="figmaFile"
           onChange={onFileChange}
           disabled={disabled}
