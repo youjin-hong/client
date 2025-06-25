@@ -12,17 +12,21 @@ export default function ProjectPageTable({ pages = [] }: ProjectPageTableProps) 
         <table className="w-full text-center">
           <thead>
             <tr className="text-14 text-typography-dark font-bold border-b border-b-[#CCCCCC]">
-              <th className="py-2">페이지명</th>
-              <th className="py-2">페이지 URL</th>
+              <th className="py-2 w-full min-w-0 max-w-full overflow-hidden truncate whitespace-nowrap">페이지명</th>
+              <th className="py-2 w-full min-w-0 max-w-full overflow-hidden truncate whitespace-nowrap">페이지 URL</th>
             </tr>
           </thead>
           <tbody>
             {pages.length > 0 ? (
               pages.map((page, index) => (
                 <tr key={index} className="children:font-medium text-11 text-typography-dark">
-                  <td className="py-2">{page.pageName}</td>
-                  <td className="py-2">
-                    <p>{page.pageBaseUrl}</p>
+                  <td className="py-2 w-full min-w-0 max-w-full overflow-hidden truncate whitespace-nowrap">
+                    {page.pageName}
+                  </td>
+                  <td className="py-2 w-full min-w-0 max-w-full overflow-hidden truncate whitespace-nowrap">
+                    <p className="w-full min-w-0 max-w-full overflow-hidden truncate whitespace-nowrap">
+                      {page.pageBaseUrl}
+                    </p>
                   </td>
                 </tr>
               ))

@@ -24,7 +24,10 @@ export default {
       colors: colors,
       borderRadius: shape.radius,
       boxShadow: shape.boxShadow,
-      fontSize: typography.fontSize
+      fontSize: typography.fontSize,
+      screens: {
+        xl2: '1250px'
+      }
     },
     keyframes: {
       flowAlongLine: {

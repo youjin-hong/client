@@ -4,10 +4,12 @@ import Sidebar from '@/components/layout/sidebar/Sidebar';
 import { ROUTES } from '@/constants';
 import { useAppSelector } from '@/store/redux/store';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function Layout() {
   const location = useLocation();
   const { isLoggedIn } = useAppSelector((state) => state.auth);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // 현재 경로
   const currentPath = location.pathname;
@@ -47,12 +49,24 @@ export default function Layout() {
   }
 
   return (
-    <div className={`min-h-screen bg-background ${shouldHideSidebarAndHeader ? '' : 'flex'}`}>
-      {!shouldHideSidebarAndHeader && <Sidebar />}
-      <div className={`flex flex-col w-full ${shouldHideSidebarAndHeader ? '' : 'ml-[280px]'}`}>
-        <div className={`px-8 w-full`}>
-          {!shouldHideSidebarAndHeader && <Header />}
-          <main className={`flex-grow py-4`}>
+    <div className={`min-h-screen bg-background min-w-[450px] ${shouldHideSidebarAndHeader ? '' : 'flex'}`}>
+      {/* 데스크탑: 기존 사이드바, 모바일: 오버레이 사이드바 */}
+      {!shouldHideSidebarAndHeader && (
+        <>
+          {/* 데스크탑 사이드바 */}
+          <div className="hidden md:block">
+            <Sidebar />
+          </div>
+          {/* 모바일 오버레이 사이드바 */}
+          <div className="block md:hidden">
+            <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+          </div>
+        </>
+      )}
+      <div className={`flex flex-col w-full ${shouldHideSidebarAndHeader ? '' : 'md:ml-[280px]'}`}>
+        <div className="w-full">
+          {!shouldHideSidebarAndHeader && <Header onMenuClick={() => setSidebarOpen((prev) => !prev)} />}
+          <main className="flex-grow py-4 pt-[90px] md:pt-0">
             <Outlet />
           </main>
         </div>
