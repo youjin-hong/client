@@ -10,7 +10,7 @@ interface OverviewCardProps {
 const OverviewCard: React.FC<OverviewCardProps> = ({ icon, title, value, unit }) => (
   <div
     className="flex flex-col items-center md:items-start justify-between
-               w-full max-w-[322px] min-w-[180px] h-[200px] md:h-[219px]
+               w-full max-w-[90vw] sm:max-w-[322px] min-w-[180px] h-[200px] md:h-[219px]
                px-6 md:px-[32px] py-6 md:py-[24px]
                rounded-[20px] bg-[#F5F5F5]
                shadow-[0_0_4px_rgba(0,0,0,0.25)] transition-shadow duration-300 hover:shadow-[0_4px_12px_rgba(0,0,0,0.2)]">

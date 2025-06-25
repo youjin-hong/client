@@ -45,7 +45,7 @@ export default function TableItem<T>({
             className={`font-bold text-typography-dark text-14 flex items-center justify-${
               column.align || 'center'
             } ${column.width ? `w-[${column.width}]` : ''}`}>
-            <th>{column.label}</th>
+            <th className="w-full min-w-0 max-w-full overflow-hidden truncate whitespace-nowrap">{column.label}</th>
           </tr>
         ))}
       </thead>
@@ -62,7 +62,7 @@ export default function TableItem<T>({
                 key={`${itemIndex}-${column.id}`}
                 className={`flex items-center justify-${
                   column.align || 'center'
-                } ${column.width ? `w-[${column.width}]` : ''} font-medium text-typography-dark text-11 `}>
+                } ${column.width ? `w-[${column.width}]` : ''} font-medium text-typography-dark text-11 w-full min-w-0 max-w-full overflow-hidden truncate whitespace-nowrap`}>
                 {renderCell(column, item, itemIndex)}
               </td>
             ))}
