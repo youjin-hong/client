@@ -40,7 +40,7 @@ export default function SearchHeader({
         <Input
           type="text"
           placeholder="프로젝트 검색"
-          className="w-full max-h-[35px] rounded-20 pl-10 border-[0.5px] border-typography-gray"
+          className="w-full max-h-[35px] rounded-20 pl-10 border-[0.5px] border-typography-gray max-md:placeholder:text-[12px]"
           value={inputValue}
           onChange={(e) => onInputChange(e.target.value)}
           onKeyUp={(e: KeyboardEvent<HTMLInputElement>) => {
