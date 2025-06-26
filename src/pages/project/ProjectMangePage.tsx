@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/redux/store';
 import { BeatLoader } from 'react-spinners';
 import TableListCard from '@/pages/project/_components/responsive_tableListCard/TableListCard';
+import ScrollToTopButton from '@/components/ui/scrollTopButton/ScrollToTopButton';
 
 const columns = [
   { id: 'projectName', label: '프로젝트 명' },
@@ -46,71 +47,75 @@ export default function ProjectMangePage() {
   if (isError) return <div>오류가 발생했습니다.</div>;
 
   return (
-    <div className="w-[90%] flex flex-col m-auto">
-      <ProjectTitle />
-      {projects.length === 0 ? (
-        <div className="w-full text-center py-20 text-typography-gray text-16 font-medium">
-          <p>검색 결과가 없습니다.</p>
-        </div>
-      ) : (
-        <>
-          <div className="hidden md:block">
-            <TableItem
-              columns={columns}
-              items={projects}
-              onItemClick={handleItemClick}
-              className="w-full"
-              renderCell={(column, item) => {
-                if (column.id === 'projectStatus') {
-                  return <StatusBadge status={item.projectStatus} />;
-                }
-                if (column.id === 'projectMember') {
-                  return (
-                    <div className="flex -space-x-1 overflow-hidden">
-                      <img
-                        className="inline-block size-6 rounded-full ring-2 ring-white"
-                        src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      />
-                      <img
-                        className="inline-block size-6 rounded-full ring-2 ring-white"
-                        src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      />
-                      <img
-                        className="inline-block size-6 rounded-full ring-2 ring-white"
-                        src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
-                        alt=""
-                      />
-                      <img
-                        className="inline-block size-6 rounded-full ring-2 ring-white"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      />
-                    </div>
-                  );
-                }
-                if (column.id === 'testRate') {
-                  if (item.testRate === null) {
-                    return <span>-</span>;
-                  } else {
-                    return <span>{item.testRate}%</span>;
+    <>
+      <div className="w-[90%] flex flex-col m-auto">
+        <ProjectTitle />
+        {projects.length === 0 ? (
+          <div className="w-full text-center py-20 text-typography-gray text-16 font-medium">
+            <p>검색 결과가 없습니다.</p>
+          </div>
+        ) : (
+          <>
+            <div className="hidden md:block">
+              <TableItem
+                columns={columns}
+                items={projects}
+                onItemClick={handleItemClick}
+                className="w-full"
+                renderCell={(column, item) => {
+                  if (column.id === 'projectStatus') {
+                    return <StatusBadge status={item.projectStatus} />;
                   }
-                }
+                  if (column.id === 'projectMember') {
+                    return (
+                      <div className="flex -space-x-1 overflow-hidden">
+                        <img
+                          className="inline-block size-6 rounded-full ring-2 ring-white"
+                          src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                          alt=""
+                        />
+                        <img
+                          className="inline-block size-6 rounded-full ring-2 ring-white"
+                          src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                          alt=""
+                        />
+                        <img
+                          className="inline-block size-6 rounded-full ring-2 ring-white"
+                          src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
+                          alt=""
+                        />
+                        <img
+                          className="inline-block size-6 rounded-full ring-2 ring-white"
+                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                          alt=""
+                        />
+                      </div>
+                    );
+                  }
+                  if (column.id === 'testRate') {
+                    if (item.testRate === null) {
+                      return <span>-</span>;
+                    } else {
+                      return <span>{item.testRate}%</span>;
+                    }
+                  }
 
-                return item[column.id as keyof typeof item];
-              }}
-            />
-          </div>
+                  return item[column.id as keyof typeof item];
+                }}
+              />
+            </div>
 
-          {/* md(768px) 이하 사이즈일 때 카드 형태로 변경 */}
-          <div className="md:hidden grid grid-cols-2 max-sm:grid-cols-1 gap-4">
-            {projects.map((project: ProjectListData) => (
-              <TableListCard key={project.projectId} project={project} onClick={() => handleItemClick(project)} />
-            ))}
-          </div>
-        </>
-      )}
-    </div>
+            {/* md(768px) 이하 사이즈일 때 카드 형태로 변경 */}
+            <div className="md:hidden grid grid-cols-2 max-sm:grid-cols-1 gap-4">
+              {projects.map((project: ProjectListData) => (
+                <TableListCard key={project.projectId} project={project} onClick={() => handleItemClick(project)} />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+
+      <ScrollToTopButton />
+    </>
   );
 }
