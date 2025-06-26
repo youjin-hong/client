@@ -35,7 +35,7 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
     <header className="fixed top-4 left-1/2 -translate-x-1/2 z-[999] w-[95vw] max-w-2xl bg-background/90 backdrop-blur-md flex items-center justify-between px-4 py-2 rounded-full shadow-lg transition-all md:static md:top-0 md:left-0 md:translate-x-0 md:w-full md:max-w-full md:rounded-none md:shadow-none md:px-8 md:py-6">
       {/* 모바일 햄버거 메뉴 */}
       {onMenuClick && (
-        <button className="block md:hidden mr-2 p-2 rounded-full hover:bg-gray-100 transition" onClick={onMenuClick}>
+        <button className="block lg:hidden mr-2 p-2 rounded-full hover:bg-gray-100 transition" onClick={onMenuClick}>
           <svg width="28" height="28" fill="none" stroke="currentColor">
             <path strokeLinecap="round" strokeWidth="2" d="M4 7h20M4 14h20M4 21h20" />
           </svg>
@@ -63,21 +63,21 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
           }}
         />
       </div>
-      <div className="flex items-center gap-2 md:gap-4 min-w-0">
+      <div className="flex items-center gap-2 lg:gap-4 min-w-0">
         {/* 알림 버튼 (모바일에서는 숨김) */}
-        <div className="hidden md:flex items-center">
+        <div className="hidden lg:flex items-center">
           <button>
             <img src={notificationIcon} alt="notification button" />
           </button>
         </div>
         {/* 프로필 버튼 */}
-        <button className="flex items-center min-w-0 max-w-[120px] md:max-w-44 gap-2 rounded-full px-3 py-1 bg-white shadow md:shadow-none overflow-hidden">
-          <div className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden flex-shrink-0">
+        <button className="flex items-center min-w-0 max-w-[120px] lg:max-w-44 gap-2 rounded-full px-3 py-1 bg-white shadow lg:shadow-none overflow-hidden">
+          <div className="w-8 h-8 lg:w-9 lg:h-9 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden flex-shrink-0">
             <img src={profileImg} alt="profile img" className="w-full h-full object-cover" />
           </div>
           <div className="flex flex-col justify-center items-start min-w-0">
-            <p className="font-bm text-xs md:text-sm truncate max-w-[60px] md:max-w-[100px]">{profile?.username}</p>
-            <p className="font-medium text-[10px] md:text-7 text-typography-gray truncate max-w-[60px] md:max-w-[100px]">
+            <p className="font-bm text-xs lg:text-sm truncate max-w-[60px] lg:max-w-[100px]">{profile?.username}</p>
+            <p className="font-medium text-[10px] lg:text-7 text-typography-gray truncate max-w-[60px] lg:max-w-[100px]">
               Test Automation Developer
             </p>
           </div>

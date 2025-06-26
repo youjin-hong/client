@@ -58,12 +58,12 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
     <>
       {/* 모바일 오버레이 */}
       <div
-        className={`fixed inset-0 bg-black/50 z-[998] transition-opacity duration-300 md:hidden ${open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 bg-black/50 z-[998] transition-opacity duration-300 lg:hidden ${open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={onClose}
       />
       {/* 사이드바 */}
       <aside
-        className={`fixed top-0 left-0 h-full w-[80vw] max-w-[320px] min-w-[280px] min-[450px]:min-w-[450px] bg-pointColor rounded-2xl shadow-xl z-[999] px-4 pt-24 pb-6 flex flex-col transition-transform duration-300 md:hidden ${open ? 'translate-x-0' : '-translate-x-full'}`}>
+        className={`fixed top-0 left-0 h-full w-[80vw] max-w-[320px] min-w-[280px] min-[450px]:min-w-[450px] bg-pointColor rounded-2xl shadow-xl z-[999] px-4 pt-24 pb-6 flex flex-col transition-transform duration-300 lg:hidden ${open ? 'translate-x-0' : '-translate-x-full'}`}>
         {/* 로고 */}
         <div className="w-full flex justify-center mb-6">
           <img src={smallLogo} alt="logo" className="h-10" />
