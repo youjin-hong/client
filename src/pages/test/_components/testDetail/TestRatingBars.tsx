@@ -28,8 +28,8 @@ export default function TestRatingBars({ testSummary }: TestRatingBarsProps) {
   } = testSummary;
 
   return (
-    <section className="flex  gap-6 children:py-6">
-      <div className="shadow-custom rounded-15 basis-1/4 w-full px-2 children:w-full">
+    <section className="flex gap-6 children:py-6 max-sm:flex-col max-sm:items-center max-sm:gap-6">
+      <div className="shadow-custom rounded-15 basis-1/4 w-full px-2 children:w-full max-sm:basis-auto max-sm:w-1/2">
         <CircleProgressBar
           value={calculatePercentage(totalSuccessTests, totalSuccessTests + totalFailTests)}
           label="TOTAL"
