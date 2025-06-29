@@ -47,7 +47,7 @@ export default function CheckBoxes({ filters, onChange }: CheckBoxesProps) {
   ];
 
   return (
-    <div className="flex items-center space-x-2 px-8 pb-5">
+    <div className="flex items-center space-x-2 px-8 pb-5 all:max-sm:text-[10px]">
       <label className="flex items-center gap-2 text-typography-dark font-medium text-11 select-none">
         <div className="relative flex items-center">
           <input

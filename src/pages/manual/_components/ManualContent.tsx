@@ -130,40 +130,43 @@ const ManualContent = ({ showLogo = false }: { showLogo?: boolean }) => {
         <div className="flex items-center justify-center w-full relative">
           {/* 왼쪽 화살표 */}
           <button onClick={prevSlide} className="text-5xl font-bold px-8 select-none focus:outline-none z-10">
-            <div className="w-0 h-0 border-t-[20px] border-t-transparent border-b-[20px] border-b-transparent border-r-[30px] border-r-[#97AF8F]"></div>
+            <div className="w-0 h-0 border-t-[20px] max-sm:border-t-[12px] border-t-transparent border-b-[20px] max-sm:border-b-[12px] border-b-transparent border-r-[30px] max-sm:border-r-[18px] border-r-[#97AF8F]"></div>
           </button>
           {/* 슬라이드 콘텐츠 랩퍼 - overflow-hidden 및 애니메이션 적용 */}
-          <div className="w-[1000px] h-[372px] rounded-xl bg-[#F5F5F5] shadow-md overflow-hidden relative">
+          <div className="w-full max-w-[1000px] min-h-[372px] max-lg:min-h-[600px] max-md:min-h-[500px] rounded-xl bg-[#F5F5F5] shadow-md overflow-hidden relative">
             {slides.map((slide, index) => (
               <div
                 key={slide.id}
-                className={`absolute top-0 left-0 w-full h-full p-8 flex items-center justify-between flex-shrink-0 transition-transform duration-500 ease-in-out ${index === current ? 'translate-x-0' : index < current ? '-translate-x-full' : 'translate-x-full'}`}
+                className={`absolute top-0 left-0 w-full h-full p-8 max-lg:p-4 flex max-lg:flex-col items-center justify-between flex-shrink-0 transition-transform duration-500 ease-in-out ${
+                  index === current ? 'translate-x-0' : index < current ? '-translate-x-full' : 'translate-x-full'
+                }`}
                 style={{ zIndex: index === current ? 1 : 0 }}>
                 {/* 이미지 Placeholder */}
-                <div className="w-[430px] h-[calc(100%-25%)] flex-shrink-0">
+                <div className="w-[430px] max-lg:w-full h-[calc(100%-25%)] max-lg:h-[250px] max-md:h-[200px] flex-shrink-0 max-lg:mb-4">
                   {/* Container for image */}
                   <img
                     src={slide.imageSrc}
                     alt={`Manual step ${slide.id}`}
-                    className="w-full h-full rounded-lg border border-gray-300"
+                    className="w-full h-full object-contain rounded-lg border border-gray-300"
                   />
                 </div>
                 {/* 텍스트 내용 */}
                 <div
-                  className="flex flex-col items-start ml-8 flex-grow relative overflow-y-auto"
+                  className="flex flex-col items-start ml-8 max-lg:ml-0 flex-grow relative overflow-y-auto"
                   style={{ gap: '15px' }}>
-                  <h3 className="text-xl font-bold text-typography-dark">{slide.title}</h3>
+                  <h3 className="text-xl max-lg:text-lg font-bold text-typography-dark">{slide.title}</h3>
                   <p
-                    className="text-sm leading-relaxed text-typography-dark"
+                    className="text-sm max-lg:text-xs leading-relaxed text-typography-dark"
                     style={{ lineHeight: '1.9' }}
-                    dangerouslySetInnerHTML={{ __html: slide.text }}></p>
+                    dangerouslySetInnerHTML={{ __html: slide.text }}
+                  />
                 </div>
               </div>
             ))}
           </div>
           {/* 오른쪽 화살표 */}
           <button onClick={nextSlide} className="text-5xl font-bold px-8 select-none focus:outline-none z-10">
-            <div className="w-0 h-0 border-t-[20px] border-t-transparent border-b-[20px] border-b-transparent border-l-[30px] border-l-[#97AF8F]"></div>
+            <div className="w-0 h-0 border-t-[20px] max-sm:border-t-[12px] border-t-transparent border-b-[20px] max-sm:border-b-[12px] border-b-transparent border-l-[30px] max-sm:border-l-[18px] border-l-[#97AF8F]"></div>
           </button>
         </div>
         {/* 페이지네이션 불렛 */}
