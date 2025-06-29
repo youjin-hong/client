@@ -18,9 +18,9 @@ export const useProjectFormHandler = ({ mode }: UseProjectFromHandlerProps) => {
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
   // API 호출 함수 정의
-  const generateProject = useGenerateProject();
-  const updateProject = useUpdateProject(Number(projectId));
-  const runTest = useRunTest();
+  const { mutate: generateProject, isPending: isRegisterLoading } = useGenerateProject();
+  const { mutate: updateProject } = useUpdateProject(Number(projectId));
+  const { mutate: runTest, isPending: isTestLoading } = useRunTest();
   const { data: userData, isPending: isUserDataLoading, isError: isUserDataError } = useUserProfile();
   const {
     data: projectDetail,
@@ -80,7 +80,7 @@ export const useProjectFormHandler = ({ mode }: UseProjectFromHandlerProps) => {
     const data = createFormData(formData, actionType, figmaFile);
     const mutation = mode === 'create' ? generateProject : updateProject;
 
-    mutation.mutate(data, {
+    mutation(data, {
       onSuccess: (response) => {
         const successMessage = mode === 'create' ? '프로젝트 생성이 완료되었습니다' : '프로젝트 수정이 완료되었습니다';
 
@@ -89,7 +89,7 @@ export const useProjectFormHandler = ({ mode }: UseProjectFromHandlerProps) => {
         const responseProjectId = response.data?.projectId || Number(projectId);
 
         if (actionType === 'test' && responseProjectId) {
-          runTest.mutate(responseProjectId);
+          runTest(responseProjectId);
         }
 
         handleNavigate(actionType, responseProjectId);
@@ -124,7 +124,8 @@ export const useProjectFormHandler = ({ mode }: UseProjectFromHandlerProps) => {
   const isError = mode === 'create' ? isUserDataError || !userData : isUserDataError || !userData || isProjectError;
   const username = mode === 'create' ? userData?.username : projectDetail?.projectAdmin || userData?.username;
   const initialValues = mode === 'modify' ? projectDetail : undefined;
-  const isLoading = generateProject.isPending || (updateProject?.isPending ?? false) || runTest.isPending;
+
+  const isRegisterPending = mode === 'create' && isRegisterLoading;
 
   return {
     isPending,
@@ -133,7 +134,8 @@ export const useProjectFormHandler = ({ mode }: UseProjectFromHandlerProps) => {
     initialValues,
     handleProjectSubmit,
     handleCancelProject,
-    isLoading,
+    isRegisterLoading: isRegisterPending,
+    isTestLoading,
     isCancelModalOpen,
     handleCloseCancelModal,
     handleConfirmCancelProject

@@ -9,7 +9,8 @@ export default function ProjectCreatePage() {
     username,
     handleProjectSubmit,
     handleCancelProject,
-    isLoading,
+    isRegisterLoading,
+    isTestLoading,
     isCancelModalOpen,
     handleCloseCancelModal,
     handleConfirmCancelProject
@@ -29,7 +30,8 @@ export default function ProjectCreatePage() {
         username={username}
         onSubmit={handleProjectSubmit}
         onCancel={handleCancelProject}
-        isLoading={isLoading}
+        isRegisterLoading={isRegisterLoading}
+        isTestLoading={isTestLoading}
       />
       <CommonModal
         isOpen={isCancelModalOpen}

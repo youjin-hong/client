@@ -18,7 +18,7 @@ const TestList = forwardRef<HTMLDivElement, TestListProps>(({ tests, isFetchingN
   };
 
   return (
-    <section className="grid grid-cols-2 md:grid-cols-3 gap-10">
+    <section className="grid grid-cols-3 gap-10 max-xl2:grid-cols-2 max-sm:grid-cols-1">
       {tests.length > 0 ? (
         tests.map((test) => (
           <TestListItem

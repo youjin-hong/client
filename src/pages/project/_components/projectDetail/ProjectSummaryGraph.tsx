@@ -21,7 +21,7 @@ export default function ProjectSummaryGraph({ testSummary }: ProjectSummaryGraph
 
   return (
     <>
-      <div className="py-8 px-10 basis-2/3 flex flex-col items-center gap-5 h-full w-full">
+      <div className="py-8 px-10 basis-2/3 flex flex-col items-center gap-5 h-full w-full max-sm:px-5">
         <LinearProgressBar2 value={routingPercentage} label="ROUTING" color={colors.teal_1} />
         <LinearProgressBar2 value={interactionPercentage} label="INTERACTION" color={colors.purple_1} />
         <LinearProgressBar2 value={mappingPercentage} label="COMPONENT" color={colors.brown_1} />

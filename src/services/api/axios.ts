@@ -2,6 +2,7 @@ import axios from 'axios';
 import { API_ENDPOINTS, ROUTES } from '@/constants';
 import { store } from '@/store/redux/store';
 import { logout, setToken } from '@/store/redux/reducers/auth';
+import { toast } from 'react-toastify';
 
 // refresh 재요청 queue에 들어갈 요청 형태 정의
 type FailQueueItem = {
@@ -91,11 +92,22 @@ axiosInstance.interceptors.response.use(
       } catch (refreshError) {
         processQueue(refreshError, null);
         store.dispatch(logout());
+
+        alert('로그아웃되었습니다. 다시 로그인해주세요.');
+
         window.location.href = ROUTES.LOGIN;
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;
       }
+    }
+
+    // 403(권한 부족) 에러도 강제 로그아웃 처리 (이건 혹시나 해서...)
+    if (error.response?.status === 403) {
+      store.dispatch(logout());
+      toast.error('접근 권한이 없습니다. 다시 로그인해주세요.');
+      window.location.href = ROUTES.LOGIN;
+      return Promise.reject(error);
     }
 
     return Promise.reject(error);
