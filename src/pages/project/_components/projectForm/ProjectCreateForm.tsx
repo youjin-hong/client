@@ -12,7 +12,8 @@ interface ProjectCreateFormPropsType {
   mode?: 'create' | 'modify';
   onSubmit: (data: GenerateProject, actionType: 'register' | 'test', figmaFile: File | null) => void;
   onCancel: () => void;
-  isLoading?: boolean;
+  isRegisterLoading?: boolean;
+  isTestLoading?: boolean;
 }
 
 export default function ProjectCreateForm({
@@ -21,7 +22,8 @@ export default function ProjectCreateForm({
   mode = 'create',
   onSubmit,
   onCancel,
-  isLoading
+  isRegisterLoading,
+  isTestLoading
 }: ProjectCreateFormPropsType) {
   const [formData, setFormData] = useState<GenerateProject>({
     projectName: '',
@@ -41,10 +43,10 @@ export default function ProjectCreateForm({
   const buttonTexts = useMemo(() => {
     const baseText = mode === 'modify' ? '수정' : '등록';
     return {
-      primary: isLoading ? `${baseText} 중...` : baseText,
-      secondary: isLoading ? `${baseText} 및 테스트 중...` : `${baseText} 후 테스트 생성하기`
+      primary: isRegisterLoading ? `${baseText} 중...` : baseText,
+      secondary: isTestLoading ? `${baseText} 및 테스트 중...` : `${baseText} 후 테스트 생성하기`
     };
-  }, [mode, isLoading]);
+  }, [mode, isRegisterLoading, isTestLoading]);
 
   // initialValue가 변경될 때 formData 업데이트
   useEffect(() => {
@@ -125,9 +127,21 @@ export default function ProjectCreateForm({
         />
 
         <div className="flex justify-center gap-10 children:px-8 children:font-medium">
-          <Button text={buttonTexts.primary} type="button" onClick={handleRegisterProject} disabled={isLoading} />
-          <Button text={buttonTexts.secondary} type="button" onClick={handleRegisterAndTest} disabled={isLoading} />
-          <Button text="취소" type="button" data-submit-type="cancel" onClick={onCancel} disabled={isLoading} />
+          <Button
+            text={buttonTexts.primary}
+            type="button"
+            onClick={handleRegisterProject}
+            disabled={isRegisterLoading}
+          />
+          {mode === 'create' && (
+            <Button
+              text={buttonTexts.secondary}
+              type="button"
+              onClick={handleRegisterAndTest}
+              disabled={isRegisterLoading}
+            />
+          )}
+          <Button text="취소" type="button" data-submit-type="cancel" onClick={onCancel} disabled={isRegisterLoading} />
         </div>
       </section>
     </div>

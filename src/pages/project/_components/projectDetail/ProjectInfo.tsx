@@ -18,9 +18,9 @@ export default function ProjectInfo({
 }: ProjectBasicInfoProps) {
   return (
     <section>
-      <h2 className="font-bold text-[24px] pb-4">{projectName}</h2>
+      <h2 className="font-bold text-[24px] pb-4 max-lg:text-16">{projectName}</h2>
       <div className="flex flex-col gap-3">
-        <div className="flex gap-5">
+        <div className="flex gap-5 max-lg:grid grid-cols-2 max-lg:gap-1">
           <ProjectInfoItem label="프로젝트 관리자" value={projectAdmin} />
           <ProjectInfoItem label="프로젝트 생성일" value={projectCreatedDate} />
           <ProjectInfoItem label="프로젝트 마감일" value={projectEnd} />

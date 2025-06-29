@@ -54,19 +54,19 @@ export default function Layout() {
       {!shouldHideSidebarAndHeader && (
         <>
           {/* 데스크탑 사이드바 */}
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <Sidebar />
           </div>
           {/* 모바일 오버레이 사이드바 */}
-          <div className="block md:hidden">
+          <div className="block lg:hidden">
             <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
           </div>
         </>
       )}
-      <div className={`flex flex-col w-full ${shouldHideSidebarAndHeader ? '' : 'md:ml-[280px]'}`}>
+      <div className={`flex flex-col w-full ${shouldHideSidebarAndHeader ? '' : 'lg:ml-[280px]'}`}>
         <div className="w-full">
           {!shouldHideSidebarAndHeader && <Header onMenuClick={() => setSidebarOpen((prev) => !prev)} />}
-          <main className="flex-grow py-4 pt-[90px] md:pt-0">
+          <main className="flex-grow py-4 pt-[90px] lg:pt-0">
             <Outlet />
           </main>
         </div>

@@ -11,7 +11,6 @@ export default function ProjectModifyPage() {
     initialValues,
     handleProjectSubmit,
     handleCancelProject,
-    isLoading,
     isCancelModalOpen,
     handleCloseCancelModal,
     handleConfirmCancelProject
@@ -36,7 +35,6 @@ export default function ProjectModifyPage() {
         initialValues={initialValues}
         onSubmit={handleProjectSubmit}
         onCancel={handleCancelProject}
-        isLoading={isLoading}
       />
       <CommonModal
         isOpen={isCancelModalOpen}
