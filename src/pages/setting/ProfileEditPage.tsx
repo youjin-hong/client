@@ -36,7 +36,7 @@ export default function ProfileEditPage() {
         <SettingTitle />
         <SettingCard title="Edit Profile Info" />
       </section>
-      <section className="flex w-full gap-10">
+      <section className="flex w-full gap-10 max-sm:flex-col">
         <div className="flex flex-col items-center gap-6">
           <div className="w-72 h-72 rounded-full overflow-hidden">
             <img src={profileImg} alt="profileImg" className="w-full h-full object-cover" />

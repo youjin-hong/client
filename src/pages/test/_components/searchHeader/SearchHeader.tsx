@@ -3,6 +3,7 @@ import Input from '@/components/ui/input/Input';
 import Select from '@/components/ui/select/Select';
 import Button from '@/components/ui/button/Button';
 import searchIcon from '@/assets/icons/search.svg';
+import ResetIcon from '@/assets/icons/refresh.svg?react';
 
 interface SearchHeaderProps {
   inputValue: string;
@@ -52,7 +53,11 @@ export default function SearchHeader({
       </div>
 
       <div className="flex gap-2">
-        <Button text="⭮" className="font-bold" onClick={onReset} />
+        <Button
+          leftIcon={<ResetIcon className="transition-transform duration-500 ease-out group-hover:rotate-90" />}
+          className="group [&>span:first-child]:mr-0 justify-center items-center"
+          onClick={onReset}
+        />
         <Select
           value={nameSort}
           onChange={onNameSortChange}

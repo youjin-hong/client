@@ -42,7 +42,7 @@ export default function AuthForm({ type, onSubmit }: AuthFormProps) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center max-xl2:px-8">
+    <div className="flex items-center justify-center py-12 max-xl2:px-8 max-xl2:py-0">
       <div className="flex flex-col items-center">
         <Link to={ROUTES.LANDING}>
           <img src={bigLogo} alt="AUTA big logo" className="py-20" />
