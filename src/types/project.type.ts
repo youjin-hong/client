@@ -8,13 +8,28 @@ export interface ProjectListData {
   testRate: number;
 }
 
-export interface ProjectResponse {
-  status: string;
-  message: string;
-  data: {
-    ProjectList: ProjectListData[];
-  };
-  code: number;
+export interface ProjectDetailData {
+  projectName: string;
+  projectAdmin: string;
+  projectStatus: string;
+  projectCreatedDate: string;
+  projectEnd: string;
+  testExecutionTime: string | null;
+  rootFigmaPage: string;
+  description: string;
+  fileName: string | null;
+  figmaUrl: string;
+  serviceUrl: string;
+  reportSummary: string | null;
+  testSummary: {
+    totalRoutingTest: number;
+    totalInteractionTest: number;
+    totalMappingTest: number;
+  } | null;
+  pages: Array<{
+    pageName: string;
+    pageBaseUrl: string;
+  }>;
 }
 
 export interface ProjectsParams {
