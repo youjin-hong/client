@@ -4,13 +4,19 @@ import ProjectInfo from '@/pages/project/_components/projectDetail/ProjectInfo';
 import TestTitle from '@/pages/test/_components/TestTitle';
 import TestRatingBars from '@/pages/test/_components/testDetail/TestRatingBars';
 import PageIssueSection from '@/pages/test/_components/testDetail/page-issue';
+import BeatLoader from 'react-spinners/BeatLoader';
 
 export default function TestDetailPage() {
   const params = useParams();
   const projectId = params.projectId;
   const { data: testDetail, isPending, isError } = useGetTestDetail(Number(projectId));
 
-  if (isPending) return <div className="py-20 text-center">로딩 중...</div>;
+  if (isPending)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <BeatLoader color="#B3C7AA" />
+      </div>
+    );
   if (isError) return <div className="py-20 text-center text-red-500">오류가 발생했습니다.</div>;
 
   const testBasicInfo = {

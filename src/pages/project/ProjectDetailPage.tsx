@@ -7,13 +7,19 @@ import ReportBrief from '@/pages/project/_components/projectDetail/ReportBrief';
 import ProjectControlButtons from '@/pages/project/_components/projectDetail/ProjectControlButtons';
 import ProjectPageTable from '@/pages/project/_components/projectDetail/ProjectPageTable';
 import ProjectSummaryGraph from '@/pages/project/_components/projectDetail/ProjectSummaryGraph';
+import BeatLoader from 'react-spinners/BeatLoader';
 
 export default function ProjectDetailPage() {
   const params = useParams();
   const projectId = params.projectId;
   const { data: projectDetail, isPending, isError } = useGetProjectDetail(Number(projectId));
 
-  if (isPending) return <div className="py-20 text-center">로딩 중...</div>;
+  if (isPending)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <BeatLoader color="#B3C7AA" />
+      </div>
+    );
   if (isError) return <div className="py-20 text-center text-red-500">오류가 발생했습니다.</div>;
 
   const projectBasicInfo = {
