@@ -16,16 +16,13 @@ export default function ReportBrief({ reportSummary, projectId }: ReportBriefPro
         <Button
           text="테스트 리포트 바로가기"
           className={`border-none shadow-custom h-6`}
-          onClick={() => navigate(ROUTES.EDIT_PROJECT.replace(':projectId', String(projectId)))}
-          disabled={reportSummary === null}
+          onClick={() => navigate(ROUTES.TEST_DETAIL.replace(':projectId', String(projectId)))}
         />
       </div>
       {reportSummary === null ? (
         <div className="shadow-custom rounded-15 p-4 font-medium text-11 text-typography-dark">
           <div className="border border-dashed border-typography-gray p-4 rounded-md w-full min-h-[200px] h-full flex justify-center items-center">
-            <p className="font-medium text-16 text-typography-gray">
-              아직 생성된 리포트가 없습니다. 테스트를 먼저 실행해보세요.
-            </p>
+            <p className="font-medium text-16 text-typography-gray">준비 중인 기능입니다. 조금만 기다려주세요🚀</p>
           </div>
         </div>
       ) : (

@@ -19,22 +19,20 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const baseClasses = `
-    rounded-10
-    text-11
-    text-typography-dark
-    transition-colors
-    border border-button-border
-    bg-button-default
-    hover:bg-button-hover
-    active:bg-button-press
-    disabled:opacity-50
-    disabled:cursor-not-allowed
-    flex
-    justify-center
-    items-center
-    py-2 
-    px-4
-  `;
+  rounded-10
+  text-11
+  text-typography-dark
+  transition-colors
+  border border-button-border
+  ${className?.includes('bg-') ? '' : 'bg-button-default hover:bg-button-hover active:bg-button-press'}
+  disabled:opacity-50
+  disabled:cursor-not-allowed
+  flex
+  justify-center
+  items-center
+  py-2 
+  px-4
+`;
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (disabled) return;

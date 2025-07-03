@@ -5,11 +5,12 @@ import OverviewSection from './_components/OverviewSection';
 import DashboardProjectTable from './_components/DashboardProjectTable';
 import DashboardTestTable from './_components/DashboardTestTable';
 import { useDashboardHome } from '@/store/queries/dashboard/useDashboardHomeQuery';
+import PageLoader from '@/components/ui/loader/PageLoader';
 
 export default function DashboardPage() {
   const { data, isPending, isError } = useDashboardHome();
 
-  if (isPending) return <div className="py-20 text-center">로딩 중...</div>;
+  if (isPending) return <PageLoader />;
   if (isError) return <div className="py-20 text-center text-red-500">오류가 발생했습니다.</div>;
 
   return (

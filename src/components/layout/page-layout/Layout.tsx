@@ -4,7 +4,8 @@ import Sidebar from '@/components/layout/sidebar/Sidebar';
 import { ROUTES } from '@/constants';
 import { useAppSelector } from '@/store/redux/store';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
+import PageLoader from '@/components/ui/loader/PageLoader';
 
 export default function Layout() {
   const location = useLocation();
@@ -67,7 +68,9 @@ export default function Layout() {
         <div className="w-full">
           {!shouldHideSidebarAndHeader && <Header onMenuClick={() => setSidebarOpen((prev) => !prev)} />}
           <main className="flex-grow py-4 pt-[90px] lg:pt-0 max-md:pt-28">
-            <Outlet />
+            <Suspense fallback={<PageLoader />}>
+              <Outlet />
+            </Suspense>
           </main>
         </div>
         <Footer />

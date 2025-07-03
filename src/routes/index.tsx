@@ -1,21 +1,24 @@
+import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 import { ROUTES } from '@/constants';
 import Layout from '@/components/layout/page-layout/Layout';
-import LandingPage from '@/pages/main/LandingPage';
+// 유저가 바로 보는 or 가벼운 페이지는 즉시 로딩
 import LoginPage from '@/pages/auth/LoginPage';
 import SignupPage from '@/pages/auth/SignupPage';
+import LandingPage from '@/pages/main/LandingPage';
+import DashboardPage from '@/pages/main/DashboardPage';
 import ManualPage from '@/pages/manual/ManualPage';
 import ManualPrivatePage from '@/pages/manual/ManualPrivatePage';
-import DashboardPage from '@/pages/main/DashboardPage';
-import ProjectCreatePage from '@/pages/project/ProjectCreatePage';
-import ProjectDetailPage from '@/pages/project/ProjectDetailPage';
-import ProjectMangePage from '@/pages/project/ProjectMangePage';
-import TestManagePage from '@/pages/test/TestManagePage';
-import TestDetailPage from '@/pages/test/TestDetailPage';
-import SettingPage from '@/pages/setting/SettingPage';
-import ProfileEditPage from '@/pages/setting/ProfileEditPage';
-import PasswordEditPage from '@/pages/setting/PasswordEditPage';
-import ProjectModifyPage from '@/pages/project/ProjectModifyPage';
+// 무거운 페이지, 로딩 잘 걸리는, 중요도 우선순위에서 먼 페이지는 지연 로딩
+const ProjectDetailPage = lazy(() => import('@/pages/project/ProjectDetailPage'));
+const ProjectCreatePage = lazy(() => import('@/pages/project/ProjectCreatePage'));
+const ProjectModifyPage = lazy(() => import('@/pages/project/ProjectModifyPage'));
+const ProjectMangePage = lazy(() => import('@/pages/project/ProjectMangePage'));
+const TestManagePage = lazy(() => import('@/pages/test/TestManagePage'));
+const TestDetailPage = lazy(() => import('@/pages/test/TestDetailPage'));
+const SettingPage = lazy(() => import('@/pages/setting/SettingPage'));
+const ProfileEditPage = lazy(() => import('@/pages/setting/ProfileEditPage'));
+const PasswordEditPage = lazy(() => import('@/pages/setting/PasswordEditPage'));
 
 const routes = [
   { path: ROUTES.LANDING, element: <LandingPage /> },

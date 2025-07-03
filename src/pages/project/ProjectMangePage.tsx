@@ -7,9 +7,9 @@ import { useGetProjectList } from '@/store/queries/project/useProjectQueries';
 import { ProjectListData } from '@/types/project.type';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/redux/store';
-import { BeatLoader } from 'react-spinners';
 import TableListCard from '@/pages/project/_components/responsive_tableListCard/TableListCard';
 import ScrollToTopButton from '@/components/ui/scrollTopButton/ScrollToTopButton';
+import PageLoader from '@/components/ui/loader/PageLoader';
 
 const columns = [
   { id: 'projectName', label: '프로젝트 명' },
@@ -38,12 +38,7 @@ export default function ProjectMangePage() {
     navigate(ROUTES.PROJECT_DETAIL.replace(':projectId', item.projectId.toString()));
   };
 
-  if (isPending)
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <BeatLoader color="#B3C7AA" />
-      </div>
-    );
+  if (isPending) return <PageLoader />;
   if (isError) return <div>오류가 발생했습니다.</div>;
 
   return (
