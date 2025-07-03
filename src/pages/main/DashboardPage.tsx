@@ -5,17 +5,12 @@ import OverviewSection from './_components/OverviewSection';
 import DashboardProjectTable from './_components/DashboardProjectTable';
 import DashboardTestTable from './_components/DashboardTestTable';
 import { useDashboardHome } from '@/store/queries/dashboard/useDashboardHomeQuery';
-import BeatLoader from 'react-spinners/BeatLoader';
+import PageLoader from '@/components/ui/loader/PageLoader';
 
 export default function DashboardPage() {
   const { data, isPending, isError } = useDashboardHome();
 
-  if (isPending)
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <BeatLoader color="#B3C7AA" />
-      </div>
-    );
+  if (isPending) return <PageLoader />;
   if (isError) return <div className="py-20 text-center text-red-500">오류가 발생했습니다.</div>;
 
   return (

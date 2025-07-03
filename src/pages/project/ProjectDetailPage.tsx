@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import BeatLoader from 'react-spinners/BeatLoader';
 import { useGetProjectDetail } from '@/store/queries/project/useProjectQueries';
 import { useRunTest } from '@/store/queries/test/useTestMutations';
 import CommonModal from '@/components/modal/CommonModal';
@@ -13,18 +12,14 @@ import ProjectControlButtons from '@/pages/project/_components/projectDetail/Pro
 import NotStartedState from '@/pages/project/_components/projectDetail/NotStartedState';
 import InProgressState from '@/pages/project/_components/projectDetail/InProgressState';
 import CompletedState from '@/pages/project/_components/projectDetail/CompletedState';
+import PageLoader from '@/components/ui/loader/PageLoader';
 export default function ProjectDetailPage() {
   const { projectId } = useParams();
   const { data: projectDetail, isPending, isError } = useGetProjectDetail(Number(projectId));
   const { mutate: runTestMutation, isPending: isRunningTest } = useRunTest();
   const [isRunTestModalOpen, setIsRunTestModalOpen] = useState(false);
 
-  if (isPending)
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <BeatLoader color="#B3C7AA" />
-      </div>
-    );
+  if (isPending) return <PageLoader />;
   if (isError) return <div className="py-20 text-center text-red-500">오류가 발생했습니다.</div>;
 
   const projectBasicInfo = {

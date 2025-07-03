@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { BeatLoader } from 'react-spinners';
 import UseIntersectionObserver from '@/utils/useIntersectionObserver';
 import { useGetTestListInfinite } from '@/store/queries/test/useTestQueries';
 import ScrollToTopButton from '@/components/ui/scrollTopButton/ScrollToTopButton';
 import TestTitle from '@/pages/test/_components/TestTitle';
 import SearchHeader from '@/pages/test/_components/searchHeader/SearchHeader';
 import TestList from '@/pages/test/_components/testList/TestList';
+import PageLoader from '@/components/ui/loader/PageLoader';
 
 export default function TestManagePage() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -41,12 +41,7 @@ export default function TestManagePage() {
     setDateSort('');
   };
 
-  if (isPending)
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <BeatLoader color="#B3C7AA" />
-      </div>
-    );
+  if (isPending) return <PageLoader />;
   if (isError)
     return <div className="col-span-3 text-center text-typography-gray text-16 pt-40">오류가 발생했습니다.</div>;
 

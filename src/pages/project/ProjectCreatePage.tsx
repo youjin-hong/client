@@ -1,7 +1,7 @@
 import CommonModal from '@/components/modal/CommonModal';
+import PageLoader from '@/components/ui/loader/PageLoader';
 import ProjectCreateForm from '@/pages/project/_components/projectForm/ProjectCreateForm';
 import { useProjectFormHandler } from '@/pages/project/_hooks/useProjectFormHandler';
-import { BeatLoader } from 'react-spinners';
 
 export default function ProjectCreatePage() {
   const {
@@ -19,12 +19,7 @@ export default function ProjectCreatePage() {
     mode: 'create'
   });
 
-  if (isPending)
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <BeatLoader color="#B3C7AA" />
-      </div>
-    );
+  if (isPending) return <PageLoader />;
   if (isError || !username)
     return <div className="py-20 text-center text-red-500">사용자 정보 불러오는 중 오류가 발생했습니다.</div>;
 
