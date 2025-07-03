@@ -1,19 +1,25 @@
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useGetProjectDetail } from '@/store/queries/project/useProjectQueries';
+import { useRunTest } from '@/store/queries/test/useTestMutations';
+import CommonModal from '@/components/modal/CommonModal';
 import DesignSourceSection from '@/pages/project/_components/projectForm/DesignSourceSection';
 import ProjectTitle from '@/pages/project/_components/ProjectTitle';
 import ProjectInfo from '@/pages/project/_components/projectDetail/ProjectInfo';
 import ReportBrief from '@/pages/project/_components/projectDetail/ReportBrief';
 import ProjectControlButtons from '@/pages/project/_components/projectDetail/ProjectControlButtons';
-import ProjectPageTable from '@/pages/project/_components/projectDetail/ProjectPageTable';
-import ProjectSummaryGraph from '@/pages/project/_components/projectDetail/ProjectSummaryGraph';
-
+import NotStartedState from '@/pages/project/_components/projectDetail/NotStartedState';
+import InProgressState from '@/pages/project/_components/projectDetail/InProgressState';
+import CompletedState from '@/pages/project/_components/projectDetail/CompletedState';
+import PageLoader from '@/components/ui/loader/PageLoader';
 export default function ProjectDetailPage() {
-  const params = useParams();
-  const projectId = params.projectId;
+  const { projectId } = useParams();
   const { data: projectDetail, isPending, isError } = useGetProjectDetail(Number(projectId));
+  const { mutate: runTestMutation, isPending: isRunningTest } = useRunTest();
+  const [isRunTestModalOpen, setIsRunTestModalOpen] = useState(false);
 
-  if (isPending) return <div className="py-20 text-center">로딩 중...</div>;
+  if (isPending) return <PageLoader />;
   if (isError) return <div className="py-20 text-center text-red-500">오류가 발생했습니다.</div>;
 
   const projectBasicInfo = {
@@ -25,6 +31,42 @@ export default function ProjectDetailPage() {
     testExecutionTime: projectDetail?.testExecutionTime
   };
 
+  const handleRunTest = () => {
+    runTestMutation(Number(projectId), {
+      onSuccess: () => {
+        toast.success('테스트 실행이 시작되었습니다.\n완료까지 몇 분 소요될 수 있습니다.');
+      },
+      onError: () => {
+        toast.error('테스트 실행 요청이 실패했습니다.\n다시 시도해주세요.');
+      }
+    });
+    setIsRunTestModalOpen(false);
+  };
+
+  const handleOpenTestModal = () => {
+    setIsRunTestModalOpen(true);
+  };
+
+  const handleCloseTestModal = () => {
+    setIsRunTestModalOpen(false);
+  };
+
+  // projectStatus별 렌더링 함수
+  const renderProjectStatusSection = () => {
+    const status = projectDetail?.projectStatus;
+
+    switch (status) {
+      case 'NOT_STARTED':
+        return <NotStartedState onOpenTestModal={handleOpenTestModal} isRunningTest={isRunningTest} />;
+      case 'IN_PROGRESS':
+        return <InProgressState />;
+      case 'COMPLETED':
+        return <CompletedState projectDetail={projectDetail} />;
+      default:
+        return <NotStartedState onOpenTestModal={handleOpenTestModal} isRunningTest={isRunningTest} />;
+    }
+  };
+
   return (
     <div className="w-[90%] flex flex-col m-auto">
       <ProjectTitle />
@@ -32,11 +74,12 @@ export default function ProjectDetailPage() {
       <span className="border border-typography-gray my-4"></span>
 
       <section className="flex gap-6 justify-center py-4 children:shadow-custom children:rounded-15 children:w-full">
-        <ProjectSummaryGraph testSummary={projectDetail?.testSummary} />
-        <ProjectPageTable pages={projectDetail?.pages || []} />
+        {renderProjectStatusSection()}
       </section>
 
-      <ReportBrief reportSummary={projectDetail?.reportSummary} projectId={Number(projectId)} />
+      {projectDetail?.projectStatus === 'COMPLETED' && (
+        <ReportBrief reportSummary={projectDetail?.reportSummary} projectId={Number(projectId)} />
+      )}
 
       <DesignSourceSection
         figmaUrl={projectDetail?.figmaUrl}
@@ -47,7 +90,21 @@ export default function ProjectDetailPage() {
         disabled
       />
 
-      <ProjectControlButtons projectId={Number(projectId)} projectName={projectBasicInfo.projectName} />
+      <ProjectControlButtons
+        projectId={Number(projectId)}
+        projectName={projectBasicInfo.projectName}
+        projectStatus={projectDetail?.projectStatus}
+        onOpenTestModal={handleOpenTestModal}
+      />
+
+      <CommonModal
+        isOpen={isRunTestModalOpen}
+        onClose={handleCloseTestModal}
+        onConfirm={handleRunTest}
+        title="테스트 실행"
+        cancelText="취소">
+        {projectDetail?.projectName}에 대해 테스트를 실행하시겠습니까?
+      </CommonModal>
     </div>
   );
 }

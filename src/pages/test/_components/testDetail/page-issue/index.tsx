@@ -8,6 +8,7 @@ import IssueContents from '@/pages/test/_components/testDetail/page-issue/IssueC
 import IssueTabBar, { TabMeta } from '@/pages/test/_components/testDetail/page-issue/IssueTabBar';
 import PageButtons from '@/pages/test/_components/testDetail/page-issue/PageButtons';
 import GoToFigmaButton from '@/pages/test/_components/testDetail/page-issue/GoToFigmaButton';
+import PageLoader from '@/components/ui/loader/PageLoader';
 
 interface PageIssueSectionProps {
   testDetail: TestDetail;
@@ -30,7 +31,7 @@ export default function PageIssueSection({ testDetail }: PageIssueSectionProps) 
   const { data: issueData, isLoading: isPending, isError } = useGetPageIssue(pageId);
 
   if (isPending) {
-    return <div className="py-20 text-center">페이지 이슈 로딩 중...</div>;
+    return <PageLoader />;
   }
   if (isError || !issueData) {
     return <div className="py-20 text-center text-red-500">페이지 이슈 불러오기 실패</div>;
