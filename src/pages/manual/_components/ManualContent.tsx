@@ -84,7 +84,7 @@ const ManualContent = ({ showLogo = false }: { showLogo?: boolean }) => {
       setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
     }, 7000);
     return () => clearInterval(interval);
-  }, [slides.length]);
+  }, []);
 
   const toggleFaq = (index: number) => {
     setOpenFaqIndices((prevIndices) =>

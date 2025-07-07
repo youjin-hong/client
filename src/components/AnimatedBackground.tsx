@@ -1,22 +1,19 @@
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 
 const AnimatedBackground = () => {
   const [viewportWidth, setViewportWidth] = useState(4000);
 
   // 디바운싱된 resize 핸들러
-  const debouncedResize = useCallback(
-    (() => {
-      let timeoutId: ReturnType<typeof setTimeout>;
-      return () => {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {
-          const diagonalStretch = window.innerWidth * 2;
-          setViewportWidth(diagonalStretch);
-        }, 150); // 150ms 디바운싱
-      };
-    })(),
-    []
-  );
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const debouncedResize = useCallback(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
+      const diagonalStretch = window.innerWidth * 2;
+      setViewportWidth(diagonalStretch);
+    }, 150);
+  }, [setViewportWidth]);
 
   useEffect(() => {
     const updateWidth = () => {
