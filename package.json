@@ -9,8 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "prepare": "husky install",
-    "type-check": "tsc --noEmit --jsx react-jsx",
-    "type-check:watch": "tsc --noEmit --watch"
+    "type-check": "tsc --project tsconfig.app.json --noEmit"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -18,9 +17,7 @@
       "prettier --write"
     ],
     "*.{ts, tsx}": [
-      "tsc --noEmit",
-      "eslint --fix",
-      "prettier --write"
+      "tsc --project tsconfig.app.json --noEmit"
     ]
   },
   "dependencies": {
