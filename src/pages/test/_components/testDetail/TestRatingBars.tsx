@@ -2,20 +2,20 @@ import CircleProgressBar from '@/components/ui/progressBar/CircleProgressBar';
 import { colors } from '@/styles/theme/colors';
 import { calculatePercentage } from '@/utils/useCalculateTestPercentage';
 
-interface TestRatingBarsProps {
-  testSummary: {
-    totalSuccessTests: number;
-    totalFailTests: number;
-    routingSuccessCount: number;
-    routingFailCount: number;
-    interactionSuccessCount: number;
-    interactionFailCount: number;
-    mappingSuccessCount: number;
-    mappingFailCount: number;
-  };
-}
+// interface TestRatingBarsProps {
+//   testSummary: {
+//     totalSuccessTests: number;
+//     totalFailTests: number;
+//     routingSuccessCount: number;
+//     routingFailCount: number;
+//     interactionSuccessCount: number;
+//     interactionFailCount: number;
+//     mappingSuccessCount: number;
+//     mappingFailCount: number;
+//   };
+// }
 
-export default function TestRatingBars({ testSummary }: TestRatingBarsProps) {
+export default function TestRatingBars({ testSummary }) {
   const {
     totalSuccessTests,
     totalFailTests,
