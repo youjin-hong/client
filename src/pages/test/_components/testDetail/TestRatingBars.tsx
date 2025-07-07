@@ -16,7 +16,7 @@ import { calculatePercentage } from '@/utils/useCalculateTestPercentage';
 // }
 
 export default function TestRatingBars({ testSummary }) {
-  const test: string = 123;
+  const test: string = 1234;
   console.log(test);
   const {
     totalSuccessTests,
