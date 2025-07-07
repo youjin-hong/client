@@ -16,9 +16,6 @@ interface TestRatingBarsProps {
 }
 
 export default function TestRatingBars({ testSummary }: TestRatingBarsProps) {
-  const test: number = -1236;
-
-  console.log(test);
   const {
     totalSuccessTests,
     totalFailTests,
