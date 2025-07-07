@@ -18,7 +18,9 @@
       "prettier --write"
     ],
     "*.{ts, tsx}": [
-      "tsc --noEmit"
+      "tsc --noEmit",
+      "eslint --fix", 
+      "prettier --write" 
     ]
   },
   "dependencies": {
