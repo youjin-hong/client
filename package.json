@@ -18,7 +18,7 @@
       "prettier --write"
     ],
     "*.{ts, tsx}": [
-      "bash -c 'npm run type-check'"
+      "tsc --noEmit"
     ]
   },
   "dependencies": {
