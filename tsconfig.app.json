@@ -32,9 +32,6 @@
     }
   },
   "include": [
-    // "./src/**/*.ts",
-    // "./src/**/*.tsx",
-    // "./src/types/svg.d.ts"
     "src/**/*",         
     "src/**/*.ts",
     "src/**/*.tsx"

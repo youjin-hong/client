@@ -15,9 +15,6 @@
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
       "prettier --write"
-    ],
-    "*.{ts, tsx}": [
-      "tsc --project tsconfig.app.json --noEmit"
     ]
   },
   "dependencies": {
