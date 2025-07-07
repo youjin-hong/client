@@ -8,12 +8,17 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "tsc --noEmit --watch"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
       "prettier --write"
+    ],
+    "*.{ts, tsx}": [
+      "bash -c 'npm run type-check'"
     ]
   },
   "dependencies": {
