@@ -14,9 +14,11 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
+    "jsxImportSource": "react",
 
     /* Linting */
     "strict": true,
+    "noImplicitAny": true, 
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
@@ -30,8 +32,8 @@
     }
   },
   "include": [
-    "./src/**/*.ts",
-    "./src/**/*.tsx",
-    "./src/types/svg.d.ts"
+    "src/**/*",         
+    "src/**/*.ts",
+    "src/**/*.tsx"
   ]
 }
