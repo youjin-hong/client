@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useUserProfile } from '@/store/queries/user/useUserQueries';
@@ -7,18 +7,54 @@ import notificationIcon from '@/assets/icons/notification.svg';
 import profileImg from '@/assets/images/짱구.jpg';
 import { menuItems, topMenuItem } from '@/components/layout/sidebar/_components/SidebarData';
 import { setProjectName } from '@/store/redux/reducers/project';
+import { saveRecentSearch, getRecentSearches, clearRecentSearches } from '@/utils/recentSearch';
+import { useGetProjectList } from '@/store/queries/project/useProjectQueries';
 
 export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState('');
+  const [showRecent, setShowRecent] = useState(false);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const [suggestedProjects, setSuggestedProjects] = useState<{ projectName: string; projectStatus: string }[]>([]);
 
-  const handleSearch = () => {
-    dispatch(setProjectName(inputValue));
+  // 전체 프로젝트 리스트 불러오기
+  const { data: allProjects = [] } = useGetProjectList();
+
+  // inputValue가 바뀔 때마다 추천 프로젝트 필터링
+  useEffect(() => {
+    if (!inputValue.trim()) {
+      setSuggestedProjects([]);
+      return;
+    }
+    setSuggestedProjects(
+      allProjects
+        .filter((p: any) => p.projectName.includes(inputValue) && p.projectName !== inputValue)
+        .slice(0, 5)
+        .map((p: any) => ({ projectName: p.projectName, projectStatus: p.projectStatus }))
+    );
+  }, [inputValue, allProjects]);
+
+  const handleSearch = (keyword?: string) => {
+    const searchWord = keyword ?? inputValue;
+    if (!searchWord.trim()) return;
+    dispatch(setProjectName(searchWord));
+    saveRecentSearch(searchWord);
     navigate('/projects');
     setInputValue('');
   };
+
+  const handleInputFocus = () => {
+    setShowRecent(true);
+    setRecentSearches(getRecentSearches());
+  };
+
+  function removeRecentSearch(keyword: string) {
+    const updated = recentSearches.filter((item) => item !== keyword);
+    localStorage.setItem('recent_searches', JSON.stringify(updated));
+    setRecentSearches(updated);
+  }
 
   const { data: profile } = useUserProfile();
 
@@ -46,8 +82,12 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
         {currentPage}
       </h1> */}
       {/* 검색창 (모바일에서는 숨김) */}
-      <div className="relative flex-1 max-w-[760px] w-full bg-white ml-8 py-2 px-8 mx-2 rounded-full hidden md:flex">
-        <button type="button" onClick={handleSearch}>
+      <div
+        className="relative flex-1 max-w-[760px] w-full bg-white ml-8 py-2 px-8 mx-2 rounded-full hidden md:flex"
+        tabIndex={-1}
+        onFocus={() => setShowRecent(true)}
+        onBlur={() => setShowRecent(false)}>
+        <button type="button" onClick={() => handleSearch()}>
           <img src={searchIcon} alt="search button" className="absolute left-4 top-2 w-6 h-6" />
         </button>
         <input
@@ -61,7 +101,85 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
               handleSearch();
             }
           }}
+          onFocus={handleInputFocus}
         />
+        {showRecent && (
+          <div
+            className="absolute left-0 top-full mt-2 w-full min-w-[180px] max-w-[360px] md:max-w-none bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-50 max-h-60 overflow-auto sm:w-full sm:left-0 sm:right-0 sm:mx-auto"
+            style={{ minHeight: 48 }}>
+            {inputValue.trim() ? (
+              suggestedProjects.length > 0 ? (
+                <>
+                  <div className="text-xs text-blue-400 mb-1 mt-2">추천 프로젝트</div>
+                  <ul>
+                    {suggestedProjects.map((proj) => (
+                      <li
+                        key={proj.projectName}
+                        className="flex items-center justify-between text-blue-700 text-sm py-1 px-2 hover:bg-blue-50 rounded cursor-pointer"
+                        onMouseDown={() => {
+                          setInputValue(proj.projectName);
+                          setTimeout(() => handleSearch(proj.projectName), 0);
+                        }}>
+                        <span>{proj.projectName}</span>
+                        <span
+                          className={
+                            proj.projectStatus === 'COMPLETED'
+                              ? 'ml-2 px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-700'
+                              : 'ml-2 px-2 py-0.5 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700'
+                          }>
+                          {proj.projectStatus === 'COMPLETED' ? '완료' : '진행중'}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <p className="text-gray-400 text-sm text-center py-4">일치하는 프로젝트가 없습니다</p>
+              )
+            ) : recentSearches.length === 0 ? (
+              <p className="text-gray-400 text-sm text-center py-4">최근 검색어가 없습니다</p>
+            ) : (
+              <>
+                <button
+                  className="block w-full text-right text-xs text-gray-400 hover:text-red-400 mb-2"
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    clearRecentSearches();
+                    setRecentSearches([]);
+                  }}>
+                  전체 삭제
+                </button>
+                <div className="text-xs text-gray-400 mb-1">최근 검색어</div>
+                <ul className="mb-2">
+                  {recentSearches.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-center text-gray-700 text-sm py-1 px-2 hover:bg-gray-100 rounded cursor-pointer group">
+                      <span
+                        className="flex-1"
+                        onMouseDown={() => {
+                          setInputValue(item);
+                          setTimeout(() => handleSearch(item), 0);
+                        }}>
+                        {item}
+                      </span>
+                      <button
+                        className="ml-2 text-gray-400 hover:text-red-400 opacity-70 group-hover:opacity-100 transition"
+                        onMouseDown={(e) => {
+                          e.stopPropagation();
+                          removeRecentSearch(item);
+                        }}
+                        tabIndex={-1}
+                        aria-label="검색어 삭제">
+                        ×
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
+        )}
       </div>
       <div className="flex items-center gap-2 mr-8 lg:gap-4 min-w-0">
         {/* 알림 버튼 (모바일에서는 숨김) */}
