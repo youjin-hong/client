@@ -18,6 +18,7 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
   const [inputValue, setInputValue] = useState('');
   const [showRecent, setShowRecent] = useState(false);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const [showNotification, setShowNotification] = useState(false);
   const debouncedInputValue = useDebounce(inputValue, 300);
   const { data: suggestedProjects = [] } = useGetProjectList({ projectName: debouncedInputValue });
   // 전체 프로젝트 리스트 불러오기 (진행상태 태그용)
@@ -186,9 +187,16 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
       </div>
       <div className="flex items-center gap-2 mr-8 lg:gap-4 min-w-0">
         {/* 알림 버튼 (모바일에서는 숨김) */}
-        <div className="hidden lg:flex mr-0 items-center">
-          <button>
+        <div className="hidden lg:flex mr-0 items-center relative">
+          <button className="relative" onClick={() => setShowNotification((prev) => !prev)} tabIndex={0}>
             <img src={notificationIcon} alt="notification button" />
+            {showNotification && (
+              <div
+                className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-50"
+                style={{ minHeight: 48 }}>
+                <p className="text-gray-400 text-sm text-center">최근 알림이 없습니다</p>
+              </div>
+            )}
           </button>
         </div>
         {/* 프로필 버튼 */}
