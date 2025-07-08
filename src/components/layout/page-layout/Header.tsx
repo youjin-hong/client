@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useUserProfile } from '@/store/queries/user/useUserQueries';
@@ -10,6 +10,7 @@ import { setProjectName } from '@/store/redux/reducers/project';
 import { saveRecentSearch, getRecentSearches, clearRecentSearches } from '@/utils/recentSearch';
 import { useGetProjectList } from '@/store/queries/project/useProjectQueries';
 import { useDebounce } from '@/hooks/useDebounce';
+import BellBadge from '@/components/ui/BellBadge';
 
 export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
   const location = useLocation();
@@ -19,10 +20,22 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
   const [showRecent, setShowRecent] = useState(false);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [showNotification, setShowNotification] = useState(false);
+  const notificationRef = useRef<HTMLDivElement>(null);
   const debouncedInputValue = useDebounce(inputValue, 300);
   const { data: suggestedProjects = [] } = useGetProjectList({ projectName: debouncedInputValue });
   // 전체 프로젝트 리스트 불러오기 (진행상태 태그용)
   const { data: allProjects = [] } = useGetProjectList();
+
+  useEffect(() => {
+    if (!showNotification) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (notificationRef.current && !notificationRef.current.contains(e.target as Node)) {
+        setShowNotification(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showNotification]);
 
   const handleSearch = (keyword?: string) => {
     const searchWord = keyword ?? inputValue;
@@ -56,6 +69,9 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
     );
     return matchedItem ? matchedItem.title : '';
   }, [location.pathname]);
+
+  // 알림 여부 예시 (실제 알림 데이터 연동 시 수정)
+  const hasNotification = false; // 알림이 있을 때 true로 변경
 
   return (
     <header className="fixed top-4 left-1/2 -translate-x-1/2 z-[999] w-[95vw] max-w-2xl bg-background/90 backdrop-blur-md flex items-center justify-between px-4 py-2 rounded-full shadow-lg transition-all md:static md:top-0 md:left-0 md:translate-x-0 md:w-full md:max-w-full md:rounded-none md:shadow-none md:px-8 md:py-6">
@@ -187,9 +203,11 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
       </div>
       <div className="flex items-center gap-2 mr-8 lg:gap-4 min-w-0">
         {/* 알림 버튼 (모바일에서는 숨김) */}
-        <div className="hidden lg:flex mr-0 items-center relative">
+        <div className="hidden lg:flex mr-0 items-center relative" ref={notificationRef}>
           <button className="relative" onClick={() => setShowNotification((prev) => !prev)} tabIndex={0}>
-            <img src={notificationIcon} alt="notification button" />
+            <BellBadge show={hasNotification}>
+              <img src={notificationIcon} alt="notification button" />
+            </BellBadge>
             {showNotification && (
               <div
                 className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-50"
