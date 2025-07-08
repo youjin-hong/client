@@ -1,19 +1,18 @@
-import { useMemo, useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useUserProfile } from '@/store/queries/user/useUserQueries';
 import searchIcon from '@/assets/icons/search.svg';
 import notificationIcon from '@/assets/icons/notification.svg';
 import profileImg from '@/assets/images/짱구.jpg';
-import { menuItems, topMenuItem } from '@/components/layout/sidebar/_components/SidebarData';
 import { setProjectName } from '@/store/redux/reducers/project';
 import { saveRecentSearch, getRecentSearches, clearRecentSearches } from '@/utils/recentSearch';
 import { useGetProjectList } from '@/store/queries/project/useProjectQueries';
 import { useDebounce } from '@/hooks/useDebounce';
 import BellBadge from '@/components/ui/BellBadge';
+import { ProjectListData } from '@/types/project.type';
 
 export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
-  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState('');
@@ -24,7 +23,7 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
   const debouncedInputValue = useDebounce(inputValue, 300);
   const { data: suggestedProjects = [] } = useGetProjectList({ projectName: debouncedInputValue });
   // 전체 프로젝트 리스트 불러오기 (진행상태 태그용)
-  const { data: allProjects = [] } = useGetProjectList();
+  const { data: allProjects = [] }: { data?: ProjectListData[] } = useGetProjectList();
 
   useEffect(() => {
     if (!showNotification) return;
@@ -60,15 +59,6 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
   }
 
   const { data: profile } = useUserProfile();
-
-  // 현재 경로에 있는 사이드 바의 메뉴 아이템 찾기
-  const currentPage = useMemo(() => {
-    const allMenuItems = [...menuItems, topMenuItem];
-    const matchedItem = allMenuItems.find(
-      (item) => item.path === location.pathname || (location.pathname.startsWith(item.path) && item.path !== '/')
-    );
-    return matchedItem ? matchedItem.title : '';
-  }, [location.pathname]);
 
   // 알림 여부 예시 (실제 알림 데이터 연동 시 수정)
   const hasNotification = false; // 알림이 있을 때 true로 변경
@@ -118,7 +108,7 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
                 <>
                   <div className="text-xs text-blue-400 mb-1 mt-2">추천 프로젝트</div>
                   <ul>
-                    {suggestedProjects.map((proj: any) => (
+                    {suggestedProjects.map((proj: ProjectListData) => (
                       <li
                         key={proj.projectName}
                         className="flex items-center justify-between text-blue-700 text-sm py-1 px-2 hover:bg-blue-50 rounded cursor-pointer"
@@ -159,7 +149,9 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
                 <ul className="mb-2">
                   {recentSearches.map((item) => {
                     // 프로젝트명과 완전 일치하는 프로젝트 찾기
-                    const matched = allProjects.find((p: any) => p.projectName.toLowerCase() === item.toLowerCase());
+                    const matched = allProjects.find(
+                      (p: ProjectListData) => p.projectName.toLowerCase() === item.toLowerCase()
+                    );
                     return (
                       <li
                         key={item}
