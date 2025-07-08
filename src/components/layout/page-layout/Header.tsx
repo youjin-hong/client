@@ -46,9 +46,9 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
         {currentPage}
       </h1> */}
       {/* 검색창 (모바일에서는 숨김) */}
-      <div className="relative flex-1 max-w-[320px] w-full bg-white py-2 px-4 mx-2 rounded-full hidden md:flex">
+      <div className="relative flex-1 max-w-[760px] w-full bg-white ml-8 py-2 px-8 mx-2 rounded-full hidden md:flex">
         <button type="button" onClick={handleSearch}>
-          <img src={searchIcon} alt="search button" className="absolute left-4 top-2" />
+          <img src={searchIcon} alt="search button" className="absolute left-4 top-2 w-6 h-6" />
         </button>
         <input
           type="text"
@@ -63,9 +63,9 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
           }}
         />
       </div>
-      <div className="flex items-center gap-2 lg:gap-4 min-w-0">
+      <div className="flex items-center gap-2 mr-8 lg:gap-4 min-w-0">
         {/* 알림 버튼 (모바일에서는 숨김) */}
-        <div className="hidden lg:flex items-center">
+        <div className="hidden lg:flex mr-0 items-center">
           <button>
             <img src={notificationIcon} alt="notification button" />
           </button>
