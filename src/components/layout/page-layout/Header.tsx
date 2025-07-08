@@ -20,12 +20,15 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const debouncedInputValue = useDebounce(inputValue, 300);
   const { data: suggestedProjects = [] } = useGetProjectList({ projectName: debouncedInputValue });
+  // 전체 프로젝트 리스트 불러오기 (진행상태 태그용)
+  const { data: allProjects = [] } = useGetProjectList();
 
   const handleSearch = (keyword?: string) => {
     const searchWord = keyword ?? inputValue;
     if (!searchWord.trim()) return;
     dispatch(setProjectName(searchWord));
     saveRecentSearch(searchWord);
+    setRecentSearches(getRecentSearches()); // 최근 검색어 즉시 갱신
     navigate('/projects');
     setInputValue('');
     setShowRecent(false); // 검색 시 드롭다운 닫기
@@ -137,30 +140,44 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
                 </button>
                 <div className="text-xs text-gray-400 mb-1">최근 검색어</div>
                 <ul className="mb-2">
-                  {recentSearches.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-center text-gray-700 text-sm py-1 px-2 hover:bg-gray-100 rounded cursor-pointer group">
-                      <span
-                        className="flex-1"
-                        onMouseDown={() => {
-                          setInputValue(item);
-                          setTimeout(() => handleSearch(item), 0);
-                        }}>
-                        {item}
-                      </span>
-                      <button
-                        className="ml-2 text-gray-400 hover:text-red-400 opacity-70 group-hover:opacity-100 transition"
-                        onMouseDown={(e) => {
-                          e.stopPropagation();
-                          removeRecentSearch(item);
-                        }}
-                        tabIndex={-1}
-                        aria-label="검색어 삭제">
-                        ×
-                      </button>
-                    </li>
-                  ))}
+                  {recentSearches.map((item) => {
+                    // 프로젝트명과 완전 일치하는 프로젝트 찾기
+                    const matched = allProjects.find((p: any) => p.projectName.toLowerCase() === item.toLowerCase());
+                    return (
+                      <li
+                        key={item}
+                        className="flex items-center text-gray-700 text-sm py-1 px-2 hover:bg-gray-100 rounded cursor-pointer group">
+                        <span
+                          className="flex-1"
+                          onMouseDown={() => {
+                            setInputValue(item);
+                            setTimeout(() => handleSearch(item), 0);
+                          }}>
+                          {item}
+                        </span>
+                        {matched && (
+                          <span
+                            className={
+                              matched.projectStatus === 'COMPLETED'
+                                ? 'ml-2 px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-700'
+                                : 'ml-2 px-2 py-0.5 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700'
+                            }>
+                            {matched.projectStatus === 'COMPLETED' ? '완료' : '진행중'}
+                          </span>
+                        )}
+                        <button
+                          className="ml-2 text-gray-400 hover:text-red-400 opacity-70 group-hover:opacity-100 transition"
+                          onMouseDown={(e) => {
+                            e.stopPropagation();
+                            removeRecentSearch(item);
+                          }}
+                          tabIndex={-1}
+                          aria-label="검색어 삭제">
+                          ×
+                        </button>
+                      </li>
+                    );
+                  })}
                 </ul>
               </>
             )}
