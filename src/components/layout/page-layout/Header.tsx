@@ -9,6 +9,7 @@ import { menuItems, topMenuItem } from '@/components/layout/sidebar/_components/
 import { setProjectName } from '@/store/redux/reducers/project';
 import { saveRecentSearch, getRecentSearches, clearRecentSearches } from '@/utils/recentSearch';
 import { useGetProjectList } from '@/store/queries/project/useProjectQueries';
+import { useDebounce } from '@/hooks/useDebounce';
 
 export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
   const location = useLocation();
@@ -17,24 +18,8 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
   const [inputValue, setInputValue] = useState('');
   const [showRecent, setShowRecent] = useState(false);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
-  const [suggestedProjects, setSuggestedProjects] = useState<{ projectName: string; projectStatus: string }[]>([]);
-
-  // 전체 프로젝트 리스트 불러오기
-  const { data: allProjects = [] } = useGetProjectList();
-
-  // inputValue가 바뀔 때마다 추천 프로젝트 필터링
-  useEffect(() => {
-    if (!inputValue.trim()) {
-      setSuggestedProjects([]);
-      return;
-    }
-    setSuggestedProjects(
-      allProjects
-        .filter((p: any) => p.projectName.includes(inputValue) && p.projectName !== inputValue)
-        .slice(0, 5)
-        .map((p: any) => ({ projectName: p.projectName, projectStatus: p.projectStatus }))
-    );
-  }, [inputValue, allProjects]);
+  const debouncedInputValue = useDebounce(inputValue, 300);
+  const { data: suggestedProjects = [] } = useGetProjectList({ projectName: debouncedInputValue });
 
   const handleSearch = (keyword?: string) => {
     const searchWord = keyword ?? inputValue;
@@ -43,6 +28,7 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
     saveRecentSearch(searchWord);
     navigate('/projects');
     setInputValue('');
+    setShowRecent(false); // 검색 시 드롭다운 닫기
   };
 
   const handleInputFocus = () => {
@@ -112,7 +98,7 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
                 <>
                   <div className="text-xs text-blue-400 mb-1 mt-2">추천 프로젝트</div>
                   <ul>
-                    {suggestedProjects.map((proj) => (
+                    {suggestedProjects.map((proj: any) => (
                       <li
                         key={proj.projectName}
                         className="flex items-center justify-between text-blue-700 text-sm py-1 px-2 hover:bg-blue-50 rounded cursor-pointer"
