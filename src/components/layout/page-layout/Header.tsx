@@ -42,9 +42,9 @@ export default function Header({ onMenuClick }: { onMenuClick?: () => void }) {
         </button>
       )}
       {/* 현재 페이지 이름 */}
-      <h1 className="font-bm font-medium text-lg md:text-2xl cursor-default flex-shrink-0 truncate max-w-[120px] md:max-w-[200px]">
+      {/* <h1 className="font-bm font-medium text-lg md:text-2xl cursor-default flex-shrink-0 truncate max-w-[120px] md:max-w-[200px]">
         {currentPage}
-      </h1>
+      </h1> */}
       {/* 검색창 (모바일에서는 숨김) */}
       <div className="relative flex-1 max-w-[320px] w-full bg-white py-2 px-4 mx-2 rounded-full hidden md:flex">
         <button type="button" onClick={handleSearch}>
