@@ -57,7 +57,7 @@ function AppWithErrorModal({ children }: { children: React.ReactNode }) {
   return (
     <>
       {children}
-      <ErrorModal open={showErrorModal} message={errorMessage} onClose={() => setShowErrorModal(false)} />
+      <ErrorModal open={showErrorModal} message={errorMessage} />
     </>
   );
 }
