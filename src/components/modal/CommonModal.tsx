@@ -10,6 +10,7 @@ interface CommonModalProps {
   confirmText?: string;
   cancelText?: string;
   showCancel?: boolean;
+  hideCancel?: boolean; // 추가
   confirmButtonClassName?: string;
   cancelButtonClassName?: string;
 }
@@ -23,6 +24,7 @@ export default function CommonModal({
   confirmText = '확인',
   cancelText = '취소',
   showCancel = true,
+  hideCancel = false,
   confirmButtonClassName = '',
   cancelButtonClassName = ''
 }: CommonModalProps) {
@@ -42,7 +44,7 @@ export default function CommonModal({
               className={`w-[120px] h-[44px] text-[18px] font-medium bg-white border border-gray-300 hover:bg-gray-100 ${confirmButtonClassName}`}
             />
           )}
-          {showCancel && (
+          {showCancel && !hideCancel && (
             <Button
               text={cancelText}
               onClick={onClose}
